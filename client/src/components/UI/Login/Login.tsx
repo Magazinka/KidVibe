@@ -29,8 +29,7 @@ function Login() {
   });
 
   const dispatch = useDispatch<AppDispatch>();
-
-  // Обработчик отправки формы
+  const { user } = useSelector((state: RootState) => state.authSlicer);
   const onSubmit: SubmitHandler<User> = async (data) => {
     try {
       console.log("Form Data: ", data);
@@ -39,7 +38,6 @@ function Login() {
 
       console.log("Login response: ", response);
 
-      // Диспатчим данные пользователя и токен в Redux
       dispatch(loginUserAction(response));
       // dispatch(loginUserAction({ ...response.user, token: response.token }));
       // console.log('loginUserAction: ', loginUser());

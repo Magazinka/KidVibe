@@ -10,7 +10,7 @@ const PORT = 3001;
 serverConfig(app)
 app.use("/", indexRouter);
 
-app.get("/status", verifyAccessToken, (req, res) => {
+app.get("/refresh", verifyAccessToken, (req, res) => {
     const accessToken = req.headers.authorization.split(" ")[1];
     res.json({ message: "OK", accessToken, user: res.locals.user });
   });

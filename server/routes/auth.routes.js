@@ -80,12 +80,12 @@ authRoutes.post("/login", async (req, res) => {
   }
 });
 
-// authRoutes.get("/logout", async (_, res) => {
-//   try {
-//     return res.clearCookie("refreshToken").status(200).end;
-//   } catch (error) {
-//     console.log("error logout: ", error);
-//   }
-// });
+authRoutes.get("/logout", async (_, res) => {
+  try {
+    return res.clearCookie("refreshToken").status(200).end();
+  } catch (error) {
+    console.log("error logout: ", error);
+  }
+});
 
 module.exports = authRoutes;
