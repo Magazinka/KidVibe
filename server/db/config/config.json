@@ -1,10 +1,6 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "postgres",
-    "database": "kidvibe",
-    "host": "45.12.229.19",
-    "dialect": "postgres"
+    "use_env_variable": "DATABASE_URL"
   },
   "test": {
     "username": "root",

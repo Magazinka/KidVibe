@@ -6,9 +6,11 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar />
+      {/* <NavBar /> */}
       <Routes>
-        <Route path="/" element={<MainPage />} />
+        <Route>
+          {/* <Route path="/" element={<MainPage />} /> */}
+        </Route>
       </Routes>
       {/* <Routes>
         <Route path="/" element={<MainPage />} />
