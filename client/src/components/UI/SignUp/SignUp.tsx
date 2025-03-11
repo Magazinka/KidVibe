@@ -22,7 +22,7 @@ const schema = yup
   .required();
 
 function Signup() {
-  const [createUser, { isLoading, isError, error }] = useCreateUserMutation();
+  const [createUser] = useCreateUserMutation();
   const {
     register,
     handleSubmit,
