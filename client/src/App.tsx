@@ -10,6 +10,7 @@ import GadgetPage from "./components/pages/GadgetPage/GadgetPage";
 import ProfilePage from "./components/pages/ProfilePage/ProfilePage";
 
 function App() {
+  
   return (
     <BrowserRouter>
       <NavBar />
