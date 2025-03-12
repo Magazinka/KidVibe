@@ -1,5 +1,6 @@
 
-FROM node:20.11.1
+FROM node:20.10
+
 
 
 WORKDIR /server-app
@@ -13,4 +14,4 @@ COPY . .
 EXPOSE 3001
 
 
-CMD ["npm", "server.js"]
+CMD ["node", "server.js"]

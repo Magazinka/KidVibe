@@ -12,7 +12,7 @@ services:
     build:
       context: ./server
     ports:
-      - "5001:3001"
+      - "5002:3002"
     environment:
       DB_HOST: db
       DB_PORT: ${DB_PORT}

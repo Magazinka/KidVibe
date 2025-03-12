@@ -1,9 +1,35 @@
-require("dotenv").config();
-const path = require("path");
+// require("dotenv").config();
+// const path = require("path");
 
-module.exports = {
-  config: path.resolve("db", "config", "config.json"),
-  "models-path": path.resolve("db", "models"),
-  "seeders-path": path.resolve("db", "seeders"),
-  "migrations-path": path.resolve("db", "migrations"),
-};
+// module.exports = {
+//   config: path.resolve("db", "config", "config.json"),
+//   "models-path": path.resolve("db", "models"),
+//   "seeders-path": path.resolve("db", "seeders"),
+//   "migrations-path": path.resolve("db", "migrations"),
+// };
+
+// .sequelizerc
+import Sequelize from 'sequelize';
+import models from './db/models/index.js';
+
+const sequelize = new Sequelize({
+  database: 'your_database',
+  username: 'your_username',
+  password: 'your_password',
+  host: 'localhost',
+  dialect: 'postgres', // или 'mysql', 'sqlite', 'mssql'
+});
+
+// Инициализация моделей
+Object.values(models).forEach(model => {
+  model.init(sequelize);
+});
+
+// Настройка ассоциаций
+Object.values(models).forEach(model => {
+  if (model.associate) {
+    model.associate(models);
+  }
+});
+
+export { sequelize, models };
