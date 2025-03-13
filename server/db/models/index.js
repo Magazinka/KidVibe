@@ -48,29 +48,3 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 module.exports = db;
-
-// import fs from "fs";
-// import path from "path";
-// import { fileURLToPath } from "url";
-
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
-
-// const models = {};
-
-// // Автоматически импортируем все модели из текущей директории
-// fs.readdirSync(__dirname)
-//   .filter((file) => {
-//     return (
-//       file.indexOf(".") !== 0 && // Исключаем скрытые файлы
-//       file !== "index.js" && // Исключаем сам index.js
-//       file.slice(-3) === ".js" // Импортируем только .js файлы
-//     );
-//   })
-//   .forEach(async (file) => {
-//     const modelModule = await import(`./${file}`);
-//     const model = modelModule.default;
-//     models[model.name] = model;
-//   });
-
-// export default models;

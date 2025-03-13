@@ -14,18 +14,3 @@ function generateToken(payload) {
 }
 
 module.exports = generateToken;
-
-// import jwt from "jsonwebtoken";
-// import jwtConfig from "./jwt.config.js";
-
-// const generateToken = (payload) => {
-//   const accessToken = jwt.sign(payload, jwtConfig.access.secret, {
-//     expiresIn: jwtConfig.access.expiresIn,
-//   });
-//   const refreshToken = jwt.sign(payload, jwtConfig.refresh.secret, {
-//     expiresIn: jwtConfig.refresh.expiresIn,
-//   });
-//   return { accessToken, refreshToken };
-// };
-
-// export default generateToken;

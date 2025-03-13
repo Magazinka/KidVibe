@@ -14,24 +14,3 @@ function verifyRefreshToken(req, res, next) {
 }
 
 module.exports = verifyRefreshToken;
-// import jwt from "jsonwebtoken";
-// import jwtConfig from "../shared/jwt.config.js";
-
-// const verifyRefreshToken = (req, res, next) => {
-//   const token = req.cookies.refreshToken;
-
-//   if (!token) {
-//     return res.status(401).json({ message: "Refresh token is missing" });
-//   }
-
-//   try {
-//     const decoded = jwt.verify(token, jwtConfig.refresh.secret);
-//     res.locals.user = decoded.user; // Сохраняем пользователя в res.locals
-//     next();
-//   } catch (error) {
-//     console.log("Error verifying refresh token:", error);
-//     res.status(401).json({ message: "Invalid refresh token" });
-//   }
-// };
-
-// export default verifyRefreshToken;
