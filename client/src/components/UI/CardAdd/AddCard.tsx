@@ -5,13 +5,28 @@ import { useCreateEventMutation } from "../../../redux/slice/event.api.slice";
 
 
 function AddCard(){
-    const dispatch = useDispatch()
-      const [loginUser, { isLoading, isError, error }] = useCreateEventMutation();
-      const {
-        register,
-        handleSubmit,
-        // formState: { errors },
-      } = useForm<User>({});
+    const dispatch = useDispatch<AppDispatch>()
+    //   const [loginUser, { isLoading, isError, error }] = useCreateEventMutation();
+    //   const {
+    //     register,
+    //     handleSubmit,
+    //     // formState: { errors },
+    //   } = useForm<User>({});
     
-    return()
+    return(
+        <form>
+            <label>
+                <input type="file"/>
+            </label>
+            <label>
+                Title
+                <input/>
+            </label>
+            <label>
+                <input/>
+            </label>
+        </form>
+    )
 }
+
+export default AddCard;

@@ -1,9 +1,11 @@
+import AddCard from "../../UI/CardAdd/AddCard";
 import CardEvent from "../../UI/CardEvent/CardEvent";
 
 function EventPage() {
   return (
     <>
       <CardEvent />
+      <AddCard/>
     </>
   );
 }
