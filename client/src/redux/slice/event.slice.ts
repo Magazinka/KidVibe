@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import $api from "../../shared/axios.instance";
 
-// Типизация для асинхронного запроса
 export const getEvent = createAsyncThunk<Event[], void>(
   "event/getEvent", 
   async () => {
