@@ -28,7 +28,7 @@ $api.interceptors.response.use(
   async (error) => {
     const prevRequest = error.config;
     if (error.response.status === 403 && !prevRequest.sent) {
-      const response = await axios("http://localhost:3001/tokens/refresh", {
+      const response = await axios(`${import.meta.env.URL}/tokens/refresh`, {
         withCredentials: true,
       });
       accessToken = response.data.accessToken;
