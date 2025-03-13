@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const $api = axios.create({
-  baseURL: import.meta.env.URL,
+  baseURL: import.meta.env.VITE_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -28,7 +28,7 @@ $api.interceptors.response.use(
   async (error) => {
     const prevRequest = error.config;
     if (error.response.status === 403 && !prevRequest.sent) {
-      const response = await axios(`${import.meta.env.URL}/tokens/refresh`, {
+      const response = await axios(`${import.meta.env.VITE_URL}/tokens/refresh`, {
         withCredentials: true,
       });
       accessToken = response.data.accessToken;
