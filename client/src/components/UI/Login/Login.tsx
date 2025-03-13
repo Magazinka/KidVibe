@@ -1,3 +1,72 @@
+// import { useForm, SubmitHandler } from "react-hook-form";
+// import { yupResolver } from "@hookform/resolvers/yup";
+// import * as yup from "yup";
+// import { useLoginUserMutation } from "../../../redux/slice/api.slice";
+// import { useDispatch, useSelector } from "react-redux";
+// import { loginUser as loginUserAction } from "../../../redux/slice/auth.slice";
+// import { AppDispatch, RootState } from "../../../redux/store";
+// import { User } from "../../../Types/Types";
+
+
+// function Login() {
+//   const [loginUser, { isLoading, isError, error }] = useLoginUserMutation();
+//   const {
+//     register,
+//     handleSubmit,
+//     // formState: { errors },
+//   } = useForm<User>({});
+
+//   const dispatch = useDispatch<AppDispatch>();
+//   const { user } = useSelector((state: RootState) => state.authSlicer);
+//   const onSubmit: SubmitHandler<User> = async (data) => {
+//     try {
+//       console.log("Form Data: ", data);
+
+//       const response = await loginUser(data).unwrap(); 
+
+//       console.log("Login response: ", response);
+
+//       dispatch(loginUserAction(response));
+//       // dispatch(loginUserAction({ ...response.user, token: response.token }));
+//       // console.log('loginUserAction: ', loginUser());
+//     } catch (error) {
+//       console.log("Error during login: ", error);
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <form onSubmit={handleSubmit(onSubmit)}>
+//         <div>
+//           <label htmlFor="email">Your Email:</label>
+//           <input
+//             {...register("email")}
+//             type="text"
+//             placeholder="Email"
+//             autoComplete="current-email"
+//             id="email"
+//           />
+//         </div>
+//         <div>
+//           <label htmlFor="password">Your Password:</label>
+//           <input
+//             {...register("password")}
+//             type="password"
+//             placeholder="Password"
+//             autoComplete="current-password"
+//             id="password"
+//           />
+//         </div>
+//         <button type="submit" disabled={isLoading}>
+//           {isLoading ? "Logging in..." : "Login"}
+//         </button>
+//       </form>
+//     </div>
+//   );
+// }
+
+// export default Login;
+
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -7,16 +76,9 @@ import { loginUser as loginUserAction } from "../../../redux/slice/auth.slice";
 import { AppDispatch, RootState } from "../../../redux/store";
 import { User } from "../../../Types/Types";
 
+import { TextField, Button, CircularProgress, Box } from "@mui/material";
 
-// const schema = yup
-//   .object({
-//     email: yup
-//       .string()
-//       .email("Email is not valid")
-//       .required("Email is required"),
-//     password: yup.string().required("Password is required"),
-//   })
-//   .required();
+const shantellSans = "'Shantell Sans', sans-serif";
 
 function Login() {
   const [loginUser, { isLoading, isError, error }] = useLoginUserMutation();
@@ -24,56 +86,87 @@ function Login() {
     register,
     handleSubmit,
     // formState: { errors },
-  } = useForm<User>({
-    // resolver: yupResolver(schema), 
-  });
+  } = useForm<User>({});
 
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.authSlicer);
+
   const onSubmit: SubmitHandler<User> = async (data) => {
     try {
       console.log("Form Data: ", data);
 
-      const response = await loginUser(data).unwrap(); 
+      const response = await loginUser(data).unwrap();
 
       console.log("Login response: ", response);
 
       dispatch(loginUserAction(response));
-      // dispatch(loginUserAction({ ...response.user, token: response.token }));
-      // console.log('loginUserAction: ', loginUser());
     } catch (error) {
       console.log("Error during login: ", error);
     }
   };
 
   return (
-    <div>
+    <Box
+      sx={{
+        maxWidth: 400,
+        margin: "auto",
+        padding: 3,
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        boxShadow: 3,
+        borderRadius: 2,
+        backgroundColor: "#F5F5F5", // Цвет фона страницы
+      }}
+    >
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor="email">Your Email:</label>
-          <input
-            {...register("email")}
-            type="text"
-            placeholder="Email"
-            autoComplete="current-email"
-            id="email"
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Your Password:</label>
-          <input
-            {...register("password")}
-            type="password"
-            placeholder="Password"
-            autoComplete="current-password"
-            id="password"
-          />
-        </div>
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? "Logging in..." : "Login"}
-        </button>
+        <TextField
+          {...register("email")}
+          label="Your Email"
+          type="email"
+          variant="outlined"
+          fullWidth
+          required
+          sx={{
+            fontFamily: shantellSans, // Шрифт для поля ввода
+          }}
+        />
+        <TextField
+          {...register("password")}
+          label="Your Password"
+          type="password"
+          variant="outlined"
+          fullWidth
+          required
+          sx={{
+            marginTop: 2,
+            fontFamily: shantellSans, // Шрифт для поля ввода
+          }}
+        />
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{
+            marginTop: 2,
+            backgroundColor: "#8174A0", // Цвет фона кнопки
+            color: "#CFEBC7", // Цвет текста на кнопке
+            fontFamily: shantellSans, // Шрифт для кнопки
+            "&:hover": {
+              backgroundColor: "#441752", // Цвет кнопки при наведении
+            },
+          }}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <CircularProgress size={24} sx={{ color: "white" }} />
+          ) : (
+            "Login"
+          )}
+        </Button>
       </form>
-    </div>
+    </Box>
   );
 }
 
