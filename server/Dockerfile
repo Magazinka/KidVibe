@@ -1,11 +1,15 @@
-FROM node:20.10
 
-WORKDIR /the/workdir/path
+FROM node:18
 
-COPY package.json .
+WORKDIR /server-app
+
+COPY package*.json ./
 
 RUN npm install
 
 COPY . .
 
 EXPOSE 3001
+
+
+CMD ["node", "server.js"]

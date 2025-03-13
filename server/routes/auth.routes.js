@@ -6,15 +6,11 @@ const jwtConfig = require("../shared/jwt.config");
 
 authRoutes.post("/signup", async (req, res) => {
   try {
-    // console.log("REQ.BODY: ", req.body);
     const { login, email, password } = req.body;
     if (!login || !email || !password) {
       return res.status(400).end();
     }
     const hashPass = await bcrypt.hash(password, 10);
-    // console.log("hashPass: ", hashPass);
-    // console.log("login: ", login);
-    // console.log("hPass: ", password);
     const [newUser, created] = await User.findOrCreate({
       where: { email },
       defaults: { login, email, password: hashPass },
@@ -80,12 +76,12 @@ authRoutes.post("/login", async (req, res) => {
   }
 });
 
-// authRoutes.get("/logout", async (_, res) => {
-//   try {
-//     return res.clearCookie("refreshToken").status(200).end;
-//   } catch (error) {
-//     console.log("error logout: ", error);
-//   }
-// });
+authRoutes.get("/logout", async (_, res) => {
+  try {
+    return res.clearCookie("refreshToken").status(200).end();
+  } catch (error) {
+    console.log("error logout: ", error);
+  }
+});
 
 module.exports = authRoutes;
