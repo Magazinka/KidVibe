@@ -1,6 +1,6 @@
-import express from "express";
-import cookieParser from "cookie-parser";
-import cors from "cors";
+const express = require("express");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const corsConf = {
   allowedHeaders: ["Content-Type", "Authorization"],
@@ -18,4 +18,4 @@ const serverConfig = (app) => {
   }
 };
 
-export default serverConfig;
+module.exports = serverConfig;

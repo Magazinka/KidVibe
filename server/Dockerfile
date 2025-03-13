@@ -1,11 +1,9 @@
 
-FROM node:20.10
-
-
+FROM node:18
 
 WORKDIR /server-app
 
-COPY package.json .
+COPY package*.json ./
 
 RUN npm install
 

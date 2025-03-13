@@ -8,4 +8,4 @@ const logger = (req, _, next) => {
   }
 };
 
-export default logger;
+module.exports = logger;

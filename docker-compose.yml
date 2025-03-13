@@ -4,7 +4,7 @@ services:
       context: ./client
       dockerfile: Dockerfile
     ports:
-      - "80:4000"
+      - "80:5173"
     depends_on:
       - backend
 
@@ -12,7 +12,7 @@ services:
     build:
       context: ./server
     ports:
-      - "5002:3002"
+      - "5002:3001"
     environment:
       DB_HOST: db
       DB_PORT: ${DB_PORT}
