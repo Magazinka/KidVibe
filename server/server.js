@@ -7,13 +7,15 @@ const app = express();
 
 const PORT = 3001;
 
-serverConfig(app)
+
+serverConfig(app);
 app.use("/", indexRouter);
 
 app.get("/refresh", verifyAccessToken, (req, res) => {
-    const accessToken = req.headers.authorization.split(" ")[1];
-    res.json({ message: "OK", accessToken, user: res.locals.user });
-  });
+  const accessToken = req.headers.authorization.split(" ")[1];
+  res.json({ message: "OK", accessToken, user: res.locals.user });
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server started on ${PORT} port`);
