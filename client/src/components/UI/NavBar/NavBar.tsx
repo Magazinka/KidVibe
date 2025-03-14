@@ -3,7 +3,7 @@ import { AppDispatch, RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useLogoutUserMutation } from "../../../redux/slice/api.slice";
 import { logout } from "../../../redux/slice/auth.slice";
-import { Box, Button, Link, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 function NavBar() {
   const dispatch = useDispatch<AppDispatch>();
@@ -30,7 +30,7 @@ function NavBar() {
         gap: 2,
         boxShadow: 3,
         borderRadius: 2,
-        backgroundColor: "#F5F5F5", 
+        backgroundColor: "#F5F5F5",
       }}
     >
       {user?.login && (
@@ -45,11 +45,11 @@ function NavBar() {
             variant="contained"
             color="primary"
             sx={{
-              backgroundColor: "#8174A0", 
-              color: "#CFEBC7", 
-              fontFamily: "'Shantell Sans', sans-serif", 
+              backgroundColor: "#8174A0",
+              color: "#CFEBC7",
+              fontFamily: "'Shantell Sans', sans-serif",
               "&:hover": {
-                backgroundColor: "#441752", 
+                backgroundColor: "#441752",
               },
             }}
             fullWidth
@@ -62,11 +62,11 @@ function NavBar() {
             variant="contained"
             color="primary"
             sx={{
-              backgroundColor: "#8174A0", 
+              backgroundColor: "#8174A0",
               color: "#CFEBC7",
-              fontFamily: "'Shantell Sans', sans-serif", 
+              fontFamily: "'Shantell Sans', sans-serif",
               "&:hover": {
-                backgroundColor: "#441752", 
+                backgroundColor: "#441752",
               },
             }}
             fullWidth
@@ -79,11 +79,11 @@ function NavBar() {
             variant="contained"
             color="primary"
             sx={{
-              backgroundColor: "#8174A0", 
-              color: "#CFEBC7", 
-              fontFamily: "'Shantell Sans', sans-serif", 
+              backgroundColor: "#8174A0",
+              color: "#CFEBC7",
+              fontFamily: "'Shantell Sans', sans-serif",
               "&:hover": {
-                backgroundColor: "#441752", 
+                backgroundColor: "#441752",
               },
             }}
             fullWidth
@@ -96,11 +96,11 @@ function NavBar() {
             variant="contained"
             color="primary"
             sx={{
-              backgroundColor: "#8174A0", 
-              color: "#CFEBC7", 
+              backgroundColor: "#8174A0",
+              color: "#CFEBC7",
               fontFamily: "'Shantell Sans', sans-serif",
               "&:hover": {
-                backgroundColor: "#441752", 
+                backgroundColor: "#441752",
               },
             }}
             fullWidth
@@ -113,11 +113,11 @@ function NavBar() {
             variant="contained"
             color="primary"
             sx={{
-              backgroundColor: "#8174A0", 
-              color: "#CFEBC7", 
-              fontFamily: "'Shantell Sans', sans-serif", 
+              backgroundColor: "#8174A0",
+              color: "#CFEBC7",
+              fontFamily: "'Shantell Sans', sans-serif",
               "&:hover": {
-                backgroundColor: "#441752", 
+                backgroundColor: "#441752",
               },
             }}
             fullWidth
@@ -130,9 +130,9 @@ function NavBar() {
             variant="contained"
             color="primary"
             sx={{
-              backgroundColor: "#8174A0", 
-              color: "#CFEBC7", 
-              fontFamily: "'Shantell Sans', sans-serif", 
+              backgroundColor: "#8174A0",
+              color: "#CFEBC7",
+              fontFamily: "'Shantell Sans', sans-serif",
               "&:hover": {
                 backgroundColor: "#441752",
               },
@@ -144,40 +144,38 @@ function NavBar() {
         </NavLink>
       </Box>
 
-
       {user !== null ? (
-         <Button
-         variant="outlined"
-         color="error"
-         sx={{
-           padding: "1px 10px",
-           fontFamily: "'Shantell Sans', sans-serif", 
-         }}
-         fullWidth
-         onClick={handleLogout}
-       >
-         Logout
-       </Button>
-      ) : (
-        <NavLink to="/auth" style={{ textDecoration: "none" }}>
         <Button
-          variant="contained"
-          color="primary"
+          variant="outlined"
+          color="error"
           sx={{
-            backgroundColor: "#8174A0", 
-            color: "#CFEBC7",
-            fontFamily: "'Shantell Sans', sans-serif", 
-            "&:hover": {
-              backgroundColor: "#441752", 
-            },
-            padding: "5px 5px",
+            padding: "1px 10px",
+            fontFamily: "'Shantell Sans', sans-serif",
           }}
           fullWidth
+          onClick={handleLogout}
         >
-          Регистрация
+          Logout
         </Button>
-      </NavLink>
-       
+      ) : (
+        <NavLink to="/auth" style={{ textDecoration: "none" }}>
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{
+              backgroundColor: "#8174A0",
+              color: "#CFEBC7",
+              fontFamily: "'Shantell Sans', sans-serif",
+              "&:hover": {
+                backgroundColor: "#441752",
+              },
+              padding: "5px 5px",
+            }}
+            fullWidth
+          >
+            Регистрация
+          </Button>
+        </NavLink>
       )}
     </Box>
   );
