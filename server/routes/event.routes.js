@@ -1,10 +1,11 @@
 const eventRoutes = require("express").Router();
-const { Event } = require("../db/models");
+const { event } = require("../db/models");
 
 eventRoutes.get("/", async (req, res) => {
+  console.log("true connect");
   try {
     console.log("WORK");
-    const allEvent = await Event.findAll();
+    const allEvent = await event.findAll();
     console.log("allEvent: ", allEvent);
     res.status(200).json(allEvent);
   } catch (error) {

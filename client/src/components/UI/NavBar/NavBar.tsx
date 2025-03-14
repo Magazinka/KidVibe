@@ -5,46 +5,6 @@ import { useLogoutUserMutation } from "../../../redux/slice/api.slice";
 import { logout } from "../../../redux/slice/auth.slice";
 import { Box, Button, Link, Typography } from "@mui/material";
 
-// function NavBar() {
-//   const dispatch = useDispatch<AppDispatch>();
-//   const [logoutUser] = useLogoutUserMutation();
-//   const { user } = useSelector((state: RootState) => state.authSlicer);
-//   const handleLogout = async () => {
-//     try {
-//       await logoutUser();
-//       dispatch(logout());
-//     } catch (error) {
-//       console.error("Logout failed", error);
-//     }
-//   };
-//   return (
-//     <>
-//       <p>{user?.login && "parent"}</p>
-//       <NavLink to="/">Главная</NavLink>
-//       <NavLink to="/event">Мероприятия</NavLink>
-//       <NavLink to="/link">Полезные ссылки</NavLink>
-//       <NavLink to="/map">Карты</NavLink>
-//       <NavLink to="/gadget">Гаджеты</NavLink>
-//       <NavLink to="/profile">Профиль</NavLink>
-//       {user == undefined ? (
-//         <NavLink to="/auth">Регистрация</NavLink>
-//       ) : (
-//         <button onClick={handleLogout}>logout</button>
-//       )}
-//     </>
-//   );
-// }
-
-// export default NavBar;
-
-// import React from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { AppDispatch } from "../store";
-// import { useLogoutUserMutation } from "../services/api";
-// import { logout } from "../store/authSlice";
-// import { Box, Button, Typography } from "@mui/material";
-// import { NavLink } from "react-router-dom";
-
 function NavBar() {
   const dispatch = useDispatch<AppDispatch>();
   const [logoutUser] = useLogoutUserMutation();
@@ -67,11 +27,10 @@ function NavBar() {
         display: "flex",
         marginBottom: "10px",
         padding: "10px 30px",
-        // flexDirection: "column",
         gap: 2,
         boxShadow: 3,
         borderRadius: 2,
-        backgroundColor: "#F5F5F5", // Цвет фона страницы
+        backgroundColor: "#F5F5F5", 
       }}
     >
       {user?.login && (
@@ -80,18 +39,17 @@ function NavBar() {
         </Typography>
       )}
 
-      {/* Навигационные кнопки */}
       <Box sx={{ display: "flex", gap: 1 }}>
         <NavLink to="/" style={{ textDecoration: "none" }}>
           <Button
             variant="contained"
             color="primary"
             sx={{
-              backgroundColor: "#8174A0", // Цвет кнопки
-              color: "#CFEBC7", // Цвет текста на кнопке
-              fontFamily: "'Shantell Sans', sans-serif", // Шрифт для кнопки
+              backgroundColor: "#8174A0", 
+              color: "#CFEBC7", 
+              fontFamily: "'Shantell Sans', sans-serif", 
               "&:hover": {
-                backgroundColor: "#441752", // Цвет кнопки при наведении
+                backgroundColor: "#441752", 
               },
             }}
             fullWidth
@@ -104,11 +62,11 @@ function NavBar() {
             variant="contained"
             color="primary"
             sx={{
-              backgroundColor: "#8174A0", // Цвет кнопки
-              color: "#CFEBC7", // Цвет текста на кнопке
-              fontFamily: "'Shantell Sans', sans-serif", // Шрифт для кнопки
+              backgroundColor: "#8174A0", 
+              color: "#CFEBC7",
+              fontFamily: "'Shantell Sans', sans-serif", 
               "&:hover": {
-                backgroundColor: "#441752", // Цвет кнопки при наведении
+                backgroundColor: "#441752", 
               },
             }}
             fullWidth
@@ -121,11 +79,11 @@ function NavBar() {
             variant="contained"
             color="primary"
             sx={{
-              backgroundColor: "#8174A0", // Цвет кнопки
-              color: "#CFEBC7", // Цвет текста на кнопке
-              fontFamily: "'Shantell Sans', sans-serif", // Шрифт для кнопки
+              backgroundColor: "#8174A0", 
+              color: "#CFEBC7", 
+              fontFamily: "'Shantell Sans', sans-serif", 
               "&:hover": {
-                backgroundColor: "#441752", // Цвет кнопки при наведении
+                backgroundColor: "#441752", 
               },
             }}
             fullWidth
@@ -138,11 +96,11 @@ function NavBar() {
             variant="contained"
             color="primary"
             sx={{
-              backgroundColor: "#8174A0", // Цвет кнопки
-              color: "#CFEBC7", // Цвет текста на кнопке
-              fontFamily: "'Shantell Sans', sans-serif", // Шрифт для кнопки
+              backgroundColor: "#8174A0", 
+              color: "#CFEBC7", 
+              fontFamily: "'Shantell Sans', sans-serif",
               "&:hover": {
-                backgroundColor: "#441752", // Цвет кнопки при наведении
+                backgroundColor: "#441752", 
               },
             }}
             fullWidth
@@ -155,11 +113,11 @@ function NavBar() {
             variant="contained"
             color="primary"
             sx={{
-              backgroundColor: "#8174A0", // Цвет кнопки
-              color: "#CFEBC7", // Цвет текста на кнопке
-              fontFamily: "'Shantell Sans', sans-serif", // Шрифт для кнопки
+              backgroundColor: "#8174A0", 
+              color: "#CFEBC7", 
+              fontFamily: "'Shantell Sans', sans-serif", 
               "&:hover": {
-                backgroundColor: "#441752", // Цвет кнопки при наведении
+                backgroundColor: "#441752", 
               },
             }}
             fullWidth
@@ -172,11 +130,11 @@ function NavBar() {
             variant="contained"
             color="primary"
             sx={{
-              backgroundColor: "#8174A0", // Цвет кнопки
-              color: "#CFEBC7", // Цвет текста на кнопке
-              fontFamily: "'Shantell Sans', sans-serif", // Шрифт для кнопки
+              backgroundColor: "#8174A0", 
+              color: "#CFEBC7", 
+              fontFamily: "'Shantell Sans', sans-serif", 
               "&:hover": {
-                backgroundColor: "#441752", // Цвет кнопки при наведении
+                backgroundColor: "#441752",
               },
             }}
             fullWidth
@@ -186,14 +144,14 @@ function NavBar() {
         </NavLink>
       </Box>
 
-      {/* Кнопка регистрации или выхода */}
+
       {user !== null ? (
          <Button
          variant="outlined"
          color="error"
          sx={{
            padding: "1px 10px",
-           fontFamily: "'Shantell Sans', sans-serif", // Шрифт для кнопки
+           fontFamily: "'Shantell Sans', sans-serif", 
          }}
          fullWidth
          onClick={handleLogout}
@@ -206,11 +164,11 @@ function NavBar() {
           variant="contained"
           color="primary"
           sx={{
-            backgroundColor: "#8174A0", // Цвет кнопки
-            color: "#CFEBC7", // Цвет текста на кнопке
-            fontFamily: "'Shantell Sans', sans-serif", // Шрифт для кнопки
+            backgroundColor: "#8174A0", 
+            color: "#CFEBC7",
+            fontFamily: "'Shantell Sans', sans-serif", 
             "&:hover": {
-              backgroundColor: "#441752", // Цвет кнопки при наведении
+              backgroundColor: "#441752", 
             },
             padding: "5px 5px",
           }}

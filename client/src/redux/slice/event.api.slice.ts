@@ -1,36 +1,42 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface ApiResponse {
-  img_url: string;
-  user_id: number;
-  title: string;
-  description: string;
+  id: number;
+  name: string;
   date: string;
+  description: string;
+  img_url: string;
+  location: string;
+  price: number;
 }
 
 export const apiEvent = createApi({
-  reducerPath: 'eventApi',
+  reducerPath: "eventApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3001/event/',
-    credentials: 'include',
+    baseUrl: `${import.meta.env.VITE_URL}/event/`,
+    credentials: "include",
   }),
-  tagTypes: ['Event'],
+  tagTypes: ["Event"],
   endpoints: (builder) => ({
-    createEvent: builder.mutation<ApiResponse, { 
-      img_url: string;
-      user_id: number;
-      title: string;
-      description: string;
-      date: string;
-    }>({
+    createEvent: builder.mutation<
+      ApiResponse,
+      {
+        id: number;
+        name: string;
+        date: string;
+        description: string;
+        img_url: string;
+        location: string;
+        price: number;
+      }
+    >({
       query: (newEvent) => ({
-        url: '/event',
-        method: 'POST',
+        url: "/event",
+        method: "POST",
         body: newEvent,
       }),
     }),
   }),
 });
-
 
 export const { useCreateEventMutation } = apiEvent;

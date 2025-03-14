@@ -5,7 +5,7 @@ import { useCreateEventMutation } from "../../../redux/slice/event.api.slice";
 
 
 function AddCard(){
-    const dispatch = useDispatch<AppDispatch>()
+    // const dispatch = useDispatch<AppDispatch>()
     //   const [loginUser, { isLoading, isError, error }] = useCreateEventMutation();
     //   const {
     //     register,

@@ -8,7 +8,7 @@ authRoutes.post("/signup", async (req, res) => {
  
   try {
     const { login, email, password } = req.body;
-    console.log(' login, email, password : ',  login, email, password );
+    // console.log(' login, email, password : ',  login, email, password );
     if (!login || !email || !password) {
       return res.status(400).end();
     }
@@ -20,14 +20,14 @@ authRoutes.post("/signup", async (req, res) => {
     if (!created) {
       return res.status(400).end();
     }
-    console.log("NEWUSER: ", newUser);
+    // console.log("NEWUSER: ", newUser);
     const wser = newUser.get();
     delete wser.password;
     delete wser.updatedAt;
     delete wser.createdAt;
 
     const { accessToken, refreshToken } = generateToken({ wser });
-    console.log("acc: ", accessToken);
+    // console.log("acc: ", accessToken);
 
     return res
       .cookie("refreshToken", refreshToken, {
@@ -43,7 +43,7 @@ authRoutes.post("/signup", async (req, res) => {
 
 authRoutes.post("/login", async (req, res) => {
   try {
-    console.log("REQ.BODY: ", req.body);
+    // console.log("REQ.BODY: ", req.body);
     const { email, password } = req.body;
     if (!email || !password) {
       return res.status(400).end();
@@ -65,8 +65,8 @@ authRoutes.post("/login", async (req, res) => {
     delete foundUser.createdAt;
 
     const { accessToken, refreshToken } = generateToken({ user });
-    console.log("accessToken: ", accessToken);
-    console.log("REFRESH ", refreshToken);
+    // console.log("accessToken: ", accessToken);
+    // console.log("REFRESH ", refreshToken);
     res
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
