@@ -28,7 +28,7 @@ function Signup() {
   });
 
   const dispatch = useDispatch<AppDispatch>();
-  const { user } = useSelector((state: RootState) => state.authSlicer);
+  // const { user } = useSelector((state: RootState) => state.authSlicer);
 
   const onSubmit: SubmitHandler<User> = async (data) => {
     try {

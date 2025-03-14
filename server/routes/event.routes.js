@@ -1,4 +1,4 @@
-const eventRoutes = require("exspress").Router();
+const eventRoutes = require("express").Router();
 const { Event } = require("../db/models");
 
 eventRoutes.get("/event", async (req, res) => {
