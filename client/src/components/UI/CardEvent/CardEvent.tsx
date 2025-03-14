@@ -12,6 +12,7 @@ import { AppDispatch, RootState } from "../../../redux/store";
 
 function CardEvent() {
     const {event} = useSelector((state:RootState) => state.eventSlicer)
+    console.log('event: ', event);
   return (
     <>
       <Card

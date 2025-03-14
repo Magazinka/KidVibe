@@ -15,6 +15,9 @@ module.exports = {
       location: {
         type: Sequelize.STRING
       },
+      date: {
+        type: Sequelize.STRING
+      },
       price: {
         type: Sequelize.INTEGER
       },

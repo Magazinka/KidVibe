@@ -1,8 +1,9 @@
 const eventRoutes = require("express").Router();
 const { Event } = require("../db/models");
 
-eventRoutes.get("/event", async (req, res) => {
+eventRoutes.get("/", async (req, res) => {
   try {
+    console.log("WORK");
     const allEvent = await Event.findAll();
     console.log("allEvent: ", allEvent);
     res.status(200).json(allEvent);
@@ -12,5 +13,4 @@ eventRoutes.get("/event", async (req, res) => {
   }
 });
 
-
-module.exports = eventRoutes
+module.exports = eventRoutes;
