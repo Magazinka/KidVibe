@@ -33,7 +33,7 @@ function NavBar() {
         backgroundColor: "#F5F5F5",
       }}
     >
-      {user?.login && (
+      {user ? user.login :(
         <Typography variant="h6" sx={{ textAlign: "center" }}>
           Parent
         </Typography>

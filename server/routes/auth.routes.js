@@ -5,7 +5,6 @@ const generateToken = require("../shared/generate.token");
 const jwtConfig = require("../shared/jwt.config");
 
 authRoutes.post("/signup", async (req, res) => {
- 
   try {
     const { login, email, password } = req.body;
     // console.log(' login, email, password : ',  login, email, password );
@@ -20,13 +19,13 @@ authRoutes.post("/signup", async (req, res) => {
     if (!created) {
       return res.status(400).end();
     }
-    // console.log("NEWUSER: ", newUser);
-    const wser = newUser.get();
-    delete wser.password;
-    delete wser.updatedAt;
-    delete wser.createdAt;
-
-    const { accessToken, refreshToken } = generateToken({ wser });
+    console.log("NEWUSER: ", newUser);
+    const user = newUser.get();
+    delete user.password;
+    delete user.updatedAt;
+    delete user.createdAt;
+    console.log("WUSER: ", user);
+    const { accessToken, refreshToken } = generateToken({ user });
     // console.log("acc: ", accessToken);
 
     return res
@@ -34,7 +33,7 @@ authRoutes.post("/signup", async (req, res) => {
         httpOnly: true,
         maxAge: jwtConfig.refresh.expiresIn,
       })
-      .json({ accessToken, wser });
+      .json({ accessToken, user });
   } catch (error) {
     console.log("error sign up: ", error);
     return res.status(500).json({ message: "server err" });

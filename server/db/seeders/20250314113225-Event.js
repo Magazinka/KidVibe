@@ -11,6 +11,7 @@ module.exports = {
         location: 'Севастополь, Россия',
         date: '2025-05-20',
         price: '500', 
+        user_id: 7,
         img_url: '1',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -21,6 +22,7 @@ module.exports = {
         location: 'Севастополь, Россия',
         date: '2025-06-10',
         price: '300',
+        user_id: 6,
         img_url: '1',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -31,6 +33,7 @@ module.exports = {
         location: 'Севастополь, Россия',
         date: '2025-07-01',
         price: '800',
+        user_id: 5,
         img_url: '1',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -41,6 +44,7 @@ module.exports = {
         location: 'Севастополь, Россия',
         date: '2025-04-15',
         price: '400',
+        user_id: 5,
         img_url: '1',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -51,6 +55,7 @@ module.exports = {
         location: 'Севастополь, Россия',
         date: '2025-09-10',
         price: '200',
+        user_id: 4,
         img_url: '1',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -61,6 +66,7 @@ module.exports = {
         location: 'Севастополь, Россия',
         date: '2025-08-05',
         price: '250',
+        user_id: 3,
         img_url: '1',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -72,6 +78,7 @@ module.exports = {
         date: '2025-05-25',
         price: '100',
         img_url: '1',
+        user_id: 12,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -81,6 +88,7 @@ module.exports = {
         location: 'Севастополь, Россия',
         date: '2025-06-25',
         price: '600',
+        user_id: 11,
         img_url: '1',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -91,6 +99,7 @@ module.exports = {
         location: 'Севастополь, Россия',
         date: '2025-07-18',
         price: '50',
+        user_id: 2,
         img_url: '1',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -101,6 +110,7 @@ module.exports = {
         location: 'Севастополь, Россия',
         date: '2025-10-12',
         price: '700',
+        user_id: 1,
         img_url: '1',
         createdAt: new Date(),
         updatedAt: new Date()

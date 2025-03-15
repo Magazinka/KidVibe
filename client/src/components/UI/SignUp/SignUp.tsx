@@ -11,11 +11,16 @@ import { TextField, Button, CircularProgress, Box } from "@mui/material";
 
 const shantellSans = "'Shantell Sans', sans-serif";
 
-const schema = yup.object({
-  login: yup.string().required("Login is required"),
-  email: yup.string().email("Email is not valid").required("Email is required"),
-  password: yup.string().required("Password is required"),
-}).required();
+const schema = yup
+  .object({
+    login: yup.string().required("Login is required"),
+    email: yup
+      .string()
+      .email("Email is not valid")
+      .required("Email is required"),
+    password: yup.string().required("Password is required"),
+  })
+  .required();
 
 function Signup() {
   const [createUser, { isLoading, isError, error }] = useCreateUserMutation();
@@ -28,7 +33,7 @@ function Signup() {
   });
 
   const dispatch = useDispatch<AppDispatch>();
-  // const { user } = useSelector((state: RootState) => state.authSlicer);
+  const { user } = useSelector((state: RootState) => state.authSlicer);
 
   const onSubmit: SubmitHandler<User> = async (data) => {
     try {
@@ -43,6 +48,7 @@ function Signup() {
       console.log("Error during signup: ", error);
     }
   };
+  console.log("USERDATA: ", user);
 
   return (
     <Box

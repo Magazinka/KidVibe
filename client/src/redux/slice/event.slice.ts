@@ -20,11 +20,12 @@ export const getEvent = createAsyncThunk<Event[], void>(
 );
 
 interface Event {
-  id: number;
+  id?: number;
   name: string;
   date: string;
   description: string;
-  img_url: string;
+  // file: FileList;
+  user_id: string;
   location: string;
   price: number;
 }
@@ -59,6 +60,7 @@ const eventSlice = createSlice({
       })
       .addCase(getEvent.fulfilled, (state, action: PayloadAction<Event[]>) => {
         state.event = action.payload;
+        // console.log("State.event: ", state.event);
         state.isLoading = false;
         state.error = null;
       })

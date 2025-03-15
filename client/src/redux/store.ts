@@ -12,8 +12,10 @@ export const store = configureStore({
     eventSlicer: eventReducer,
   },
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(api.middleware);
+    return getDefaultMiddleware().concat(api.middleware).concat(apiEvent.middleware);
+
   },
+
 });
 
 export type RootState = ReturnType<typeof store.getState>;
