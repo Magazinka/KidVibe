@@ -12,40 +12,42 @@ import ProfilePage from "./components/pages/ProfilePage/ProfilePage";
 import NavBar from "./components/UI/NavBar/NavBar";
 import { loginUser } from "./redux/slice/auth.slice";
 import $api from "./shared/axios.instance";
+import OneCard from "./components/UI/OneCard/OneCard";
 
 function App() {
-	const dispatch = useDispatch();
-	useEffect(() => {
-		$api("/refresh")
-			.then(response => {
-				const { accessToken, user } = response.data;
-				dispatch(loginUser({ user, accessToken }));
-			})
-			.catch(error => {
-				console.log("Error refreshing token: ", error);
-			});
-	}, [dispatch]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    $api("/refresh")
+      .then((response) => {
+        const { accessToken, user } = response.data;
+        dispatch(loginUser({ user, accessToken }));
+      })
+      .catch((error) => {
+        console.log("Error refreshing token: ", error);
+      });
+  }, [dispatch]);
 
-	console.log(import.meta.env.VITE_URL);
-	return (
-		<BrowserRouter>
-			<NavBar />
-			<Routes>
-				<Route>
-					<Route path='/' element={<MainPage />} />
-					<Route path='/event' element={<EventPage />} />
-					<Route path='/link' element={<LinkPage />} />
-					<Route path='/map' element={<MapPage />} />
-					<Route path='/gadget' element={<GadgetPage />} />
-					<Route path='/profile' element={<ProfilePage />} />
-					<Route path='/auth' element={<AuthPage />} />
-				</Route>
-			</Routes>
-			{/* <Routes>
+  console.log(import.meta.env.VITE_URL);
+  return (
+    <BrowserRouter>
+      <NavBar />
+      <Routes>
+        <Route>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/event" element={<EventPage />} />
+          <Route path="/event/:id" element={<OneCard />} />
+          <Route path="/link" element={<LinkPage />} />
+          <Route path="/map" element={<MapPage />} />
+          <Route path="/gadget" element={<GadgetPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/auth" element={<AuthPage />} />
+        </Route>
+      </Routes>
+      {/* <Routes>
         <Route path="/" element={<MainPage />} />
       </Routes> */}
-		</BrowserRouter>
-	);
+    </BrowserRouter>
+  );
 }
 
 export default App;

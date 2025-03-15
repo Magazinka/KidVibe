@@ -22,6 +22,7 @@ interface User {
 }
 
 interface AuthState {
+    // id: any;
 	user: User | null;
 	isAuth: boolean;
 }
@@ -29,6 +30,7 @@ interface AuthState {
 const initialState: AuthState = {
 	user: null,
 	isAuth: false,
+	// id: undefined
 };
 
 const authSlice = createSlice({
@@ -37,7 +39,7 @@ const authSlice = createSlice({
 	reducers: {
 		userData: (state, action) => {
 			console.log("action: ", action.payload);
-			console.log("Login: ", action.payload.token);
+			console.log("Login: ", action.payload);
 			const { user, token } = action.payload;
 			console.log("token: ", token);
 			console.log("id authSlice: ", user);

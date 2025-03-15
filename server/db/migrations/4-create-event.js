@@ -22,9 +22,12 @@ module.exports = {
         type: Sequelize.STRING,
       },
       price: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       img_url: {
+        type: Sequelize.INTEGER,
+      },
+      user_id: {
         type: Sequelize.INTEGER,
       },
       createdAt: {
