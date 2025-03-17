@@ -59,7 +59,6 @@ eventRoutes.post("/", async (req, res) => {
   }
 });
 
-
 eventRoutes.delete("/", async (req, res) => {
   try {
     const { id } = req.body;
@@ -69,7 +68,7 @@ eventRoutes.delete("/", async (req, res) => {
     // console.log("card: ", card);
 
     if (!card) {
-      return res.status(404).json({ message: "Event not found" }); 
+      return res.status(404).json({ message: "Event not found" });
     }
 
     await event.destroy({ where: { id: Number(id) } });
@@ -78,6 +77,25 @@ eventRoutes.delete("/", async (req, res) => {
   } catch (error) {
     console.log("error: ", error);
     res.status(400).json({ message: "Error delet event" });
+  }
+});
+
+eventRoutes.put("/:id", async (req, res) => {
+  try {
+    const { id, name, description, location, price } = req.body;
+
+    const newDate = await event.findByPk(Number(id));
+
+    const updateEvent = await newDate.update({
+      name,
+      description,
+      location,
+      price,
+    });
+    res.status(200).json(updateEvent);
+  } catch (error) {
+    console.log("error: ", error);
+    res.status(400).json({ message: "Event update error" });
   }
 });
 
