@@ -57,6 +57,9 @@ const eventSlice = createSlice({
       state.isLoading = false;
       state.error = null;
     },
+    changeEvent: (state, action) => {
+      state.event = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
