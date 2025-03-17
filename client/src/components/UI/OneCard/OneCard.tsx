@@ -7,24 +7,48 @@ import {
 } from "@mui/material";
 import $api from "../../../shared/axios.instance";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 function OneCard() {
   const { id } = useParams();
-  const [event, setEvent] = useState([]);
-
+  // console.log("cardId: ", id);
+  const navigate = useNavigate();
+  const cardId = Number(id);
+  const { user } = useSelector((state: RootState) => state.authSlicer);
+  const userId = user?.id;
+  const [event, setEvent] = useState<{
+    id: number;
+    name: string;
+    description: string;
+    location: string;
+    date: string;
+    price: string;
+    img_url: string;
+    user_id: number;
+  }>({});
+  console.log("event create: ", event);
   useEffect(() => {
     $api.get(`event/${id}`).then((response) => {
-      //   console.log("Response oneCard: ", response.data);
       setEvent(response.data);
     });
   }, []);
-
+  function deleteHandler(id: number) {
+    try {
+      $api.delete("/event", { data: { id: id } }).then((response) => {
+        console.log("Delete: ", response.data);
+        navigate("/event");
+      });
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  }
   //   console.log("EVENT: ", event.name);
   return (
     <Card
       sx={{
-        width: 850,
+        maxWidth: 850,
         height: "auto",
         backgroundColor: "#E3F2FD",
         marginBottom: 2,
@@ -33,7 +57,7 @@ function OneCard() {
         borderRadius: 2,
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "100vh",
+        minHeight: "60vh",
       }}
     >
       <CardMedia
@@ -49,7 +73,7 @@ function OneCard() {
           component="div"
           sx={{ color: "#441752", marginBottom: 1 }}
         >
-          {event.name}
+          {event.name},{event.user_id}
         </Typography>
         <Typography
           variant="body2"
@@ -82,35 +106,58 @@ function OneCard() {
           </Typography>
         </div>
       </CardContent>
-      <div style={{display: "flex"}}>
-      <Button
-        variant="contained"
-        sx={{
-          backgroundColor: "#441752",
-          color: "#CFEBC7",
-          "&:hover": {
-            backgroundColor: "#8174A0",
-          },
-          margin: "10px 20px",
-          alignSelf: "flex-end",
-        }}
-      >
-        Вернуться
-      </Button>
-      <Button
-        variant="contained"
-        sx={{
-          backgroundColor: "#441752",
-          color: "#CFEBC7",
-          "&:hover": {
-            backgroundColor: "#8174A0",
-          },
-          margin: "10px 20px",
-          alignSelf: "flex-end",
-        }}
-      >
-        Записаться
-      </Button>
+      <div style={{ display: "flex" }}>
+        <Link to={`/event`} style={{ textDecoration: "none" }}>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#441752",
+              color: "#CFEBC7",
+              "&:hover": {
+                backgroundColor: "#8174A0",
+              },
+              margin: "10px 20px",
+              alignSelf: "flex-end",
+            }}
+          >
+            {event.user_id}
+            Вернуться
+          </Button>
+        </Link>
+        {Number(userId) === event.user_id ? (
+          <Button
+            onClick={() => {
+              deleteHandler(event.id);
+            }}
+            variant="contained"
+            sx={{
+              backgroundColor: "#441752",
+              color: "#CFEBC7",
+              "&:hover": {
+                backgroundColor: "#8174A0",
+              },
+              margin: "10px 20px",
+              alignSelf: "flex-end",
+            }}
+          >
+            Удалить
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#441752",
+              color: "#CFEBC7",
+              "&:hover": {
+                backgroundColor: "#8174A0",
+              },
+              margin: "10px 20px",
+              alignSelf: "flex-end",
+            }}
+          >
+            Записаться
+          </Button>
+        )}
       </div>
     </Card>
   );
