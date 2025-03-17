@@ -33,12 +33,6 @@ function NavBar() {
         backgroundColor: "#F5F5F5",
       }}
     >
-      {user ? user.login :(
-        <Typography variant="h6" sx={{ textAlign: "center" }}>
-          Parent
-        </Typography>
-      )}
-
       <Box sx={{ display: "flex", gap: 1 }}>
         <NavLink to="/" style={{ textDecoration: "none" }}>
           <Button

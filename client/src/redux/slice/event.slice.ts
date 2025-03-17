@@ -18,16 +18,22 @@ export const getEvent = createAsyncThunk<Event[], void>(
     }
   }
 );
-
+// interface User {
+// 	id: number;
+// 	login: string;
+// 	email: string;
+// 	token: string;
+// }
 interface Event {
   id?: number;
   name: string;
   date: string;
   description: string;
   // file: FileList;
-  user_id: string;
+  user_id: number;
   location: string;
   price: number;
+  // user: User[];
 }
 
 interface IState {
@@ -51,6 +57,9 @@ const eventSlice = createSlice({
       state.isLoading = false;
       state.error = null;
     },
+    changeEvent: (state, action) => {
+      state.event = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -60,7 +69,7 @@ const eventSlice = createSlice({
       })
       .addCase(getEvent.fulfilled, (state, action: PayloadAction<Event[]>) => {
         state.event = action.payload;
-        // console.log("State.event: ", state.event);
+        console.log("State.event: ", state.event);
         state.isLoading = false;
         state.error = null;
       })

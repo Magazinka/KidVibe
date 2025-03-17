@@ -1,30 +1,15 @@
 const eventRoutes = require("express").Router();
+const { where } = require("sequelize");
 const { event, User } = require("../db/models");
 
 eventRoutes.get("/", async (req, res) => {
   try {
     console.log("WORK");
     const allEvent = await event.findAll();
-    const eventWhithUser = await Promise.all(
-      allEvent.map(async (item) => {
-        const user = await User.findByPk(item.user_id);
-        const userForEvent = user.get()
-        delete userForEvent.createdAt;
-        delete userForEvent.updatedAt;
-        delete userForEvent.password;
-        
-        console.log("user: ", user);
 
-        return {
-          ...item.toJSON(),
-          user: user ? user.toJSON() : null,
-        };
-      })
-    );
-    // console.log("eventWhithUser: ", eventWhithUser);
-
+    const user = await User.findByPk;
     // console.log("allEvent: ", allEvent);
-    res.status(200).json(eventWhithUser);
+    res.status(200).json(allEvent);
   } catch (error) {
     console.log("error event get: ", error);
     res.status(400).json({ message: error });
@@ -51,8 +36,8 @@ eventRoutes.get("/:id", async (req, res) => {
 eventRoutes.post("/", async (req, res) => {
   console.log("REQBODY CREATE: ", req.body);
   try {
-    const { name, description, location, price, date, userId } = req.body;
-    if (!name || !description || !location || !price || !date || !userId) {
+    const { name, description, location, price, date, user_id } = req.body;
+    if (!name || !description || !location || !price || !date || !user_id) {
       return res.status(400).json({ message: "Error createEvent" });
     }
     const createEvent = await event.create({
@@ -61,7 +46,7 @@ eventRoutes.post("/", async (req, res) => {
       location,
       price,
       date,
-      userId,
+      user_id,
     });
     const card = createEvent.get();
     delete card.createdAt;
@@ -71,6 +56,46 @@ eventRoutes.post("/", async (req, res) => {
   } catch (error) {
     console.log("error post create: ", error);
     res.status(400).json({ message: "err create event server" });
+  }
+});
+
+eventRoutes.delete("/", async (req, res) => {
+  try {
+    const { id } = req.body;
+    // console.log("id: ", id);
+
+    const card = await event.findByPk(Number(id));
+    // console.log("card: ", card);
+
+    if (!card) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    await event.destroy({ where: { id: Number(id) } });
+
+    res.status(200).json({ message: "Event delet success" });
+  } catch (error) {
+    console.log("error: ", error);
+    res.status(400).json({ message: "Error delet event" });
+  }
+});
+
+eventRoutes.put("/:id", async (req, res) => {
+  try {
+    const { id, name, description, location, price } = req.body;
+
+    const newDate = await event.findByPk(Number(id));
+
+    const updateEvent = await newDate.update({
+      name,
+      description,
+      location,
+      price,
+    });
+    res.status(200).json(updateEvent);
+  } catch (error) {
+    console.log("error: ", error);
+    res.status(400).json({ message: "Event update error" });
   }
 });
 

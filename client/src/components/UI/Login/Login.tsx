@@ -38,17 +38,7 @@ function Login() {
 
   return (
     <Box
-      sx={{
-        maxWidth: 400,
-        margin: "auto",
-        padding: 3,
-        display: "flex",
-        flexDirection: "column",
-        gap: 2,
-        boxShadow: 3,
-        borderRadius: 2,
-        backgroundColor: "#F5F5F5", // Цвет фона страницы
-      }}
+
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
