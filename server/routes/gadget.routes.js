@@ -6,7 +6,7 @@ gadgetRoutes.get("/", async (req,res) => {
         const allGadget = await gadget.findAll()
         res.status(200).json(allGadget)
     }catch(err){
-        res.status(400).json({ message: error });
+        res.status(400).json({ message: err });
     }
 })
 
