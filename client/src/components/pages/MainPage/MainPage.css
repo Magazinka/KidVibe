@@ -1,0 +1,63 @@
+/* CSS-переменные для цветов и шрифтов */
+:root {
+    --primary-bg-color: #8174a0;
+    --primary-text-color: #cfebc7;
+    --hover-bg-color: #441752;
+    --font-family: 'Shantell Sans', sans-serif;
+  }
+  
+
+  .container {
+    padding: 20px;
+  }
+  
+  
+  .section-title {
+    margin-top: 32px;
+    margin-bottom: 16px;
+    font-family: var(--font-family);
+    color: var(--primary-text-color);
+    background-color: var(--primary-bg-color);
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  
+  .horizontal-list {
+    display: flex;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 16px;
+  }
+  
+  
+  .card {
+    min-width: 250px;
+    margin: 0 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--primary-bg-color);
+    color: var(--primary-text-color);
+    font-family: var(--font-family);
+  }
+  
+  .card:hover {
+    background-color: var(--hover-bg-color);
+  }
+  
+  .card-media {
+    height: 140px;
+    object-fit: cover;
+  }
+  
+  .card-content {
+    padding: 16px;
+  }
+  
+  
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
