@@ -62,7 +62,7 @@ const linkSlice = createSlice({
             })
             
             .addCase(getLink.fulfilled, (state, action: PayloadAction<Link[]>) => {
-                state.link = action.payload;
+                state.link = action.payload;               
                 state.isLoading = false;
                 state.error = null;
             })

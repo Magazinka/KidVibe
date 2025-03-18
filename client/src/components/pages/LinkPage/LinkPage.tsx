@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../../../redux/store';
 import { getLink } from '../../../redux/slice/link.slice'; // Импортируем Thunk для получения ссылок
-import { Card, CardContent, Typography, CircularProgress, Container, Box } from '@mui/material';
-import Grid2 from '@mui/material/Grid2';
+import { Typography, CircularProgress, Container, Box, List, ListItem, ListItemText } from '@mui/material';
 import './LinkPage.css'; // Стили для страницы ссылок
 
 const LinkPage: React.FC = () => {
@@ -12,6 +11,7 @@ const LinkPage: React.FC = () => {
   // Получаем данные из Redux store
   const links = useSelector((state: RootState) => state.link.link);
   const isLoadingLinks = useSelector((state: RootState) => state.link.isLoading);
+  console.log("LINKS: ", links);
 
   // Загружаем данные при монтировании компонента
   useEffect(() => {
@@ -35,24 +35,22 @@ const LinkPage: React.FC = () => {
           Ссылки
         </Typography>
       </Box>
-      <Grid2 container spacing={3}>
+
+      {/* Вертикальный список ссылок */}
+      <List className="link-list">
         {links.map((link) => (
-          <Grid2 key={link.id} xs={12} sm={6} md={4} lg={3}>
-            <Card className="card">
-              <CardContent className="card-content">
-                <Typography gutterBottom variant="h5" component="div">
-                  {link.title}
-                </Typography>
-                <Typography variant="body2">
-                  <a href={link.url} target="_blank" rel="noopener noreferrer">
-                    {link.url}
-                  </a>
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid2>
+          <ListItem
+            key={link.id}
+            component="a"
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link-item"
+          >
+            <ListItemText primary={link.name} />
+          </ListItem>
         ))}
-      </Grid2>
+      </List>
     </Container>
   );
 };
