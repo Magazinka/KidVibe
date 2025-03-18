@@ -39,12 +39,12 @@ const MainPage: React.FC = () => {
 
   
   const handleAllEventsClick = () => {
-    navigate('/events'); 
+    navigate('/event'); 
   };
 
  
   const handleAllGadgetsClick = () => {
-    navigate('/gadgets'); 
+    navigate('/gadget'); 
   };
 
   return (

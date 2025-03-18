@@ -1,0 +1,44 @@
+.container {
+    padding: 20px;
+  }
+  
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .section-title {
+    font-family: 'Shantell Sans', sans-serif;
+    color: #8174A0;
+  }
+  
+  .card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-content {
+    flex-grow: 1;
+    padding: 16px;
+  }
+  
+  .card-content a {
+    color: #8174A0;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .card-content a:hover {
+    text-decoration: underline;
+  }
