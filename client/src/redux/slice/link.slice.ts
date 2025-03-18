@@ -23,7 +23,7 @@ export const getLink = createAsyncThunk<Link[], void>(
 
 interface Link {
     id: number;
-    title: string;
+    name: string;
     url: string;
 }
 
