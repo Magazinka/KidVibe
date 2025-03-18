@@ -13,6 +13,7 @@ module.exports = {
         price: '500', 
         user_id: 7,
         img_url: '1',
+        group: 'Технологии',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -24,6 +25,7 @@ module.exports = {
         price: '300',
         user_id: 6,
         img_url: '1',
+        group: 'Искусство',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -35,6 +37,7 @@ module.exports = {
         price: '800',
         user_id: 5,
         img_url: '1',
+        group: 'Музыка',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -46,6 +49,7 @@ module.exports = {
         price: '400',
         user_id: 5,
         img_url: '1',
+        group: 'Бизнес',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -57,6 +61,7 @@ module.exports = {
         price: '200',
         user_id: 4,
         img_url: '1',
+        group: 'Технологии',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -68,6 +73,7 @@ module.exports = {
         price: '250',
         user_id: 3,
         img_url: '1',
+        group: 'Кулинария',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -79,6 +85,7 @@ module.exports = {
         price: '100',
         img_url: '1',
         user_id: 12,
+        group: 'Технологии',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -90,6 +97,7 @@ module.exports = {
         price: '600',
         user_id: 11,
         img_url: '1',
+        group: 'Искусство',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -101,6 +109,7 @@ module.exports = {
         price: '50',
         user_id: 2,
         img_url: '1',
+        group: 'Игры',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -112,6 +121,7 @@ module.exports = {
         price: '700',
         user_id: 1,
         img_url: '1',
+        group: 'Маркетинг',
         createdAt: new Date(),
         updatedAt: new Date()
       }
