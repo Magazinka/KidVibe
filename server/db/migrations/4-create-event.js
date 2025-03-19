@@ -30,6 +30,9 @@ module.exports = {
       user_id: {
         type: Sequelize.INTEGER,
       },
+      group: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
