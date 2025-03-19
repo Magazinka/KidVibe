@@ -4,16 +4,15 @@ import { RootState, AppDispatch } from "../../../redux/store";
 import { getEvent } from "../../../redux/slice/event.slice";
 import { getGadget } from "../../../redux/slice/gadget.slice";
 import { Card, CardMedia, CardContent, Typography, CircularProgress, Container, Box, Button } from '@mui/material';
-import Grid2 from '@mui/material/Grid2';
+import Grid2 from '@mui/material/Grid2'; 
 import { useNavigate } from 'react-router-dom'; 
 import './MainPage.css'; 
-
 
 const MainPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Получаем данные из Redux store
+  
   const events = useSelector((state: RootState) => state.event.event);
   const gadgets = useSelector((state: RootState) => state.gadget.gadget);
   const isLoadingEvents = useSelector((state: RootState) => state.event.isLoading);
@@ -36,22 +35,27 @@ const MainPage: React.FC = () => {
   const lastFourGadgets = gadgets.slice(-4); 
 
   const handleAllEventsClick = () => {
-    navigate("/event");
+    navigate('/events'); 
   };
 
   const handleAllGadgetsClick = () => {
-    navigate("/gadgets");
+    navigate('/gadgets'); 
+  };
+
+  
+  const handleEventClick = (id: number) => {
+    navigate(`/event/${id}`); 
+  };
+
+  
+  const handleGadgetClick = (id: number) => {
+    navigate(`/gadget/${id}`);
   };
 
   return (
     <Container className="container">
-      {/* Тут секция мероприятий */}
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        mb={2}
-      >
+     
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
         <Typography variant="h4" className="section-title">
           Мероприятия
         </Typography>
@@ -67,27 +71,33 @@ const MainPage: React.FC = () => {
           Все мероприятия
         </Button>
       </Box>
-      <Grid2 container spacing={3}>
+      <Grid2 container spacing={6}> {/* Увеличиваем расстояние между карточками */}
         {lastFourEvents.map((event, index) => (
           <Grid2 key={event.id} xs={12} sm={6} md={4} lg={3}>
-            <Card className="card">
+            <Card
+              className="card-container"
+              onClick={() => handleEventClick(event.id)}
+            >
               
-              <img
-                src={`../../img/png${(index % 3) + 1}.png`} // Циклически используем png1, png2, png3
+              <Box
+                component="img"
+                src={`../../../img/animals/png${(index % 3) + 1}.png`}
                 alt="Зверушка"
                 className="corner-image top-left"
               />
               
-              <img
-                src={`../../img/png${((index + 1) % 3) + 1}.png`} // Другое изображение для другого угла
+              <Box
+                component="img"
+                src={`../../../img/animals/png${((index + 1) % 3) + 1}.png`}
                 alt="Зверушка"
                 className="corner-image bottom-right"
               />
               <CardMedia
                 component="img"
-                className="card-media"
+                height="140"
                 image={event.img_url}
                 alt={event.name}
+                className="card-media"
               />
               <CardContent className="card-content">
                 <Typography gutterBottom variant="h5" component="div">
@@ -104,14 +114,8 @@ const MainPage: React.FC = () => {
         ))}
       </Grid2>
 
-      {/* Тут секция гаджетов */}
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        mt={4}
-        mb={2}
-      >
+      
+      <Box display="flex" justifyContent="space-between" alignItems="center" mt={4} mb={2}>
         <Typography variant="h4" className="section-title">
           Гаджеты
         </Typography>
@@ -127,27 +131,33 @@ const MainPage: React.FC = () => {
           Все гаджеты
         </Button>
       </Box>
-      <Grid2 container spacing={3}>
+      <Grid2 container spacing={6}> 
         {lastFourGadgets.map((gadget, index) => (
           <Grid2 key={gadget.id} xs={12} sm={6} md={4} lg={3}>
-            <Card className="card">
+            <Card
+              className="card-container"
+              onClick={() => handleGadgetClick(gadget.id)}
+            >
               
-              <img
-                src={`../../../img/animals/png${(index % 3) + 1}.png`} // Циклически используем png1, png2, png3
+              <Box
+                component="img"
+                src={`../../../img/animals/png${(index % 3) + 1}.png`}
                 alt="Зверушка"
                 className="corner-image top-left"
               />
               
-              <img
-                src={`../../../img/animals/png${((index + 1) % 3) + 1}.png`} // Другое изображение для другого угла
+              <Box
+                component="img"
+                src={`../../../img/animals/png${((index + 1) % 3) + 1}.png`}
                 alt="Зверушка"
                 className="corner-image bottom-right"
               />
               <CardMedia
                 component="img"
-                className="card-media"
+                height="140"
                 image={gadget.img_url}
                 alt={gadget.name}
+                className="card-media"
               />
               <CardContent className="card-content">
                 <Typography gutterBottom variant="h5" component="div">
