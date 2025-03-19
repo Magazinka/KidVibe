@@ -133,7 +133,7 @@
 
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import $api from "../../shared/axios.instance";
-("axios");
+// ("axios");
 
 export const getGadget = createAsyncThunk<Gadget[], void>("gadget/getGadget", async () => {
 	try {

@@ -43,26 +43,23 @@ function AddGadget() {
 		try {
 			let imageUrl = null;
 
-			// Если изображение загружено
 			if (data.image) {
 				const formData = new FormData();
 				formData.append("file", data.image);
-				formData.append("upload_preset", "your_upload_preset"); // Укажите ваш upload preset
+				formData.append("upload_preset", "your_upload_preset");
 
-				// Загрузите изображение в Cloudinary
 				const cloudinaryResponse = await fetch(`https://api.cloudinary.com/v1_1/dlliagivo/image/upload`, {
 					method: "POST",
 					body: formData,
 				}).then(res => res.json());
 
-				imageUrl = cloudinaryResponse.secure_url; // Получите URL изображения
+				imageUrl = cloudinaryResponse.secure_url;
 			}
 
-			// Отправьте данные на сервер, включая URL изображения
 			const response = await createGadget({
 				...data,
 				user_id: user_id,
-				image: imageUrl, // Добавьте URL изображения в данные
+				image: imageUrl,
 			}).unwrap();
 
 			console.log("Gadget created successfully:", response);
