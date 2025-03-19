@@ -3,19 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../../redux/store";
 import { getEvent } from "../../../redux/slice/event.slice";
 import { getGadget } from "../../../redux/slice/gadget.slice";
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  CircularProgress,
-  Container,
-  Box,
-  Button,
-} from "@mui/material";
-import Grid2 from "@mui/material/Grid2";
-import { useNavigate } from "react-router-dom";
-import "./MainPage.css";
+import { Card, CardMedia, CardContent, Typography, CircularProgress, Container, Box, Button } from '@mui/material';
+import Grid2 from '@mui/material/Grid2';
+import { useNavigate } from 'react-router-dom'; 
+import './MainPage.css'; 
+
 
 const MainPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -24,12 +16,8 @@ const MainPage: React.FC = () => {
   // Получаем данные из Redux store
   const events = useSelector((state: RootState) => state.event.event);
   const gadgets = useSelector((state: RootState) => state.gadget.gadget);
-  const isLoadingEvents = useSelector(
-    (state: RootState) => state.event.isLoading
-  );
-  const isLoadingGadgets = useSelector(
-    (state: RootState) => state.gadget.isLoading
-  );
+  const isLoadingEvents = useSelector((state: RootState) => state.event.isLoading);
+  const isLoadingGadgets = useSelector((state: RootState) => state.gadget.isLoading);
 
   useEffect(() => {
     dispatch(getEvent());
@@ -44,8 +32,8 @@ const MainPage: React.FC = () => {
     );
   }
 
-  const lastFourEvents = events.slice(-4);
-  const lastFourGadgets = gadgets.slice(-4);
+  const lastFourEvents = events.slice(-4); 
+  const lastFourGadgets = gadgets.slice(-4); 
 
   const handleAllEventsClick = () => {
     navigate("/event");
@@ -80,9 +68,21 @@ const MainPage: React.FC = () => {
         </Button>
       </Box>
       <Grid2 container spacing={3}>
-        {lastFourEvents.map((event) => (
+        {lastFourEvents.map((event, index) => (
           <Grid2 key={event.id} xs={12} sm={6} md={4} lg={3}>
             <Card className="card">
+              
+              <img
+                src={`../../img/png${(index % 3) + 1}.png`} // Циклически используем png1, png2, png3
+                alt="Зверушка"
+                className="corner-image top-left"
+              />
+              
+              <img
+                src={`../../img/png${((index + 1) % 3) + 1}.png`} // Другое изображение для другого угла
+                alt="Зверушка"
+                className="corner-image bottom-right"
+              />
               <CardMedia
                 component="img"
                 className="card-media"
@@ -128,9 +128,21 @@ const MainPage: React.FC = () => {
         </Button>
       </Box>
       <Grid2 container spacing={3}>
-        {lastFourGadgets.map((gadget) => (
+        {lastFourGadgets.map((gadget, index) => (
           <Grid2 key={gadget.id} xs={12} sm={6} md={4} lg={3}>
             <Card className="card">
+              
+              <img
+                src={`../../../img/animals/png${(index % 3) + 1}.png`} // Циклически используем png1, png2, png3
+                alt="Зверушка"
+                className="corner-image top-left"
+              />
+              
+              <img
+                src={`../../../img/animals/png${((index + 1) % 3) + 1}.png`} // Другое изображение для другого угла
+                alt="Зверушка"
+                className="corner-image bottom-right"
+              />
               <CardMedia
                 component="img"
                 className="card-media"
