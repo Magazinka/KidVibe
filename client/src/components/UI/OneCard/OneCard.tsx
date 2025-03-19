@@ -30,6 +30,7 @@ function OneCard() {
   const navigate = useNavigate();
   const cardId = Number(id);
   const { user } = useSelector((state: RootState) => state.authSlicer);
+
   const userId = user?.id;
   const [isChange, setIsChange] = useState(false);
 
@@ -49,6 +50,7 @@ function OneCard() {
   useEffect(() => {
     $api.get(`event/${id}`).then((response) => {
       setEvent(response.data);
+      // console.log("event: ", event);
       reset(response.data);
     });
   }, [id, reset]);
@@ -59,7 +61,7 @@ function OneCard() {
       .then((response) => {
         setEvent(response.data);
         setIsChange(false);
-        console.log("Event updated:", response.data);
+        // console.log("Event updated:", response.data);
       })
       .catch((error) => {
         console.error("Error updating event:", error);
@@ -76,17 +78,20 @@ function OneCard() {
       console.log("error: ", error);
     }
   }
-
+  console.log("user: ", user, event.id);
   function changeHandler() {
     setIsChange(!isChange);
   }
 
-  function signupHandler(){
+  async function signupHandler() {
     try {
-      
+      const response = await $api.post(`/event/${id}`, {
+        user_id: userId,
+        event_id: event.id,
+      });
+      console.log("RESPONSE SIGNUPEVENT", response);
     } catch (error) {
-      console.log('error: ', error);
-      
+      console.log("error: ", error);
     }
   }
 

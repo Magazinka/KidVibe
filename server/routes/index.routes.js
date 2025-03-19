@@ -5,6 +5,7 @@ const eventRoutes = require("./event.routes");
 const gadgetRoutes = require("./gadget.routes")
 const announcementRoutes = require("./announcement.routes");
 const linkRoutes = require("./link.routes");
+const signupEvent = require("./signupEvent.routes")
 
 indexRouter.use("/auth", authRoutes);
 indexRouter.use("/tokens", tokensRouter);
@@ -12,5 +13,6 @@ indexRouter.use("/event", eventRoutes);
 indexRouter.use("/gadget", gadgetRoutes)
 indexRouter.use("/announcement" , announcementRoutes)
 indexRouter.use("/link", linkRoutes)
+indexRouter.use("/event/:id/signup", signupEvent)
 
-module.exports = indexRouter;
+module.exports = indexRouter; 
