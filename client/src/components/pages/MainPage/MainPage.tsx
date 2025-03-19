@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '../../../redux/store';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "../../../redux/store";
 import { getEvent } from "../../../redux/slice/event.slice";
 import { getGadget } from "../../../redux/slice/gadget.slice";
 import { Card, CardMedia, CardContent, Typography, CircularProgress, Container, Box, Button } from '@mui/material';
@@ -10,7 +10,7 @@ import './MainPage.css';
 
 const MainPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   
   const events = useSelector((state: RootState) => state.event.event);
@@ -62,7 +62,11 @@ const MainPage: React.FC = () => {
         <Button
           variant="contained"
           onClick={handleAllEventsClick}
-          sx={{ backgroundColor: '#8174A0', color: '#CFEBC7', fontFamily: "'Shantell Sans', sans-serif" }}
+          sx={{
+            backgroundColor: "#8174A0",
+            color: "#CFEBC7",
+            fontFamily: "'Shantell Sans', sans-serif",
+          }}
         >
           Все мероприятия
         </Button>
@@ -99,12 +103,8 @@ const MainPage: React.FC = () => {
                 <Typography gutterBottom variant="h5" component="div">
                   {event.name}
                 </Typography>
-                <Typography variant="body2">
-                  Дата: {event.date}
-                </Typography>
-                <Typography variant="body2">
-                  Место: {event.location}
-                </Typography>
+                <Typography variant="body2">Дата: {event.date}</Typography>
+                <Typography variant="body2">Место: {event.location}</Typography>
                 <Typography variant="body2">
                   Цена: {event.price} руб.
                 </Typography>
@@ -122,7 +122,11 @@ const MainPage: React.FC = () => {
         <Button
           variant="contained"
           onClick={handleAllGadgetsClick}
-          sx={{ backgroundColor: '#8174A0', color: '#CFEBC7', fontFamily: "'Shantell Sans', sans-serif" }}
+          sx={{
+            backgroundColor: "#8174A0",
+            color: "#CFEBC7",
+            fontFamily: "'Shantell Sans', sans-serif",
+          }}
         >
           Все гаджеты
         </Button>
