@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate({ announcement, Gadget, event,eventCommit,gadgetCommit }) {
       this.hasMany(announcement, { foreignKey: "user_id" });
       this.hasMany(Gadget, { foreignKey: "user_id" });
-      this.hasMany(eventCommit, { foreignKey: "user_id" });
-      this.hasMany(gadgetCommit, { foreignKey: "user_id" });
-      this.hasMany()
+      // this.hasMany(eventCommit, { foreignKey: "user_id" });
+      // this.hasMany(gadgetCommit, { foreignKey: "user_id" });
+      // this.hasMany()
       this.belongsToMany(event, {
         through: "userEvent",
         foreignKey: "user_id",
