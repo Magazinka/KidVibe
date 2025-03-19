@@ -11,25 +11,60 @@ interface FormData {
 	name: string;
 	user_id: number;
 	price: number;
+	image?: File;
 }
 
 function AddGadget() {
 	const [isVisible, setIsVisible] = useState(false);
+	const [previewImage, setPreviewImage] = useState<string | null>(null);
 	const {
 		register,
 		handleSubmit,
+		setValue,
 		formState: { errors },
 	} = useForm<FormData>();
 	const user_id = useSelector((state: RootState) => state.authSlicer.user?.id);
 	console.log("userId: ", user_id);
 	const [createGadget, { isLoading, isError, error }] = useCreateGadgetMutation();
 
-	const onSubmit = async (data: { id?: number; name: string; price: number; user_id: number }) => {
+	// const onSubmit = async (data: { id?: number; name: string; price: number; user_id: number }) => {
+	// 	try {
+	// 		const response = await createGadget({
+	// 			...data,
+	// 			user_id: user_id, // Обязательно передайте user_id
+	// 		}).unwrap();
+	// 		console.log("Gadget created successfully:", response);
+	// 	} catch (err) {
+	// 		console.error("Error creating gadget:", err);
+	// 	}
+	// };
+
+	const onSubmit = async (data: FormData) => {
 		try {
+			let imageUrl = null;
+
+			// Если изображение загружено
+			if (data.image) {
+				const formData = new FormData();
+				formData.append("file", data.image);
+				formData.append("upload_preset", "your_upload_preset"); // Укажите ваш upload preset
+
+				// Загрузите изображение в Cloudinary
+				const cloudinaryResponse = await fetch(`https://api.cloudinary.com/v1_1/dlliagivo/image/upload`, {
+					method: "POST",
+					body: formData,
+				}).then(res => res.json());
+
+				imageUrl = cloudinaryResponse.secure_url; // Получите URL изображения
+			}
+
+			// Отправьте данные на сервер, включая URL изображения
 			const response = await createGadget({
 				...data,
-				user_id: user_id, // Обязательно передайте user_id
+				user_id: user_id,
+				image: imageUrl, // Добавьте URL изображения в данные
 			}).unwrap();
+
 			console.log("Gadget created successfully:", response);
 		} catch (err) {
 			console.error("Error creating gadget:", err);
@@ -98,6 +133,19 @@ function AddGadget() {
 									})}
 									error={!!errors.price}
 								/>
+							</Box>
+							<Box sx={{ marginBottom: 2 }}>
+								<input
+									type='file'
+									accept='image/*'
+									onChange={e => {
+										if (e.target.files && e.target.files[0]) {
+											setValue("image", e.target.files[0]);
+											setPreviewImage(URL.createObjectURL(e.target.files[0]));
+										}
+									}}
+								/>
+								{errors.image && <Typography color='error'>Изображение обязательно</Typography>}
 							</Box>
 
 							<Button
