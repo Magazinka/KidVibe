@@ -9,6 +9,6 @@ indexRouter.use("/auth", authRoutes);
 indexRouter.use("/tokens", tokensRouter);
 indexRouter.use("/event", eventRoutes);
 indexRouter.use("/announcement" , announcementRoutes)
-indexRouter.use("/event/signup", signupEvent)
+indexRouter.use("/event/:id/signup", signupEvent)
 
-module.exports = indexRouter;
+module.exports = indexRouter; 

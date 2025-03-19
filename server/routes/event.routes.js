@@ -40,12 +40,16 @@ eventRoutes.post("/:id", async (req, res) => {
       return res.status(400).json({ message: "Error signupEvent" });
     }
 
-    const signupCreate = await userEvent.create({
-      user_id,
-      event_id,
+    const [newSignup, created] = await userEvent.findOrCreate({
+      where: { user_id },
+      defaults: { user_id, event_id },
     });
+    if (!created) {
+      return res.status(400).end();
+    }
     const card = signupCreate.get();
     delete card.createdAt;
+    // delete card.id;
     delete card.updatedAt;
     console.log("card: ", card);
     res.status(200).json({ card });
