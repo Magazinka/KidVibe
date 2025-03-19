@@ -1,6 +1,6 @@
 const eventRoutes = require("express").Router();
 const { where } = require("sequelize");
-const { event, User } = require("../db/models");
+const { event, User, userEvent } = require("../db/models");
 
 eventRoutes.get("/", async (req, res) => {
   try {
@@ -32,6 +32,28 @@ eventRoutes.get("/:id", async (req, res) => {
     res.status(400).json({ message: "event one err" });
   }
 });
+eventRoutes.post("/:id", async (req, res) => {
+  try {
+    const { user_id, event_id } = req.body;
+    console.log("req.body: ", req.body);
+    if (!user_id || !event_id) {
+      return res.status(400).json({ message: "Error signupEvent" });
+    }
+
+    const signupCreate = await userEvent.create({
+      user_id,
+      event_id,
+    });
+    const card = signupCreate.get();
+    delete card.createdAt;
+    delete card.updatedAt;
+    console.log("card: ", card);
+    res.status(200).json({ card });
+  } catch (error) {
+    console.log("error: ", error);
+    res.status(400).json({ message: "err create signup server" });
+  }
+});
 
 eventRoutes.post("/", async (req, res) => {
   console.log("REQBODY CREATE: ", req.body);
@@ -51,7 +73,7 @@ eventRoutes.post("/", async (req, res) => {
     const card = createEvent.get();
     delete card.createdAt;
     delete card.updatedAt;
-    console.log("card: ", card);
+    // console.log("card: ", card);
     res.status(200).json({ card });
   } catch (error) {
     console.log("error post create: ", error);

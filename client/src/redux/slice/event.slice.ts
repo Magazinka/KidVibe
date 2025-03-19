@@ -9,7 +9,7 @@ export const getEvent = createAsyncThunk<Event[], void>(
       if (response.status !== 200) {
         throw new Error("Some went wrong");
       } else {
-        console.log(response.data);
+        // console.log(response.data);
         return response.data;
       }
     } catch (error) {
@@ -69,11 +69,11 @@ const eventSlice = createSlice({
       })
       .addCase(getEvent.fulfilled, (state, action: PayloadAction<Event[]>) => {
         state.event = action.payload;
-        console.log("State.event: ", state.event);
+        // console.log("State.event: ", state.event);
         state.isLoading = false;
         state.error = null;
       })
-      .addCase(getEvent.rejected, (state, action) => {
+      .addCase(getEvent.rejected, (state) => {
         state.isLoading = false;
         state.error = "Failed to fetch events";
       });

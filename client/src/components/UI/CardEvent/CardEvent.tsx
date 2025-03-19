@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -6,20 +6,23 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-// import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store";
 import { getEvent } from "../../../redux/slice/event.slice";
 import { Link } from "react-router-dom";
 
-function CardEvent() {
+interface Props {
+  modalVisable: boolean;
+}
+
+function CardEvent({ modalVisable }: Props) {
   const { event } = useSelector((state: RootState) => state.eventSlicer);
-  console.log("event test: ", event);
+  // console.log("event test: ", event);
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(getEvent());
-  }, []);
-  console.log("events: ", event);
+  }, [dispatch, event]);
+  // console.log("events: ", event);
 
   return (
     <div
@@ -29,6 +32,8 @@ function CardEvent() {
         gap: "10px",
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: modalVisable ? "rgba(0, 0, 0, 0.5)" : "transparent",
+        transition: "background-color 0.3s ease",
       }}
     >
       {event?.map((e) => (
@@ -37,10 +42,11 @@ function CardEvent() {
           sx={{
             width: 350,
             height: 400,
-            backgroundColor: "#E3F2FD",
+
             marginBottom: 2,
             display: "flex",
             flexDirection: "column",
+            backgroundColor: modalVisable ? "rgba(0, 0, 0, 0.5)" : "#E3F2FD",
           }}
         >
           <CardMedia
@@ -53,7 +59,6 @@ function CardEvent() {
           <CardContent sx={{ flexGrow: 1 }}>
             <Typography variant="h5" component="div" sx={{ color: "#441752" }}>
               {e.name}
-              {e.userId}
             </Typography>
             <Typography
               variant="body2"
@@ -70,11 +75,11 @@ function CardEvent() {
               {e.date}
             </Typography>
             <Typography component="div" sx={{ color: "#441752" }}>
-              Стоимость: {e.price}
+              Цена: {e.price}
             </Typography>
-            <Typography component="div" sx={{ color: "#441752" }}>
+            {/* <Typography component="div" sx={{ color: "#441752" }}>
               Организатор: {e.user_id}
-            </Typography>
+            </Typography> */}
           </CardContent>
           <Link to={`/event/${e.id}`} style={{ textDecoration: "none" }}>
             <Button
