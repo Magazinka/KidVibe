@@ -7,6 +7,7 @@ import eventReducer from "./slice/event.slice";
 import gadgetReducer from "./slice/gadget.slice";
 import gadgetSlice from "./slice/gadget.slice"
 import eventSlice from "./slice/event.slice"
+import linkSlice from "./slice/link.slice"
 
 
 export const store = configureStore({
@@ -18,7 +19,8 @@ export const store = configureStore({
     [apiGadget.reducerPath]: apiGadget.reducer,
     gadgetSlicer: gadgetReducer,
     gadget: gadgetSlice,
-    event: eventSlice
+    event: eventSlice,
+    link: linkSlice
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware().concat(api.middleware).concat(apiEvent.middleware).concat(apiGadget.middleware);
