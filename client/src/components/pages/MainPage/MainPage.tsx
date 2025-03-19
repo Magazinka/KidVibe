@@ -1,30 +1,41 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '../../../redux/store';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "../../../redux/store";
 import { getEvent } from "../../../redux/slice/event.slice";
 import { getGadget } from "../../../redux/slice/gadget.slice";
-import { Card, CardMedia, CardContent, Typography, CircularProgress, Container, Box, Button } from '@mui/material';
-import Grid2 from '@mui/material/Grid2';
-import { useNavigate } from 'react-router-dom'; 
-import './MainPage.css'; 
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  CircularProgress,
+  Container,
+  Box,
+  Button,
+} from "@mui/material";
+import Grid2 from "@mui/material/Grid2";
+import { useNavigate } from "react-router-dom";
+import "./MainPage.css";
 
 const MainPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   // Получаем данные из Redux store
   const events = useSelector((state: RootState) => state.event.event);
   const gadgets = useSelector((state: RootState) => state.gadget.gadget);
-  const isLoadingEvents = useSelector((state: RootState) => state.event.isLoading);
-  const isLoadingGadgets = useSelector((state: RootState) => state.gadget.isLoading);
+  const isLoadingEvents = useSelector(
+    (state: RootState) => state.event.isLoading
+  );
+  const isLoadingGadgets = useSelector(
+    (state: RootState) => state.gadget.isLoading
+  );
 
-  
   useEffect(() => {
     dispatch(getEvent());
     dispatch(getGadget());
   }, [dispatch]);
 
-  
   if (isLoadingEvents || isLoadingGadgets) {
     return (
       <Box className="loading-container">
@@ -33,31 +44,37 @@ const MainPage: React.FC = () => {
     );
   }
 
-  
-  const lastFourEvents = events.slice(-4); 
-  const lastFourGadgets = gadgets.slice(-4); 
+  const lastFourEvents = events.slice(-4);
+  const lastFourGadgets = gadgets.slice(-4);
 
-  
   const handleAllEventsClick = () => {
-    navigate('/event'); 
+    navigate("/event");
   };
 
- 
   const handleAllGadgetsClick = () => {
-    navigate('/gadget'); 
+    navigate("/gadgets");
   };
 
   return (
     <Container className="container">
       {/* Тут секция мероприятий */}
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={2}
+      >
         <Typography variant="h4" className="section-title">
           Мероприятия
         </Typography>
         <Button
           variant="contained"
           onClick={handleAllEventsClick}
-          sx={{ backgroundColor: '#8174A0', color: '#CFEBC7', fontFamily: "'Shantell Sans', sans-serif" }}
+          sx={{
+            backgroundColor: "#8174A0",
+            color: "#CFEBC7",
+            fontFamily: "'Shantell Sans', sans-serif",
+          }}
         >
           Все мероприятия
         </Button>
@@ -76,12 +93,8 @@ const MainPage: React.FC = () => {
                 <Typography gutterBottom variant="h5" component="div">
                   {event.name}
                 </Typography>
-                <Typography variant="body2">
-                  Дата: {event.date}
-                </Typography>
-                <Typography variant="body2">
-                  Место: {event.location}
-                </Typography>
+                <Typography variant="body2">Дата: {event.date}</Typography>
+                <Typography variant="body2">Место: {event.location}</Typography>
                 <Typography variant="body2">
                   Цена: {event.price} руб.
                 </Typography>
@@ -92,14 +105,24 @@ const MainPage: React.FC = () => {
       </Grid2>
 
       {/* Тут секция гаджетов */}
-      <Box display="flex" justifyContent="space-between" alignItems="center" mt={4} mb={2}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mt={4}
+        mb={2}
+      >
         <Typography variant="h4" className="section-title">
           Гаджеты
         </Typography>
         <Button
           variant="contained"
           onClick={handleAllGadgetsClick}
-          sx={{ backgroundColor: '#8174A0', color: '#CFEBC7', fontFamily: "'Shantell Sans', sans-serif" }}
+          sx={{
+            backgroundColor: "#8174A0",
+            color: "#CFEBC7",
+            fontFamily: "'Shantell Sans', sans-serif",
+          }}
         >
           Все гаджеты
         </Button>
