@@ -1,0 +1,91 @@
+
+
+
+.category-list {
+    width: 200px;
+    padding: 16px;
+  }
+  
+  
+  .category-button {
+    color: #000000; 
+    padding: 8px 16px;
+    text-align: left;
+    width: 100%;
+  }
+  
+  .category-button.selected {
+    color: #441752; 
+    font-weight: bold; 
+  }
+  
+  .category-button:hover {
+    color: #8174A0; 
+    background-color: transparent; 
+  }
+  
+  
+  .event-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    padding: 16px;
+  }
+  
+  * Стили для карточки мероприятия */
+  .event-card {
+    width: 350px;
+    height: 400px;
+    background-color: #E3F2FD;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  
+  .event-media {
+    height: 150px;
+    object-fit: cover;
+  }
+  
+ 
+  .event-content {
+    flex-grow: 1;
+  }
+  
+  
+  .event-title {
+    color: #441752;
+  }
+  
+  .event-description {
+    color: #8174A0;
+    margin-bottom: 8px;
+  }
+  
+  .event-date {
+    color: #8174A0;
+  }
+  
+  .event-price {
+    color: #441752;
+  }
+  
+  .event-organizer {
+    color: #441752;
+  }
+  
+  
+  .more-button {
+    background-color: #441752;
+    color: #CFEBC7;
+    margin: 10px 20px;
+    align-self: flex-end;
+  }
+  
+  .more-button:hover {
+    background-color: #8174A0;
+  }
