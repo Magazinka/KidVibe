@@ -1,4 +1,4 @@
-
+/* CardEvent.css */
 
 
 .category-list {
@@ -35,7 +35,7 @@
     padding: 16px;
   }
   
-  * Стили для карточки мероприятия */
+  
   .event-card {
     width: 350px;
     height: 400px;
@@ -51,7 +51,7 @@
     object-fit: cover;
   }
   
- 
+  
   .event-content {
     flex-grow: 1;
   }
@@ -78,7 +78,7 @@
     color: #441752;
   }
   
-  
+  /* Стили для кнопки "More" */
   .more-button {
     background-color: #441752;
     color: #CFEBC7;
