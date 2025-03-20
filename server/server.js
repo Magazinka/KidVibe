@@ -16,6 +16,10 @@ app.get("/refresh", verifyAccessToken, (req, res) => {
   res.json({ message: "OK", accessToken, user: res.locals.user });
 });
 
+app.get("/status", (req, res) => {
+  res.json({message: "OK"})
+})
+
 
 app.listen(PORT, () => {
   console.log(`Server started on ${PORT} port`);
