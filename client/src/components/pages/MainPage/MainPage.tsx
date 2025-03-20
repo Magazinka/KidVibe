@@ -75,41 +75,45 @@ const MainPage: React.FC = () => {
         {lastFourEvents.map((event, index) => (
           <Grid2 key={event.id} xs={12} sm={6} md={4} lg={3}>
             <Card
-              className="card-container"
-              onClick={() => handleEventClick(event.id)}
-            >
-              
-              <Box
-                component="img"
-                src={`../../../img/animals/png${(index % 3) + 1}.png`}
-                alt="Зверушка"
-                className="corner-image top-left"
-              />
-              
-              <Box
-                component="img"
-                src={`../../../img/animals/png${((index + 1) % 3) + 1}.png`}
-                alt="Зверушка"
-                className="corner-image bottom-right"
-              />
-              <CardMedia
-                component="img"
-                height="140"
-                image={event.img_url}
-                alt={event.name}
-                className="card-media"
-              />
-              <CardContent className="card-content">
-                <Typography gutterBottom variant="h5" component="div">
-                  {event.name}
-                </Typography>
-                <Typography variant="body2">Дата: {event.date}</Typography>
-                <Typography variant="body2">Место: {event.location}</Typography>
-                <Typography variant="body2">
-                  Цена: {event.price} руб.
-                </Typography>
-              </CardContent>
-            </Card>
+            className="card-container"
+            sx={{ overflow: 'visible' }} // Переопределяем стили Material-UI
+            onClick={() => handleEventClick(event.id)}
+          >
+            {/* Зверушка в верхнем левом углу */}
+            <Box
+              component="img"
+              src={`https://res.cloudinary.com/dlliagivo/image/upload/v1742475564/yepp6p1fzkqaydzodpce.webp`}
+              alt="Зверушка"
+              className="corner-image top-left"
+            />
+
+            {/* Зверушка в нижнем правом углу */}
+            <Box
+              component="img"
+              src={`https://res.cloudinary.com/dlliagivo/image/upload/v1742475564/ijzquujqf200q9ehavdo.webp`}
+              alt="Зверушка"
+              className="corner-image bottom-right"
+            />
+
+            {/* Остальное содержимое карточки */}
+            <CardMedia
+              component="img"
+              height="140"
+              image={event.img_url}
+              alt={event.name}
+              className="card-media"
+            />
+            <CardContent className="card-content">
+              <Typography gutterBottom variant="h5" component="div">
+                {event.name}
+              </Typography>
+              <Typography variant="body2">Дата: {event.date}</Typography>
+              <Typography variant="body2">Место: {event.location}</Typography>
+              <Typography variant="body2">
+                Цена: {event.price} руб.
+              </Typography>
+            </CardContent>
+          </Card>
           </Grid2>
         ))}
       </Grid2>
@@ -141,17 +145,11 @@ const MainPage: React.FC = () => {
               
               <Box
                 component="img"
-                src={`../../../img/animals/png${(index % 3) + 1}.png`}
+                src={`https://res.cloudinary.com/dlliagivo/image/upload/v1742476902/xqg3r6xxt0lh2iqvbfz0.webp`}
                 alt="Зверушка"
                 className="corner-image top-left"
               />
               
-              <Box
-                component="img"
-                src={`../../../img/animals/png${((index + 1) % 3) + 1}.png`}
-                alt="Зверушка"
-                className="corner-image bottom-right"
-              />
               <CardMedia
                 component="img"
                 height="140"
