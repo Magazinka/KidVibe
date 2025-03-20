@@ -4,7 +4,7 @@ const cors = require("cors");
 
 const corsConf = {
   allowedHeaders: ["Content-Type", "Authorization"],
-  origin: ["http://localhost:5173", "http://localhost:5174", "https://45.12.229.234", "https://kid-vibe.ru"],
+  origin: ["http://localhost:5173", "http://localhost:5174", "https://45.12.229.234:5002", "https://kid-vibe.ru"],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 };

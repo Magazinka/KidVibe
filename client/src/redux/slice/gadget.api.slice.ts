@@ -5,6 +5,7 @@ interface GadgetResponse {
 	name: string;
 	user_id: number;
 	price: number;
+	category?: string;
 }
 
 export const apiGadget = createApi({
@@ -21,6 +22,9 @@ export const apiGadget = createApi({
 				id?: number;
 				name: string;
 				user_id: number;
+				price: number;
+				category?: string;
+				image?: string;
 			}
 		>({
 			query: newGadget => ({
