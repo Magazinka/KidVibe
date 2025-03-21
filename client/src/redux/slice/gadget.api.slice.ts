@@ -5,12 +5,13 @@ interface GadgetResponse {
 	name: string;
 	user_id: number;
 	price: number;
+	category?: string;
 }
 
 export const apiGadget = createApi({
 	reducerPath: "gadgetApi",
 	baseQuery: fetchBaseQuery({
-		baseUrl: `${import.meta.env.VITE_URL}/gadget`,
+		baseUrl: `/gadget`,
 		credentials: "include",
 	}),
 	tagTypes: ["Gadget"],
@@ -21,6 +22,9 @@ export const apiGadget = createApi({
 				id?: number;
 				name: string;
 				user_id: number;
+				price: number;
+				category?: string;
+				image?: string;
 			}
 		>({
 			query: newGadget => ({
