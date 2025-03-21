@@ -11,7 +11,7 @@ interface GadgetResponse {
 export const apiGadget = createApi({
 	reducerPath: "gadgetApi",
 	baseQuery: fetchBaseQuery({
-		baseUrl: `${import.meta.env.VITE_URL}/gadget`,
+		baseUrl: `/gadget`,
 		credentials: "include",
 	}),
 	tagTypes: ["Gadget"],

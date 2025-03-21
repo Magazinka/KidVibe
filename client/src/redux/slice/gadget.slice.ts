@@ -145,7 +145,7 @@ interface Gadget {
 
 export const getGadget = createAsyncThunk<Gadget[], void>("gadget/getGadget", async () => {
 	try {
-		const response = await $api(`${import.meta.env.VITE_URL}/gadget`);
+		const response = await $api(`/gadget`);
 		if (response.status !== 200) {
 			throw new Error("some went wrong");
 		} else {
@@ -159,7 +159,7 @@ export const getGadget = createAsyncThunk<Gadget[], void>("gadget/getGadget", as
 
 export const getGadgetByCategory = createAsyncThunk<Gadget[], string>("gadget/getGadgetByCategory", async (category) => {
 	try {
-		const response = await $api(`${import.meta.env.VITE_URL}/gadget?category=${category}`);
+		const response = await $api(`/gadget?category=${category}`);
 		if (response.status !== 200) {
 			throw new Error("Something went wrong");
 		}
