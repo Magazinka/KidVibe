@@ -40,7 +40,6 @@ const MainPage: React.FC = () => {
 
   const handleAllGadgetsClick = () => {
     navigate('/gadget'); 
->>>>>>>>> Temporary merge branch 2
   };
 
   return (

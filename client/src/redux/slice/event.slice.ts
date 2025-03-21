@@ -34,6 +34,7 @@ interface Event {
   user_id: number;
   location: string;
   price: number;
+  group: string;
   // user: User[];
 }
 
