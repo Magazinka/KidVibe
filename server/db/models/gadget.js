@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   Gadget.init({
     name: DataTypes.STRING,
     user_id: DataTypes.INTEGER,
-    price: DataTypes.STRING
+    price: DataTypes.STRING,
+    image: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Gadget',

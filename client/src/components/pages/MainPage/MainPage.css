@@ -1,55 +1,17 @@
-/* CSS-переменные для цветов и шрифтов */
-:root {
-  --primary-bg-color: #8174a0;
-  --primary-text-color: #cfebc7;
-  --hover-bg-color: #441752;
-  --font-family: 'Shantell Sans', sans-serif;
-}
-
+/* Основные стили для контейнера и заголовков */
 .container {
   padding: 20px;
+  overflow: visible; 
 }
 
 .section-title {
   margin-top: 32px;
   margin-bottom: 16px;
-  font-family: var(--font-family);
-  color: var(--primary-text-color);
-  background-color: var(--primary-bg-color);
+  font-family: 'Shantell Sans', sans-serif;
+  color: #cfebc7;
+  background-color: #8174a0;
   padding: 10px;
   border-radius: 8px;
-}
-
-.horizontal-list {
-  display: flex;
-  overflow-x: auto;
-  flex-wrap: nowrap;
-  padding-bottom: 16px;
-}
-
-.card {
-  min-width: 250px;
-  margin: 0 12px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: var(--primary-bg-color);
-  color: var(--primary-text-color);
-  font-family: var(--font-family);
-  position: relative; /* Для позиционирования изображений внутри карточки */
-  overflow: hidden; /* Чтобы изображения не выходили за границы карточки */
-}
-
-.card:hover {
-  background-color: var(--hover-bg-color);
-}
-
-.card-media {
-  height: 140px;
-  object-fit: cover;
-}
-
-.card-content {
-  padding: 16px;
 }
 
 .loading-container {
@@ -59,36 +21,82 @@
   min-height: 100vh;
 }
 
-/* Стили для изображений зверушек */
+.card-container {
+  position: relative;
+  border-radius: 20px;
+  transform: rotate(0);
+  transition: transform 0.3s ease, background 0.3s ease;
+  cursor: pointer;
+  overflow: visible; 
+  background-color: #8174a0;
+  color: #cfebc7;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-container:hover {
+  transform: translateY(-5px) rotate(0deg);
+  background: linear-gradient(135deg, #ffffff, #f9f3d0);
+}
+
+.card-media {
+  height: 140px;
+  object-fit: cover;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+
 .corner-image {
   position: absolute;
-  width: 50px; /* Размер изображения */
-  height: 50px;
-  z-index: 1; /* Чтобы изображение было поверх карточки */
-  transition: transform 0.3s ease; /* Анимация при наведении */
+  width: 80px; 
+  height: 80px;
+  z-index: 2;
+  transition: transform 0.5s ease;
+}
+
+
+@keyframes spin-clockwise {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+@keyframes spin-counterclockwise {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+
+.card-container:hover .top-left {
+  animation: spin-clockwise 2s linear infinite;
+  top: -40px; 
+  left: -40px;
+}
+
+.card-container:hover .bottom-right {
+  animation: spin-counterclockwise 2s linear infinite;
+  bottom: -40px; 
+  right: -40px;
 }
 
 .top-left {
-  top: 0;
-  left: 0;
+  top: -30px; 
+  left: -50px;
 }
 
 .bottom-right {
-  bottom: 0;
-  right: 0;
-}
-
-/* Анимация при наведении на карточку */
-.card:hover .corner-image {
-  transform: scale(1.1); /* Увеличиваем изображение при наведении */
-}
-
-/* Анимация для изображения в левом верхнем углу */
-.card:hover .top-left {
-  transform: rotate(15deg) scale(1.1); /* Поворот и увеличение */
-}
-
-/* Анимация для изображения в правом нижнем углу */
-.card:hover .bottom-right {
-  transform: rotate(-15deg) scale(1.1); /* Поворот и увеличение */
+  bottom: -30px;
+  right: -5px;
 }

@@ -1,9 +1,19 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../../../redux/store';
-import { getLink } from '../../../redux/slice/link.slice'; // Импортируем Thunk для получения ссылок
-import { Typography, CircularProgress, Container, Box, List, ListItem, ListItemText } from '@mui/material';
-import './LinkPage.css'; // Стили для страницы ссылок
+import { getLink } from '../../../redux/slice/link.slice';
+import {
+  Typography,
+  CircularProgress,
+  Container,
+  Box,
+  Grid,
+  Card,
+  CardContent,
+  CardActionArea,
+  CardMedia,
+} from '@mui/material';
+import './LinkPage.css';
 
 const LinkPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -11,14 +21,14 @@ const LinkPage: React.FC = () => {
   // Получаем данные из Redux store
   const links = useSelector((state: RootState) => state.link.link);
   const isLoadingLinks = useSelector((state: RootState) => state.link.isLoading);
-  console.log("LINKS: ", links);
+  console.log('LINKS: ', links);
 
-  // Загружаем данные при монтировании компонента
+
   useEffect(() => {
     dispatch(getLink());
   }, [dispatch]);
 
-  // Отображаем загрузку, если данные еще не загружены
+ 
   if (isLoadingLinks) {
     return (
       <Box className="loading-container">
@@ -29,28 +39,45 @@ const LinkPage: React.FC = () => {
 
   return (
     <Container className="container">
-      {/* Секция ссылок */}
-      <Box mb={2}>
+      
+      <Box mb={4}>
         <Typography variant="h4" className="section-title">
-          Ссылки
+          Полезные ссылки для молодых семей
         </Typography>
       </Box>
 
-      {/* Вертикальный список ссылок */}
-      <List className="link-list">
+      
+      <Grid container spacing={4}>
         {links.map((link) => (
-          <ListItem
-            key={link.id}
-            component="a"
-            href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="link-item"
-          >
-            <ListItemText primary={link.name} />
-          </ListItem>
+          <Grid item key={link.id} xs={12} sm={6} md={4} lg={3}>
+            <Card className="link-card">
+              <CardActionArea
+                component="a"
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={link.image || 'https://res.cloudinary.com/dlliagivo/image/upload/v1742477841/wvtyoh2ysubjbrpo75kx.png'} 
+                  alt={link.name}
+                  className="link-image"
+                />
+                <CardContent>
+                  <Typography variant="h6" component="div" className="link-name">
+                    {link.name}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {link.description || 'Описание отсутствует'}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
         ))}
-      </List>
+      </Grid>
     </Container>
   );
 };

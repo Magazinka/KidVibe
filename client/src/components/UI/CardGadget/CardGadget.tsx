@@ -29,7 +29,7 @@ function CardGadget() {
 					key={g.id}
 					sx={{
 						width: 350,
-						height: 200,
+						height: 400,
 						backgroundColor: "#E3F2FD",
 						marginBottom: 2,
 						display: "flex",
@@ -37,6 +37,7 @@ function CardGadget() {
 					}}
 				>
 					<CardContent sx={{ flexGrow: 1 }}>
+						{g.image && <img src={g.image} alt={g.name} style={{ width: "43%", marginTop: 10, borderRadius: 4 }} />}
 						<Typography variant='h5' component='div' sx={{ color: "#441752" }}>
 							{g.name}
 						</Typography>
