@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store";
 import { getEvent } from "../../../redux/slice/event.slice";
 import { Link } from "react-router-dom";
-import "./CardEvent.css"; // Импорт CSS-файла
+import "./CardEvent.css"; 
 
 function CardEvent() {
   const { event } = useSelector((state: RootState) => state.eventSlicer);
@@ -42,7 +42,7 @@ function CardEvent() {
 
   return (
     <Box sx={{ display: "flex" }}>
-      {/* Список категорий */}
+      
       <Box className="category-list">
         <List>
           {categories.map((category) => (

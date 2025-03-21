@@ -25,8 +25,9 @@ module.exports = {
       image: {
         type: Sequelize.STRING
       },
-      category: {
-        type: Sequelize.STRING
+      group: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
