@@ -5,7 +5,7 @@ export const getEvent = createAsyncThunk<Event[], void>(
   "event/getEvent",
   async () => {
     try {
-      const response = await $api(`${import.meta.env.VITE_URL}/event`);
+      const response = await $api(`/event`);
       if (response.status !== 200) {
         throw new Error("Some went wrong");
       } else {

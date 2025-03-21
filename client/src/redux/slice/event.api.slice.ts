@@ -14,7 +14,7 @@ interface ApiResponse {
 export const apiEvent = createApi({
   reducerPath: "eventApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${import.meta.env.VITE_URL}/event`,
+    baseUrl: `/event`,
     credentials: "include",
   }),
   tagTypes: ["Event"],

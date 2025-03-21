@@ -16,16 +16,16 @@ import OneCard from "./components/UI/OneCard/OneCard";
 
 function App() {
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   $api("/refresh")
-  //     .then((response) => {
-  //       const { accessToken, user } = response.data;
-  //       dispatch(loginUser({ user, accessToken }));
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error refreshing token: ", error);
-  //     });
-  // }, [dispatch]);
+  useEffect(() => {
+    $api("/refresh")
+      .then((response) => {
+        const { accessToken, user } = response.data;
+        dispatch(loginUser({ user, accessToken }));
+      })
+      .catch((error) => {
+        console.log("Error refreshing token: ", error);
+      });
+  }, [dispatch]);
 
   console.log(import.meta.env.VITE_URL);
   return (

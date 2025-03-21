@@ -29,7 +29,7 @@ $api.interceptors.response.use(
   async (error) => {
     const prevRequest = error.config;
     if (error.response.status === 403 && !prevRequest.sent) {
-      const response = await axios(`${import.meta.env.VITE_URL}/tokens/refresh`, {
+      const response = await axios(`/tokens/refresh`, {
         withCredentials: true,
       });
       accessToken = response.data.accessToken;
