@@ -2,7 +2,7 @@ import { Button, Card, CardContent, Typography, List, ListItem, ListItemButton, 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getGadget } from "../../../redux/slice/gadget.slice";
+import { getGadget, getGadgetByCategory } from "../../../redux/slice/gadget.slice";
 import { AppDispatch, RootState } from "../../../redux/store";
 
 function CardGadget() {

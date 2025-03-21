@@ -133,7 +133,15 @@
 
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import $api from "../../shared/axios.instance";
-("axios");
+// ("axios");
+interface Gadget {
+	id: number;
+	name: string;
+	price: number;
+	user_id: number;
+	image?: string;
+	category?: string;
+}
 
 export const getGadget = createAsyncThunk<Gadget[], void>("gadget/getGadget", async () => {
 	try {
@@ -149,14 +157,18 @@ export const getGadget = createAsyncThunk<Gadget[], void>("gadget/getGadget", as
 	}
 });
 
-interface Gadget {
-	id: number;
-	name: string;
-	price: number;
-	user_id: number;
-	image?: string;
-}
-
+export const getGadgetByCategory = createAsyncThunk<Gadget[], string>("gadget/getGadgetByCategory", async (category) => {
+	try {
+		const response = await $api(`${import.meta.env.VITE_URL}/gadget?category=${category}`);
+		if (response.status !== 200) {
+			throw new Error("Something went wrong");
+		}
+		return response.data;
+	} catch (error) {
+		console.error("Error fetching gadgets by category: ", error);
+		throw error;
+	}
+});
 interface IState {
 	gadget: Gadget[];
 	isLoading: boolean;
@@ -193,6 +205,19 @@ const gadgetSlice = createSlice({
 			.addCase(getGadget.rejected, (state, action) => {
 				state.isLoading = false;
 				state.error = "Failed to fetch events";
+			})
+			.addCase(getGadgetByCategory.pending, (state) => {
+				state.isLoading = true;
+				state.error = null;
+			})
+			.addCase(getGadgetByCategory.fulfilled, (state, action: PayloadAction<Gadget[]>) => {
+				state.gadget = action.payload;
+				state.isLoading = false;
+				state.error = null;
+			})
+			.addCase(getGadgetByCategory.rejected, (state, action) => {
+				state.isLoading = false;
+				state.error = "Failed to fetch gadgets by category";
 			});
 	},
 });
