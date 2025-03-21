@@ -71,12 +71,20 @@ signupEvent.post("/signup", async (req, res) => {
       user_id,
       event_id,
     });
+    const signups = await User.findAll({
+      attributes: ["id", "login", "email"],
+      include: {
+        model: event,
+        as: "attendees",
+        attributes: [],
+        where: { id: event_id },
+      },
+    });
+    // const card = signupCreate.get();
+    // delete card.createdAt;
+    // delete card.updatedAt;
 
-    const card = signupCreate.get();
-    delete card.createdAt;
-    delete card.updatedAt;
-
-    res.status(200).json({ card });
+    res.status(200).json(signups);
   } catch (error) {
     console.log("error: ", error);
     res.status(500).json({ message: "Ошибка при создании записи" });

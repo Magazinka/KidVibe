@@ -106,11 +106,13 @@ function OneCard() {
         user_id: userId,
         event_id: event.id,
       });
-
-      if (response.data) {
+console.log(response.data)
+if (response.data) {
         setIsUserSignedUp(true); 
-        setSignupArr((prev) => [...prev, response.data]); 
+        // setSignupArr((prev) => [...prev, response.data]); 
+        setSignupArr(response.data); 
       }
+      console.log(signupArr)
     } catch (error) {
       console.log("error: ", error);
     }

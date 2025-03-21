@@ -35,7 +35,7 @@ const MainPage: React.FC = () => {
   const lastFourGadgets = gadgets.slice(-4); 
 
   const handleAllEventsClick = () => {
-    navigate('/events'); 
+    navigate('/event'); 
   };
 
   const handleAllGadgetsClick = () => {
