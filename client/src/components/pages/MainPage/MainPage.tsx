@@ -143,7 +143,7 @@ const MainPage: React.FC = () => {
               <CardMedia
                 component="img"
                 height="140"
-                image={gadget.img_url}
+                image={gadget.image}
                 alt={gadget.name}
                 className="card-media"
               />
