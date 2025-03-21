@@ -12,7 +12,7 @@ interface ApiResponse {
 
 export const api = createApi({
   reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({ baseUrl: `/auth/`, credentials: "include" }),
+  baseQuery: fetchBaseQuery({ baseUrl: `/api/auth/`, credentials: "include" }),
   tagTypes: ["Auth"],
   endpoints: (builder) => ({
     createUser: builder.mutation<
