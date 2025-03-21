@@ -73,7 +73,7 @@ services:
             - "traefik.http.routers.api.rule=Host(`kid-vibe.ru`) && PathPrefix(`/api`)"
             - "traefik.http.middlewares.api-strip-prefix.stripprefix.prefixes=/api"
             - "traefik.http.routers.api.middlewares=api-strip-prefix"
-            - "traefik.http.services.api.loadbalancer.server.port=5002"
+            - "traefik.http.services.api.loadbalancer.server.port=3001"
         networks:
             - web
         restart: unless-stopped
