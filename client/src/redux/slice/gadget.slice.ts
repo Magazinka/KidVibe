@@ -3,7 +3,7 @@
 
 // export const getGadget = createAsyncThunk<Gadget[], void>("gadget/getGadget", async () => {
 // 	try {
-// 		const response = await $api(`${import.meta.env.VITE_URL}/gadget`);
+// 		const response = await $api(`/gadget`);
 // 		if (response.status !== 200) {
 // 			throw new Error("Something went wrong");
 // 		} else {
@@ -68,7 +68,7 @@
 //     "gadget/getGadget",
 //     async () => {
 //         try {
-//             const response = await $api(`${import.meta.env.VITE_URL}/gadget`);
+//             const response = await $api(`/gadget`);
 //             if(response.status !== 200) {
 //                 throw new Error("some went wrong");
 //             } else {

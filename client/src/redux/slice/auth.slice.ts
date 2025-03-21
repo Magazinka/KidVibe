@@ -3,7 +3,7 @@ import $api from "../../shared/axios.instance";
 
 export const getLogout = createAsyncThunk("logout/getLogout", async () => {
 	try {
-		const response = await $api(`${import.meta.env.VITE_URL}/auth/logout`);
+		const response = await $api(`/auth/logout`);
 		if (response.status !== 200) {
 			throw Error("Something went wrong");
 		} else {
