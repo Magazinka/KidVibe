@@ -26,9 +26,9 @@ RUN ls -al /client-app
 # Используем Nginx для сервировки статических файлов
 FROM nginx:alpine
 # Копируем собранные файлы из первого этапа
-# COPY --from=build /client-app/dist /usr/share/nginx/html
+COPY --from=build /client-app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /client-app/dist /home/kidvibe/KidVibe/client/dist
+# COPY --from=build /client-app/dist /home/kidvibe/KidVibe/client/dist
 # root /home/kidvibe/KidVibe/client/dist
 # Открываем порт 80
 EXPOSE 80
