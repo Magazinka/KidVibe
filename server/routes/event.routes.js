@@ -32,38 +32,21 @@ eventRoutes.get("/:id", async (req, res) => {
     res.status(400).json({ message: "event one err" });
   }
 });
-eventRoutes.post("/:id", async (req, res) => {
-  try {
-    const { user_id, event_id } = req.body;
-    console.log("req.body: ", req.body);
-    if (!user_id || !event_id) {
-      return res.status(400).json({ message: "Error signupEvent" });
-    }
-
-    const [newSignup, created] = await userEvent.findOrCreate({
-      where: { user_id },
-      defaults: { user_id, event_id },
-    });
-    if (!created) {
-      return res.status(400).end();
-    }
-    const card = signupCreate.get();
-    delete card.createdAt;
-    // delete card.id;
-    delete card.updatedAt;
-    console.log("card: ", card);
-    res.status(200).json({ card });
-  } catch (error) {
-    console.log("error: ", error);
-    res.status(400).json({ message: "err create signup server" });
-  }
-});
 
 eventRoutes.post("/", async (req, res) => {
   console.log("REQBODY CREATE: ", req.body);
   try {
-    const { name, description, location, price, date, user_id } = req.body;
-    if (!name || !description || !location || !price || !date || !user_id) {
+    const { name, description, location, price, date, user_id, group } =
+      req.body;
+    if (
+      !name ||
+      !description ||
+      !location ||
+      !price ||
+      !date ||
+      !user_id ||
+      !group
+    ) {
       return res.status(400).json({ message: "Error createEvent" });
     }
     const createEvent = await event.create({
@@ -73,6 +56,7 @@ eventRoutes.post("/", async (req, res) => {
       price,
       date,
       user_id,
+      group,
     });
     const card = createEvent.get();
     delete card.createdAt;

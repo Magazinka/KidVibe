@@ -13,5 +13,6 @@ indexRouter.use("/event", eventRoutes);
 indexRouter.use("/gadget", gadgetRoutes)
 indexRouter.use("/announcement" , announcementRoutes)
 indexRouter.use("/link", linkRoutes)
+indexRouter.use("/event/:id", signupEvent)
 
 module.exports = indexRouter; 

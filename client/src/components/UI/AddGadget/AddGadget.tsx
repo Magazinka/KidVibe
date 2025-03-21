@@ -11,6 +11,7 @@ interface FormData {
 	name: string;
 	user_id: number;
 	price: number;
+	group: string;
 }
 
 function AddGadget() {
@@ -28,7 +29,7 @@ function AddGadget() {
 		try {
 			const response = await createGadget({
 				...data,
-				user_id: user_id, // Обязательно передайте user_id
+				user_id: user_id, 
 			}).unwrap();
 			console.log("Gadget created successfully:", response);
 		} catch (err) {

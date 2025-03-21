@@ -8,10 +8,12 @@ import { AppDispatch, RootState } from "../../../redux/store";
 import { User } from "../../../Types/Types";
 
 import { TextField, Button, CircularProgress, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const shantellSans = "'Shantell Sans', sans-serif";
 
 function Login() {
+  const navigate = useNavigate();
   const [loginUser, { isLoading, isError, error }] = useLoginUserMutation();
   const {
     register,
@@ -31,15 +33,14 @@ function Login() {
       console.log("Login response: ", response);
 
       dispatch(loginUserAction(response));
+      navigate("/");
     } catch (error) {
       console.log("Error during login: ", error);
     }
   };
 
   return (
-    <Box
-
-    >
+    <Box>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
           {...register("email")}

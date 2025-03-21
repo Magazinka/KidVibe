@@ -29,6 +29,7 @@ interface Event {
   name: string;
   date: string;
   description: string;
+  img_url: string;
   // file: FileList;
   user_id: number;
   location: string;

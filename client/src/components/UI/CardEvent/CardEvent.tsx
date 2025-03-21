@@ -40,8 +40,8 @@ function CardEvent({ modalVisable }: Props) {
         <Card
           key={e.id}
           sx={{
-            width: 350,
-            height: 400,
+            width: 400,
+            height: 450,
 
             marginBottom: 2,
             display: "flex",
@@ -52,7 +52,7 @@ function CardEvent({ modalVisable }: Props) {
           <CardMedia
             component="img"
             height="150"
-            image={e.name}
+            image={e.img_url}
             alt="event image"
             sx={{ objectFit: "cover" }}
           />

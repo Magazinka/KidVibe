@@ -10,6 +10,10 @@ import {
   Modal,
   Backdrop,
   Fade,
+  FormControl,
+  Select,
+  MenuItem,
+  InputLabel,
 } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -23,6 +27,7 @@ interface FormData {
   date: string;
   price: number;
   user_id: number;
+  group: string;
 }
 interface Props {
   toggleModalVisable: () => void;
@@ -132,6 +137,18 @@ function AddCard({ toggleModalVisable }: Props) {
                         required: "Описание обязательно",
                       })}
                       error={!!errors.description}
+                    />
+                  </Box>
+                  <Box sx={{ marginBottom: 2 }}>
+                    <TextField
+                      fullWidth
+                      label="Категория"
+                      variant="outlined"
+                      placeholder="Введите категорию"
+                      {...register("group", {
+                        required: "Категория обязательна",
+                      })}
+                      error={!!errors.location}
                     />
                   </Box>
                   <Box sx={{ marginBottom: 2 }}>
