@@ -63,10 +63,10 @@ function OneCard() {
         params: { eventId: id, userId: userId },
       })
       .then((response) => {
-        // console.log("response.data.sign: ", response.data);
-
         setSignupArr(response.data);
-        setIsUserSignedUp(response.data);
+
+        const isSignedUp = response.data.some((signup: Signup) => signup.id === userId);
+        setIsUserSignedUp(isSignedUp);
       })
       .catch((error) => {
         console.log("Error fetching signups: ", error);
@@ -108,16 +108,14 @@ function OneCard() {
       });
 
       if (response.data) {
-        setIsUserSignedUp(true);
-        // setSignupArr(response.data);
+        setIsUserSignedUp(true); 
+        setSignupArr((prev) => [...prev, response.data]); 
       }
-
-      navigate(`/event/${id}`);
     } catch (error) {
       console.log("error: ", error);
     }
   }
-  // console.log("Signup data 111: ", signupArr);
+
   async function unsubscribe() {
     try {
       const response = await $api.delete(`/event/${id}/signup`, {
@@ -126,19 +124,15 @@ function OneCard() {
           event_id: event.id,
         },
       });
-      // console.log("response: ", response);
-      // console.log("response.data: : ", response.data);
-      setSignupArr(response.data);
-      navigate(`/event/${id}`);
+
+      if (response.data) {
+        setIsUserSignedUp(false);
+        setSignupArr((prev) => prev.filter((user) => user.id !== userId));
+      }
     } catch (error) {
       console.log("error: ", error);
     }
-    setIsUserSignedUp(false);
   }
-  // if()
-  // const userList = signupArr.some((user) => user.id === userId);
-  // console.log("userId: ", userId);
-  // console.log("USERLIST: ", userList);
 
   return (
     <Card
@@ -275,9 +269,9 @@ function OneCard() {
               className="card-media"
               sx={{
                 margin: "0 auto",
-                height: 300, 
+                height: 300,
                 width: "90%",
-                objectFit: "cover", 
+                objectFit: "cover",
               }}
               image={event.img_url}
               alt={event.name}
@@ -382,7 +376,7 @@ function OneCard() {
         <Typography variant="h6" sx={{ color: "#441752", marginBottom: 1 }}>
           Подписавшиеся на событие:
         </Typography>
-        {signupArr.length > 0 && isUserSignedUp ? (
+        {signupArr.length > 0 ? (
           <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
             {signupArr.map(
               (user: { id: number; login: string; email: string }) => (
