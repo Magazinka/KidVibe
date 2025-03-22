@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface GadgetResponse {
-	id?: number;
-	name: string;
-	user_id: number;
-	price: number;
+  id?: number;
+  name: string;
+  user_id: number;
+  price: number;
+  image?: string;
 	category?: string;
 }
 
