@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   eventComment.init(
     {
       user_id: DataTypes.INTEGER,
+      event_id: DataTypes.INTEGER,
       text: DataTypes.STRING,
     },
     {

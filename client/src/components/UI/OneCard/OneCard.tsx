@@ -112,6 +112,7 @@ function OneCard() {
       console.log(response.data);
       if (response.data) {
         setIsUserSignedUp(true);
+
         setSignupArr(response.data);
       }
       console.log(signupArr);
