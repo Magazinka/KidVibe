@@ -12,7 +12,6 @@ const MainPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
 
-  
   const events = useSelector((state: RootState) => state.event.event);
   const gadgets = useSelector((state: RootState) => state.gadget.gadget);
   const isLoadingEvents = useSelector((state: RootState) => state.event.isLoading);
@@ -34,6 +33,18 @@ const MainPage: React.FC = () => {
   const lastFourEvents = events.slice(-4); 
   const lastFourGadgets = gadgets.slice(-4); 
 
+  const animalImages = [
+    "https://res.cloudinary.com/dlliagivo/image/upload/v1742475564/yepp6p1fzkqaydzodpce.webp",
+    "https://res.cloudinary.com/dlliagivo/image/upload/v1742475564/ijzquujqf200q9ehavdo.webp",
+    "https://res.cloudinary.com/dlliagivo/image/upload/v1742476902/xqg3r6xxt0lh2iqvbfz0.webp",
+    
+  ];
+
+  const getRandomAnimalImage = () => {
+  const randomIndex = Math.floor(Math.random() * animalImages.length);
+  return animalImages[randomIndex];
+};
+
   const handleAllEventsClick = () => {
     navigate('/event'); 
   };
@@ -42,12 +53,10 @@ const MainPage: React.FC = () => {
     navigate('/gadget'); 
   };
 
-  
   const handleEventClick = (id: number) => {
     navigate(`/event/${id}`); 
   };
 
-  
   const handleGadgetClick = (id: number) => {
     navigate(`/gadget/${id}`);
   };
@@ -71,54 +80,53 @@ const MainPage: React.FC = () => {
           Все мероприятия
         </Button>
       </Box>
-      <Grid2 container spacing={6}> {/* Увеличиваем расстояние между карточками */}
-        {lastFourEvents.map((event, index) => (
+      <Grid2 container spacing={6}> 
+          {lastFourEvents.map((event, index) => (
           <Grid2 key={event.id} xs={12} sm={6} md={4} lg={3}>
             <Card
-            className="card-container"
-            sx={{ overflow: 'visible' }} // Переопределяем стили Material-UI
-            onClick={() => handleEventClick(event.id)}
-          >
-            {/* Зверушка в верхнем левом углу */}
-            <Box
-              component="img"
-              src={`https://res.cloudinary.com/dlliagivo/image/upload/v1742475564/yepp6p1fzkqaydzodpce.webp`}
-              alt="Зверушка"
-              className="corner-image top-left"
-            />
+              className="card-container"
+              sx={{ overflow: 'visible' }}
+              onClick={() => handleEventClick(event.id)}
+            >
+              
+              <Box
+                component="img"
+                src={getRandomAnimalImage()} /
+                alt="Зверушка"
+                className="corner-image top-left"
+              />
 
-            {/* Зверушка в нижнем правом углу */}
-            <Box
-              component="img"
-              src={`https://res.cloudinary.com/dlliagivo/image/upload/v1742475564/ijzquujqf200q9ehavdo.webp`}
-              alt="Зверушка"
-              className="corner-image bottom-right"
-            />
+              
+              <Box
+                component="img"
+                src={getRandomAnimalImage()} 
+                alt="Зверушка"
+                className="corner-image bottom-right"
+              />
 
-            {/* Остальное содержимое карточки */}
-            <CardMedia
-              component="img"
-              height="140"
-              image={event.img_url}
-              alt={event.name}
-              className="card-media"
-            />
-            <CardContent className="card-content">
-              <Typography gutterBottom variant="h5" component="div">
-                {event.name}
-              </Typography>
-              <Typography variant="body2">Дата: {event.date}</Typography>
-              <Typography variant="body2">Место: {event.location}</Typography>
-              <Typography variant="body2">
-                Цена: {event.price} руб.
-              </Typography>
-            </CardContent>
-          </Card>
+              
+              <CardMedia
+                component="img"
+                height="140"
+                image={event.img_url}
+                alt={event.name}
+                className="card-media"
+              />
+              <CardContent className="card-content">
+                <Typography gutterBottom variant="h5" component="div">
+                  {event.name}
+                </Typography>
+                <Typography variant="body2">Дата: {event.date}</Typography>
+                <Typography variant="body2">Место: {event.location}</Typography>
+                <Typography variant="body2">
+                  Цена: {event.price} руб.
+                </Typography>
+              </CardContent>
+            </Card>
           </Grid2>
-        ))}
+         ))}
       </Grid2>
 
-      
       <Box display="flex" justifyContent="space-between" alignItems="center" mt={4} mb={2}>
         <Typography variant="h4" className="section-title">
           Гаджеты
@@ -140,16 +148,25 @@ const MainPage: React.FC = () => {
           <Grid2 key={gadget.id} xs={12} sm={6} md={4} lg={3}>
             <Card
               className="card-container"
+              sx={{ overflow: 'visible' }}
               onClick={() => handleGadgetClick(gadget.id)}
             >
               
               <Box
                 component="img"
-                src={`https://res.cloudinary.com/dlliagivo/image/upload/v1742476902/xqg3r6xxt0lh2iqvbfz0.webp`}
+                src={getRandomAnimalImage()} 
                 alt="Зверушка"
                 className="corner-image top-left"
               />
+
               
+              <Box
+                component="img"
+                src={getRandomAnimalImage()} 
+                alt="Зверушка"
+                className="corner-image bottom-right"
+              />
+
               <CardMedia
                 component="img"
                 height="140"
