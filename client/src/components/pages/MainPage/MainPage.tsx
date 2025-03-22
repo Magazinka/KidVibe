@@ -42,6 +42,16 @@ const MainPage: React.FC = () => {
     navigate('/gadget'); 
   };
 
+  
+  const handleEventClick = (id: number) => {
+    navigate(`/event/${id}`); 
+  };
+
+  
+  const handleGadgetClick = (id: number) => {
+    navigate(`/gadget/${id}`);
+  };
+
   return (
     <Container className="container">
      
@@ -143,7 +153,7 @@ const MainPage: React.FC = () => {
               <CardMedia
                 component="img"
                 height="140"
-                image={gadget.img_url}
+                image={gadget.image}
                 alt={gadget.name}
                 className="card-media"
               />

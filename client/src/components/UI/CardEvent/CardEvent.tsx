@@ -17,11 +17,7 @@ import { getEvent } from "../../../redux/slice/event.slice";
 import { Link } from "react-router-dom";
 import "./CardEvent.css"; 
 
-interface Props {
-  modalVisable: boolean;
-}
-
-function CardEvent({ modalVisable }: Props) {
+function CardEvent() {
   const { event } = useSelector((state: RootState) => state.eventSlicer);
   const dispatch = useDispatch<AppDispatch>();
   const [selectedCategory, setSelectedCategory] = useState("all");
