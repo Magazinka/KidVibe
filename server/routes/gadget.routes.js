@@ -34,14 +34,16 @@ gadgetRoutes.post("/", async (req, res) => {
 	console.log("REQBODY CREATE GADGET: ", req.body);
 	try {
 		const { name, price, user_id } = req.body;
-		if (!name || !price || !user_id || !image) {
+		if (!name || !price || !user_id || !image || !group || !description) {
 			return res.status(400).json({ message: "Missing required fields" });
 		}
 		const createGadget = await Gadget.create({
 			name,
 			price,
 			user_id,
-			image
+			image,
+			group,
+			description
 		});
 		const card = createGadget.get();
 		delete card.createdAt;

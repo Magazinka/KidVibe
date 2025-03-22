@@ -1,0 +1,73 @@
+.category-list {
+    width: 200px;
+    padding: 16px;
+    background-color: #f5f5f5;
+  }
+  
+  .category-button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    margin: 4px 0;
+  }
+  
+  .category-button.selected {
+    background-color: #441752;
+    color: #CFEBC7;
+  }
+  
+  .gadget-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px;
+    flex-grow: 1;
+  }
+  
+  .gadget-card {
+    width: 300px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    background-color: #E3F2FD;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .gadget-media {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .gadget-content {
+    padding: 16px;
+    flex-grow: 1;
+  }
+  
+  .gadget-title {
+    font-size: 1.25rem;
+    color: #441752;
+    margin-bottom: 8px;
+  }
+  
+  .gadget-price {
+    font-size: 1rem;
+    color: #441752;
+    margin-bottom: 8px;
+  }
+  
+  .gadget-owner {
+    font-size: 0.875rem;
+    color: #441752;
+  }
+  
+  .more-button {
+    background-color: #441752;
+    color: #CFEBC7;
+    margin: 16px;
+    align-self: flex-end;
+  }
+  
+  .more-button:hover {
+    background-color: #8174A0;
+  }

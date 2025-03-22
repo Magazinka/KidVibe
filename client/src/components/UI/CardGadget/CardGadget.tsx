@@ -1,9 +1,21 @@
-import { Button, Card, CardContent, Typography, List, ListItem, ListItemButton, ListItemText, Box } from "@mui/material";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Box,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getGadget, getGadgetByCategory } from "../../../redux/slice/gadget.slice";
+import { getGadget } from "../../../redux/slice/gadget.slice";
 import { AppDispatch, RootState } from "../../../redux/store";
+import "./CardGadget.css"; // Импорт CSS-файла
 
 function CardGadget() {
   const { gadget } = useSelector((state: RootState) => state.gadgetSlicer);
@@ -22,13 +34,14 @@ function CardGadget() {
     }
   }, [gadget]);
 
-  const filteredGadgets = selectedCategory === "all"
-    ? gadget
-    : gadget?.filter((g) => g.group === selectedCategory);
+  const filteredGadgets =
+    selectedCategory === "all"
+      ? gadget
+      : gadget?.filter((g) => g.group === selectedCategory);
 
   return (
     <Box sx={{ display: "flex" }}>
-      
+      {/* Список категорий */}
       <Box className="category-list">
         <List>
           {categories.map((category) => (
@@ -44,56 +57,34 @@ function CardGadget() {
         </List>
       </Box>
 
-      
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "10px",
-          justifyContent: "center",
-          alignItems: "center",
-          flexGrow: 1,
-        }}
-      >
+      {/* Карточки гаджетов */}
+      <Box className="gadget-container">
         {filteredGadgets?.map((g) => (
-          <Card
-            key={g.id}
-            sx={{
-              width: 350,
-              height: 400,
-              backgroundColor: "#E3F2FD",
-              marginBottom: 2,
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <CardContent sx={{ flexGrow: 1 }}>
-              {g.image && <img src={g.image} alt={g.name} style={{ width: "43%", marginTop: 10, borderRadius: 4 }} />}
-              <Typography variant='h5' component='div' sx={{ color: "#441752" }}>
+          <Card key={g.id} className="gadget-card">
+            {g.image && (
+              <CardMedia
+                component="img"
+                className="gadget-media"
+                image={g.image}
+                alt={g.name}
+              />
+            )}
+            <CardContent className="gadget-content">
+              <Typography variant="h5" className="gadget-title">
                 {g.name}
               </Typography>
-              <Typography component='div' sx={{ color: "#441752" }}>
-                Цена: {g.price} руб.
+              <Typography className="gadget-price">
+              Цена: {g.price} руб.
               </Typography>
-              <Typography component='div' sx={{ color: "#441752" }}>
+              <Typography className="gadget-description">
+                {g.description}
+              </Typography>
+              {/* <Typography className="gadget-owner">
                 Владелец: {g.user_id}
-              </Typography>
+              </Typography> */}
             </CardContent>
             <Link to={`/gadget/${g.id}`} style={{ textDecoration: "none" }}>
-              <Button
-                variant='contained'
-                sx={{
-                  backgroundColor: "#441752",
-                  color: "#CFEBC7",
-                  "&:hover": {
-                    backgroundColor: "#8174A0",
-                  },
-                  margin: "10px 20px",
-                  alignSelf: "flex-end",
-                }}
-              >
-                More
-              </Button>
+              <Button className="more-button">More</Button>
             </Link>
           </Card>
         ))}
