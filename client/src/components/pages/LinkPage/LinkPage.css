@@ -1,0 +1,52 @@
+/* Основные стили для контейнера */
+.container {
+  padding: 20px;
+}
+
+.section-title {
+  margin-top: 32px;
+  margin-bottom: 16px;
+  font-family: 'Shantell Sans', sans-serif;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.link-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.link-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Стили для картинки */
+.link-image {
+  object-fit: cover; 
+}
+
+
+.link-name {
+  font-family: 'Shantell Sans', sans-serif;
+  color: #34495e;
+  margin-bottom: 8px;
+}
+
+
+.link-card .MuiTypography-body2 {
+  color: #7f8c8d;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}

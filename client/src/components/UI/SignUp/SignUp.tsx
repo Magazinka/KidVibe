@@ -6,6 +6,7 @@ import { userData } from "../../../redux/slice/auth.slice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store";
 import { User } from "../../../Types/Types";
+import { useNavigate } from "react-router-dom";
 
 import { TextField, Button, CircularProgress, Box } from "@mui/material";
 
@@ -23,6 +24,7 @@ const schema = yup
   .required();
 
 function Signup() {
+  const navigate = useNavigate();
   const [createUser, { isLoading, isError, error }] = useCreateUserMutation();
   const {
     register,
@@ -44,6 +46,7 @@ function Signup() {
       console.log("Signup response: ", response);
 
       dispatch(userData(response));
+      navigate("/");
     } catch (error) {
       console.log("Error during signup: ", error);
     }

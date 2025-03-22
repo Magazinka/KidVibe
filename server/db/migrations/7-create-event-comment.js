@@ -2,15 +2,12 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Gadgets', {
+    await queryInterface.createTable('eventComments', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
-      },
-      name: {
-        type: Sequelize.STRING
       },
       user_id: {
         type: Sequelize.INTEGER,
@@ -19,15 +16,8 @@ module.exports = {
           key: "id"
         }
       },
-      price: {
+      text: {
         type: Sequelize.STRING
-      },
-      image: {
-        type: Sequelize.STRING
-      },
-      group: {
-        type: Sequelize.STRING,
-        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -40,6 +30,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Gadgets');
+    await queryInterface.dropTable('eventComments');
   }
 };

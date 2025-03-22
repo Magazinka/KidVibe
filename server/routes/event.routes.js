@@ -1,6 +1,6 @@
 const eventRoutes = require("express").Router();
 const { where } = require("sequelize");
-const { event, User } = require("../db/models");
+const { event, User, userEvent } = require("../db/models");
 
 eventRoutes.get("/", async (req, res) => {
   try {
@@ -36,8 +36,17 @@ eventRoutes.get("/:id", async (req, res) => {
 eventRoutes.post("/", async (req, res) => {
   console.log("REQBODY CREATE: ", req.body);
   try {
-    const { name, description, location, price, date, user_id } = req.body;
-    if (!name || !description || !location || !price || !date || !user_id) {
+    const { name, description, location, price, date, user_id, group } =
+      req.body;
+    if (
+      !name ||
+      !description ||
+      !location ||
+      !price ||
+      !date ||
+      !user_id ||
+      !group
+    ) {
       return res.status(400).json({ message: "Error createEvent" });
     }
     const createEvent = await event.create({
@@ -47,11 +56,12 @@ eventRoutes.post("/", async (req, res) => {
       price,
       date,
       user_id,
+      group,
     });
     const card = createEvent.get();
     delete card.createdAt;
     delete card.updatedAt;
-    console.log("card: ", card);
+    // console.log("card: ", card);
     res.status(200).json({ card });
   } catch (error) {
     console.log("error post create: ", error);

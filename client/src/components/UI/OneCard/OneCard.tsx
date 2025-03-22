@@ -24,7 +24,11 @@ interface EventType {
   img_url: string;
   user_id: number;
 }
-
+interface Signup {
+  id: number;
+  login: string;
+  email: string;
+}
 function OneCard() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -32,6 +36,8 @@ function OneCard() {
   const { user } = useSelector((state: RootState) => state.authSlicer);
   const userId = user?.id;
   const [isChange, setIsChange] = useState(false);
+  const [signupArr, setSignupArr] = useState<Signup[]>([]);
+  const [isUserSignedUp, setIsUserSignedUp] = useState(false);
 
   const [event, setEvent] = useState<EventType>({
     id: 0,
@@ -51,7 +57,21 @@ function OneCard() {
       setEvent(response.data);
       reset(response.data);
     });
-  }, [id, reset]);
+
+    $api
+      .get(`/event/${id}/signup`, {
+        params: { eventId: id, userId: userId },
+      })
+      .then((response) => {
+        setSignupArr(response.data);
+
+        const isSignedUp = response.data.some((signup: Signup) => signup.id === userId);
+        setIsUserSignedUp(isSignedUp);
+      })
+      .catch((error) => {
+        console.log("Error fetching signups: ", error);
+      });
+  }, [id, userId, reset]);
 
   const onSubmit: SubmitHandler<EventType> = (data) => {
     $api
@@ -59,7 +79,6 @@ function OneCard() {
       .then((response) => {
         setEvent(response.data);
         setIsChange(false);
-        console.log("Event updated:", response.data);
       })
       .catch((error) => {
         console.error("Error updating event:", error);
@@ -79,6 +98,42 @@ function OneCard() {
 
   function changeHandler() {
     setIsChange(!isChange);
+  }
+
+  async function signupHandler() {
+    try {
+      const response = await $api.post(`/event/${id}/signup`, {
+        user_id: userId,
+        event_id: event.id,
+      });
+console.log(response.data)
+if (response.data) {
+        setIsUserSignedUp(true); 
+        // setSignupArr((prev) => [...prev, response.data]); 
+        setSignupArr(response.data); 
+      }
+      console.log(signupArr)
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  }
+
+  async function unsubscribe() {
+    try {
+      const response = await $api.delete(`/event/${id}/signup`, {
+        data: {
+          user_id: userId,
+          event_id: event.id,
+        },
+      });
+
+      if (response.data) {
+        setIsUserSignedUp(false);
+        setSignupArr((prev) => prev.filter((user) => user.id !== userId));
+      }
+    } catch (error) {
+      console.log("error: ", error);
+    }
   }
 
   return (
@@ -210,18 +265,23 @@ function OneCard() {
         </Box>
       ) : (
         <>
-          <CardMedia
-            component="img"
-            height="150"
-            image={event.img_url}
-            alt="event image"
-            sx={{ objectFit: "cover" }}
-          />
           <CardContent sx={{ flexGrow: 1 }}>
+            <CardMedia
+              component="img"
+              className="card-media"
+              sx={{
+                margin: "0 auto",
+                height: 300,
+                width: "90%",
+                objectFit: "cover",
+              }}
+              image={event.img_url}
+              alt={event.name}
+            />
             <Typography
               variant="h5"
               component="div"
-              sx={{ color: "#441752", marginBottom: 1 }}
+              sx={{ color: "#441752", marginBottom: 2, marginTop: 2 }}
             >
               {event.name}
             </Typography>
@@ -260,57 +320,100 @@ function OneCard() {
           </CardContent>
         </>
       )}
+      <Box>
+        <div style={{ display: "flex" }}>
+          <Link to={`/event`} style={{ textDecoration: "none" }}>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#441752",
+                color: "#CFEBC7",
+                "&:hover": {
+                  backgroundColor: "#8174A0",
+                },
+                margin: "10px 20px",
+                alignSelf: "flex-end",
+              }}
+            >
+              Вернуться
+            </Button>
+          </Link>
 
-      <div style={{ display: "flex" }}>
-        <Link to={`/event`} style={{ textDecoration: "none" }}>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#441752",
-              color: "#CFEBC7",
-              "&:hover": {
-                backgroundColor: "#8174A0",
-              },
-              margin: "10px 20px",
-              alignSelf: "flex-end",
-            }}
-          >
-            Вернуться
-          </Button>
-        </Link>
-
-        {Number(userId) === event.user_id && !isChange ? (
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#441752",
-              color: "#CFEBC7",
-              "&:hover": {
-                backgroundColor: "#8174A0",
-              },
-              margin: "10px 20px",
-              display: "none",
-              alignSelf: "flex-end",
-            }}
-          ></Button>
+          {isUserSignedUp ? (
+            <Button
+              onClick={unsubscribe}
+              variant="contained"
+              sx={{
+                backgroundColor: "#441752",
+                color: "#CFEBC7",
+                "&:hover": {
+                  backgroundColor: "#8174A0",
+                },
+                margin: "10px 20px",
+                alignSelf: "flex-end",
+              }}
+            >
+              Отписаться
+            </Button>
+          ) : (
+            <Button
+              onClick={signupHandler}
+              variant="contained"
+              sx={{
+                backgroundColor: "#441752",
+                color: "#CFEBC7",
+                "&:hover": {
+                  backgroundColor: "#8174A0",
+                },
+                margin: "10px 20px",
+                alignSelf: "flex-end",
+              }}
+            >
+              Записаться
+            </Button>
+          )}
+        </div>
+      </Box>
+      <Box sx={{ padding: 2 }}>
+        <Typography variant="h6" sx={{ color: "#441752", marginBottom: 1 }}>
+          Подписавшиеся на событие:
+        </Typography>
+        {signupArr.length > 0 ? (
+          <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
+            {signupArr.map(
+              (user: { id: number; login: string; email: string }) => (
+                <li
+                  key={user.id}
+                  style={{
+                    backgroundColor: "#6A4F7D",
+                    position: "relative",
+                    paddingLeft: "20px",
+                  }}
+                >
+                  <Typography variant="body2" sx={{ color: "#fff" }}>
+                    <span
+                      style={{
+                        position: "absolute",
+                        left: 0,
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        fontSize: "1.2em",
+                      }}
+                    >
+                      ✨
+                    </span>
+                    Login: {user.login}, Email: ({user.email})
+                  </Typography>
+                </li>
+              )
+            )}
+          </ul>
         ) : (
-          <Button
-            onClick={changeHandler}
-            variant="contained"
-            sx={{
-              backgroundColor: "#441752",
-              color: "#CFEBC7",
-              "&:hover": {
-                backgroundColor: "#8174A0",
-              },
-              margin: "10px 20px",
-              alignSelf: "flex-end",
-            }}
-          >
-            Записаться
-          </Button>
+          <Typography variant="body2" sx={{ color: "#441752" }}>
+            Пока никто не подписался.
+          </Typography>
         )}
-      </div>
+      </Box>
     </Card>
   );
 }
