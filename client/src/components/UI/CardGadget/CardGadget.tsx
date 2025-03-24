@@ -114,7 +114,7 @@ function CardGadget() {
               </Box>
             </CardContent>
             <Link to={`/gadget/${g.id}`} style={{ textDecoration: "none" }}>
-              <Button style={{ paddingTop: "0px" }} className="more-button">More</Button>
+              <Button style={{ paddingTop: "0px" }} className="more-button">Подробнее</Button>
             </Link>
           </Card>
         ))}
