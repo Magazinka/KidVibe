@@ -37,7 +37,8 @@ const MainPage: React.FC = () => {
     "https://res.cloudinary.com/dlliagivo/image/upload/v1742475564/yepp6p1fzkqaydzodpce.webp",
     "https://res.cloudinary.com/dlliagivo/image/upload/v1742475564/ijzquujqf200q9ehavdo.webp",
     "https://res.cloudinary.com/dlliagivo/image/upload/v1742476902/xqg3r6xxt0lh2iqvbfz0.webp",
-    
+    "https://res.cloudinary.com/dlliagivo/image/upload/v1742641971/esqsjyfnwrwcyrhdrtzc.png",
+    "https://res.cloudinary.com/dlliagivo/image/upload/v1742642372/ph4dabj592sqwwz2kw9r.png"
   ];
 
   const getRandomAnimalImage = () => {
