@@ -14,10 +14,10 @@ interface FormData {
 	id?: number;
 	name: string;
 	user_id: number;
-	price: number;
-	image?: File;
+	price: string;
+	image?: File; // Измените тип на File
 	group: string;
-	description: string
+	description: string;
 }
 
 function AddGadget({ toggleModalVisible }: Props) {
@@ -38,30 +38,51 @@ function AddGadget({ toggleModalVisible }: Props) {
 		try {
 			let imageUrl = null;
 
-			if (data.image) {
+			// Проверяем, есть ли файл изображения
+			if (data.image instanceof File) {
 				const formData = new FormData();
 				formData.append("file", data.image);
-				formData.append("upload_preset", "your_upload_preset");
+				formData.append("upload_preset", "upload_gadgets"); // Замените на ваш upload preset
 
+				const controller = new AbortController();
+  				// Устанавливаем таймаут 30 секунд (30000 мс)
+				const timeoutId = setTimeout(() => controller.abort(), 30000);
+				
 				const cloudinaryResponse = await fetch(`https://api.cloudinary.com/v1_1/dlliagivo/image/upload`, {
 					method: "POST",
 					body: formData,
-				}).then(res => res.json());
+					signal: controller.signal
+				});
 
-				imageUrl = cloudinaryResponse.secure_url;
+				if (!cloudinaryResponse.ok) {
+					throw new Error("Image upload failed");
+				}
+
+				const result = await cloudinaryResponse.json();
+				imageUrl = result.secure_url;
+				console.log(result);
+				
 			}
-
-			const response = await createGadget({
-				...data,
+			// Отправляем данные на сервер
+			const gadgetData = {
+				name: data.name,
+				price: data.price.toString(), // Явное преобразование в строку
 				user_id: user_id,
-				image: imageUrl,
-			}).unwrap();
+				image: imageUrl || "", // На случай если изображение не загружено
+				group: data.group,
+				description: data.description,
+			};
+
+			console.log("Sending to server:", gadgetData);
+			const response = await createGadget(gadgetData).unwrap();
 
 			console.log("Gadget created successfully:", response);
 			setIsVisible(false);
 			toggleModalVisible();
+			setPreviewImage(null);
 		} catch (err) {
 			console.error("Error creating gadget:", err);
+			// Здесь можно добавить уведомление для пользователя
 		}
 	};
 
@@ -170,7 +191,7 @@ function AddGadget({ toggleModalVisible }: Props) {
 											error={!!errors.description}
 										/>
 									</Box>
-									<Box sx={{ marginBottom: 2 }}>
+									<Button sx={{ marginBottom: 2 }}>
 										<input
 											type='file'
 											accept='image/*'
@@ -182,7 +203,11 @@ function AddGadget({ toggleModalVisible }: Props) {
 											}}
 										/>
 										{errors.image && <Typography color='error'>Изображение обязательно</Typography>}
-									</Box>
+									</Button>
+
+									{previewImage && (
+										<img src={previewImage} alt='Preview' style={{ width: "100%", marginBottom: 16, borderRadius: 4 }} />
+									)}
 
 									<Button
 										fullWidth

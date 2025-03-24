@@ -7,6 +7,20 @@ const app = express();
 
 const PORT = 3001;
 
+// const multer = require("multer")
+// const cloudinary = require("cloudinary").v2
+// const streamifier = require("streamifire")
+
+// cloudinary.config({
+//   cloud_name: "dlliagivo",
+//   api_key: "212971461224372",
+//   api_secret: "6jDh5g0JQjr31zs8GVQuhkriwVA",
+//   secure: true,
+// });
+
+// const storage = multer.memoryStorage()
+
+
 
 serverConfig(app);
 app.use("/", indexRouter);
