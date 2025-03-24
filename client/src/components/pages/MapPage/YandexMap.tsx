@@ -1,117 +1,198 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { 
+  Box, 
+  List, 
+  ListItem, 
+  ListItemText, 
+  Divider, 
+  Typography,
+  Button,
+  Paper,
+  CircularProgress,
+  Alert
+} from '@mui/material';
+import { SentimentDissatisfied } from '@mui/icons-material';
+import { v4 as uuidv4 } from 'uuid';
+import './YandexMap.css';
 
-interface Place {
-  id: string;
-  name: string;
-  coordinates: [number, number];
-  type: string; 
-}
+const SEVASTOPOL_CENTER: [number, number] = [44.6167, 33.5254];
+const ZOOM = 12;
 
-const YandexMap: React.FC = () => {
+const CHILD_CLINICS = [
+  {
+    id: 1,
+    name: "Детская поликлиника №1",
+    address: "ул. Ленина, 25",
+    coordinates: [44.6115, 33.5223] as [number, number]
+  },
+  {
+    id: 2,
+    name: "Детская поликлиника №3", 
+    address: "ул. Острякова, 5",
+    coordinates: [44.6021, 33.5198] as [number, number]
+  },
+  {
+    id: 3,
+    name: "Детская поликлиника №5",
+    address: "ул. Гоголя, 16",
+    coordinates: [44.6138, 33.5129] as [number, number]
+  }
+];
+
+const YandexMap = ({ ymaps }: { ymaps: any }) => {
   const mapRef = useRef<HTMLDivElement>(null);
-  const [places, setPlaces] = useState<Place[]>([]); 
-  const apiKey = 'dd3a041b-a4cd-4fc2-baa2-965afa2f42ad'; 
+  const [selectedClinic, setSelectedClinic] = useState<number | null>(null);
+  const [savedClinics, setSavedClinics] = useState<any[]>([]);
+  const [mapInstance, setMapInstance] = useState<any>(null);
 
+  
   useEffect(() => {
-    
-    if (!apiKey) {
-      console.error('API-ключ не указан');
-      return;
-    }
+    if (!ymaps || !mapRef.current) return;
 
-    
-    const script = document.createElement('script');
-    script.src = `https://api-maps.yandex.ru/2.1/?apikey=${apiKey}&lang=ru_RU`;
-    script.async = true;
-    document.head.appendChild(script);
+    const map = new ymaps.Map(mapRef.current, {
+      center: SEVASTOPOL_CENTER,
+      zoom: ZOOM,
+    });
 
-    script.onload = () => {
-      window.ymaps.ready(() => {
-        if (mapRef.current) {
-          
-          const map = new window.ymaps.Map(mapRef.current, {
-            center: [44.61665, 33.52536], 
-            zoom: 12,
-          });
-
-          // Функция для поиска организаций
-          const searchOrganizations = (query: string, type: string) => {
-            fetch(
-              `https://search-maps.yandex.ru/v1/?apikey=${apiKey}&text=${encodeURIComponent(query)}, Севастополь&lang=ru_RU&results=50`
-            )
-              .then((response) => {
-                if (!response.ok) {
-                  return response.text().then((text) => {
-                    throw new Error(`Ошибка HTTP: ${response.status}. Ответ сервера: ${text}`);
-                  });
-                }
-                return response.json();
-              })
-              .then((data) => {
-                const foundPlaces: Place[] = data.features.map((feature: any) => ({
-                  id: feature.properties.id,
-                  name: feature.properties.name,
-                  coordinates: feature.geometry.coordinates.reverse(), 
-                  type: type, // Тип места
-                }));
-
-                // Добавляем найденные места в состояние
-                setPlaces((prevPlaces) => [...prevPlaces, ...foundPlaces]);
-
-                //Добавляем метки на карту
-                foundPlaces.forEach((place) => {
-                  const placemark = new window.ymaps.Placemark(place.coordinates, {
-                    hintContent: place.name,
-                  });
-                  map.geoObjects.add(placemark);
-                });
-              })
-              .catch((error) => {
-                console.error(`Ошибка при загрузке данных (${query}):`, error.message);
-              });
-          };
-
-          // Поиск детских садов
-          searchOrganizations('детский сад', 'детский сад');
-
-          // Поиск аптек
-          searchOrganizations('аптека', 'аптека');
-        }
-      });
-    };
+    setMapInstance(map);
 
     return () => {
-      document.head.removeChild(script);
+      map.destroy();
     };
-  }, [apiKey]);
+  }, [ymaps]);
+
+  
+  useEffect(() => {
+    if (!mapInstance || !ymaps) return;
+
+    
+    mapInstance.geoObjects.removeAll();
+
+    
+    CHILD_CLINICS.forEach(clinic => {
+      const placemark = new ymaps.Placemark(
+        clinic.coordinates,
+        {
+          hintContent: clinic.name,
+          balloonContent: `
+            <strong>${clinic.name}</strong><br/>
+            <em>${clinic.address}</em>
+          `,
+        },
+        {
+          preset: clinic.id === selectedClinic 
+            ? 'islands#redHospitalIcon' 
+            : 'islands#blueHospitalIcon'
+        }
+      );
+      mapInstance.geoObjects.add(placemark);
+    });
+
+    
+    savedClinics.forEach(clinic => {
+      const placemark = new ymaps.Placemark(
+        clinic.coordinates,
+        {
+          balloonContent: `
+            <strong>${clinic.name}</strong><br/>
+            <em>${clinic.address}</em>
+          `,
+        },
+        { preset: 'islands#greenDotIcon' }
+      );
+      mapInstance.geoObjects.add(placemark);
+    });
+
+  }, [mapInstance, ymaps, selectedClinic, savedClinics]);
+
+  
+  useEffect(() => {
+    const saved = localStorage.getItem('savedClinics');
+    if (saved) setSavedClinics(JSON.parse(saved));
+  }, []);
+
+  const handleSaveClinic = () => {
+    if (selectedClinic === null) return;
+
+    const clinicToSave = CHILD_CLINICS.find(c => c.id === selectedClinic);
+    if (!clinicToSave) return;
+
+    const newSavedClinic = {
+      id: uuidv4(),
+      ...clinicToSave
+    };
+
+    const updated = [...savedClinics, newSavedClinic];
+    localStorage.setItem('savedClinics', JSON.stringify(updated));
+    setSavedClinics(updated);
+  };
 
   return (
-    <div style={{ display: 'flex', width: '100%', height: '600px' }}>
-      
-      <div ref={mapRef} style={{ flex: 2, height: '100%' }} />
+    <Box className="map-container">
+      <Box className="map-content">
+        <Paper className="clinics-list" elevation={3}>
+          <Typography variant="h6" gutterBottom>
+            Детские поликлиники Севастополя
+          </Typography>
+          <List>
+            {CHILD_CLINICS.map(clinic => (
+              <div key={clinic.id}>
+                <ListItem 
+                  button
+                  selected={clinic.id === selectedClinic}
+                  onClick={() => setSelectedClinic(clinic.id)}
+                >
+                  <ListItemText
+                    primary={clinic.name}
+                    secondary={clinic.address}
+                  />
+                </ListItem>
+                <Divider />
+              </div>
+            ))}
+          </List>
 
-      
-      <div style={{ flex: 1, padding: '16px', overflowY: 'auto', borderLeft: '1px solid #ccc' }}>
-        <h2>Найденные места</h2>
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          {places.map((place) => (
-            <li
-              key={place.id}
-              style={{
-                marginBottom: '8px',
-                padding: '8px',
-                backgroundColor: place.type === 'детский сад' ? '#e3f2fd' : '#ffebee',
-                borderRadius: '4px',
-              }}
-            >
-              <strong>{place.name}</strong>
-              <br />
-              <span>{place.type}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+          {selectedClinic !== null && (
+            <Box p={2}>
+              <Typography variant="subtitle1">
+                {CHILD_CLINICS.find(c => c.id === selectedClinic)?.name}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {CHILD_CLINICS.find(c => c.id === selectedClinic)?.address}
+              </Typography>
+              <Button
+                variant="contained"
+                fullWidth
+                sx={{ mt: 2 }}
+                onClick={handleSaveClinic}
+              >
+                Сохранить в избранное
+              </Button>
+            </Box>
+          )}
+        </Paper>
+
+        <Box ref={mapRef} className="main-map" />
+      </Box>
+
+      {savedClinics.length > 0 && (
+        <Paper sx={{ mt: 3, p: 2 }} elevation={3}>
+          <Typography variant="h6" gutterBottom>
+            Избранные поликлиники
+          </Typography>
+          <List>
+            {savedClinics.map(clinic => (
+              <ListItem key={clinic.id}>
+                <ListItemText
+                  primary={clinic.name}
+                  secondary={clinic.address}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </Paper>
+      )}
+    </Box>
   );
 };
 
