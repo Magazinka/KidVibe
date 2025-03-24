@@ -91,7 +91,7 @@ const MainPage: React.FC = () => {
               
               <Box
                 component="img"
-                src={getRandomAnimalImage()} /
+                src={getRandomAnimalImage()} 
                 alt="Зверушка"
                 className="corner-image top-left"
               />

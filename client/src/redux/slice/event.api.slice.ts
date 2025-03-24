@@ -7,7 +7,7 @@ interface ApiResponse {
   date: string;
   description: string;
   // file: FileList;
-  userId: string;
+  user_id: string;
   location: string;
   price: number;
 }
@@ -19,6 +19,7 @@ export const apiEvent = createApi({
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).authSlicer.user?.token;
+      console.log("token event: ", token);
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
@@ -35,7 +36,7 @@ export const apiEvent = createApi({
         date: string;
         description: string;
         // fileList: FileList;
-        userId: number | undefined;
+        user_id: number | undefined;
         location: string;
         price: number;
       }

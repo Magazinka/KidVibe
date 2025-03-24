@@ -42,6 +42,7 @@ const authSlice = createSlice({
       console.log("Login: ", action.payload);
       const { user, accessToken } = action.payload;
       state.user = { ...user, token: accessToken };
+
       //   state.user.token = accessToken;
       console.log("token: ", accessToken);
       console.log("id authSlice: ", user);
@@ -50,10 +51,14 @@ const authSlice = createSlice({
       state.isAuth = true;
     },
     loginUser: (state, action) => {
-      const { user, token } = action.payload;
-      console.log("token: ", token);
-      state.user = user;
-      console.log("TEST STATE: ", state.user);
+      const { user, accessToken } = action.payload;
+      state.user = { ...user, token: accessToken };
+      console.log("token: ", accessToken);
+      console.log("state.user login: ", state.user);
+      console.log("{ ...user, token: accessToken };: ", {
+        ...user,
+        token: accessToken,
+      });
       state.isAuth = true;
       // state.accessToken = action.payload.accessToken;
     },
