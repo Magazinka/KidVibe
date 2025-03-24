@@ -13,6 +13,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { useForm, SubmitHandler } from "react-hook-form";
+import CommentEvent from "./CommentEvent";
 
 interface EventType {
   id: number;
@@ -65,7 +66,9 @@ function OneCard() {
       .then((response) => {
         setSignupArr(response.data);
 
-        const isSignedUp = response.data.some((signup: Signup) => signup.id === userId);
+        const isSignedUp = response.data.some(
+          (signup: Signup) => signup.id === userId
+        );
         setIsUserSignedUp(isSignedUp);
       })
       .catch((error) => {
@@ -106,13 +109,12 @@ function OneCard() {
         user_id: userId,
         event_id: event.id,
       });
-console.log(response.data)
-if (response.data) {
-        setIsUserSignedUp(true); 
-        // setSignupArr((prev) => [...prev, response.data]); 
-        setSignupArr(response.data); 
+      console.log(response.data);
+      if (response.data) {
+        setIsUserSignedUp(true);
+        setSignupArr(response.data);
       }
-      console.log(signupArr)
+      console.log(signupArr);
     } catch (error) {
       console.log("error: ", error);
     }
@@ -414,6 +416,7 @@ if (response.data) {
           </Typography>
         )}
       </Box>
+      <CommentEvent />
     </Card>
   );
 }
