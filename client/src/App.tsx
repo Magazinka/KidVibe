@@ -13,6 +13,7 @@ import NavBar from "./components/UI/NavBar/NavBar";
 import { loginUser } from "./redux/slice/auth.slice";
 import $api from "./shared/axios.instance";
 import OneCard from "./components/UI/OneCard/OneCard";
+import Footer from "./components/UI/Footer/footer";
 import OneGadget from "./components/UI/OneGadget/OneGadget";
 
 function App() {
@@ -28,12 +29,11 @@ function App() {
       });
   }, [dispatch]);
 
-  console.log(import.meta.env.VITE_URL);
   return (
     <BrowserRouter>
       <NavBar />
-      <Routes>
-        <Route>
+      <main>
+        <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/event" element={<EventPage />} />
           <Route path="/event/:id" element={<OneCard />} />
@@ -43,11 +43,9 @@ function App() {
           <Route path="/gadget/:id" element={<OneGadget />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/auth" element={<AuthPage />} />
-        </Route>
-      </Routes>
-      {/* <Routes>
-        <Route path="/" element={<MainPage />} />
-      </Routes> */}
+        </Routes>
+      </main>
+      <Footer />
     </BrowserRouter>
   );
 }
