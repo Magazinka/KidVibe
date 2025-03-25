@@ -35,7 +35,7 @@ eventRoutes.get("/:id", async (req, res) => {
 eventRoutes.post("/", async (req, res) => {
   console.log("REQBODY CREATE: ", req.body);
   try {
-    const { name, description, location, price, date, user_id, group } =
+    const { name, description, location, price, date, user_id, group, img_url } =
       req.body;
     console.log(typeof user_id);
     if (
@@ -45,8 +45,10 @@ eventRoutes.post("/", async (req, res) => {
       !price ||
       !date ||
       !user_id ||
-      !group
-    ) {
+      !group 
+      // !img_url
+    )
+    {
       return res.status(400).json({ message: "Error createEvent" });
     }
     const createEvent = await event.create({
@@ -57,6 +59,7 @@ eventRoutes.post("/", async (req, res) => {
       date,
       user_id,
       group,
+      img_url
     });
     const allEvent = await event.findAll();
     // const card = createEvent.get();

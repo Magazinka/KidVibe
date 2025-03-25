@@ -43,16 +43,11 @@ function AddGadget({ toggleModalVisible }: Props) {
 			if (data.image instanceof File) {
 				const formData = new FormData();
 				formData.append("file", data.image);
-				formData.append("upload_preset", "upload_gadgets"); // Замените на ваш upload preset
+				formData.append("upload_preset", "upload_gadgets"); 
 
-				const controller = new AbortController();
-  				// Устанавливаем таймаут 30 секунд (30000 мс)
-				// const timeoutId = setTimeout(() => controller.abort(), 30000);
-				
 				const cloudinaryResponse = await fetch(`https://api.cloudinary.com/v1_1/dlliagivo/image/upload`, {
 					method: "POST",
 					body: formData,
-					// signal: controller.signal
 				});
 
 				if (!cloudinaryResponse.ok) {
@@ -61,9 +56,9 @@ function AddGadget({ toggleModalVisible }: Props) {
 
 				const result = await cloudinaryResponse.json();
 				imageUrl = result.secure_url;
-				console.log("formData", formData.getAll("upload_preset"))
-				console.log(result);
-				console.log(imageUrl);
+				// console.log("formData", formData.getAll("upload_preset"))
+				// console.log(result);
+				// console.log(imageUrl);
 				
 				
 			}
@@ -77,7 +72,7 @@ function AddGadget({ toggleModalVisible }: Props) {
 				description: data.description,
 			};
 
-			console.log("Sending to server:", gadgetData);
+			// console.log("Sending to server:", gadgetData);
 			const response = await createGadget(gadgetData).unwrap();
 
 			console.log("Gadget created successfully:", response);
