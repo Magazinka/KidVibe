@@ -14,6 +14,7 @@ import {
   Select,
   MenuItem,
   InputLabel,
+  FormHelperText,
 } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -143,16 +144,30 @@ function AddCard({ toggleModalVisable }: Props) {
                     />
                   </Box>
                   <Box sx={{ marginBottom: 2 }}>
-                    <TextField
-                      fullWidth
-                      label="Категория"
-                      variant="outlined"
-                      placeholder="Введите категорию"
-                      {...register("group", {
-                        required: "Категория обязательна",
-                      })}
-                      error={!!errors.location}
-                    />
+                    <FormControl fullWidth error={!!errors.group}>
+                      <InputLabel>Категория</InputLabel>
+                      <Select
+                        label="Категория"
+                        {...register("group", {
+                          required: "Категория обязательна",
+                        })}
+                        defaultValue=""
+                      >
+                        <MenuItem value="">
+                          <em>Выберите категорию</em>
+                        </MenuItem>
+                        <MenuItem value="technologies">Технологии</MenuItem>
+                        <MenuItem value="art">Искусство</MenuItem>
+                        <MenuItem value="music">Музыка</MenuItem>
+                        <MenuItem value="buisness">Бизнес</MenuItem>
+                        <MenuItem value="cooking">Кулинария</MenuItem>
+                        <MenuItem value="game">Игры</MenuItem>
+                        <MenuItem value="marketing">Маркетинг</MenuItem>
+                      </Select>
+                      {errors.group && (
+                        <FormHelperText>{errors.group.message}</FormHelperText>
+                      )}
+                    </FormControl>
                   </Box>
                   <Box sx={{ marginBottom: 2 }}>
                     <TextField
