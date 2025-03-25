@@ -4,9 +4,9 @@ const { event, User, userEvent } = require("../db/models");
 
 signupEvent.get("/signup", async (req, res) => {
   const { eventId, userId } = req.query;
-  console.log("req.query: ", req.query);
-  console.log("userId: ", userId);
-  console.log("eventId: ", eventId);
+  // console.log("req.query: ", req.query);
+  // console.log("userId: ", userId);
+  // console.log("eventId: ", eventId);
 
   try {
     const signups = await User.findAll({
@@ -18,7 +18,7 @@ signupEvent.get("/signup", async (req, res) => {
         where: { id: eventId },
       },
     });
-    console.log("signups: ", signups);
+    // console.log("signups: ", signups);
     if (!signups) {
       res.status(400).json({ message: "err signups" });
     }
@@ -33,7 +33,7 @@ signupEvent.get("/signup", async (req, res) => {
 signupEvent.post("/signup", async (req, res) => {
   try {
     const { user_id, event_id } = req.body;
-    console.log("req.body: ", req.body);
+    // console.log("req.body: ", req.body);
 
     if (!user_id || !event_id) {
       return res
@@ -128,8 +128,8 @@ signupEvent.post("/signup/attendees", async (req, res) => {
 signupEvent.delete("/signup", async (req, res) => {
   try {
     const { user_id, event_id } = req.body;
-    console.log("event_id: ", event_id);
-    console.log("user_id: ", user_id);
+    // console.log("event_id: ", event_id);
+    // console.log("user_id: ", user_id);
     if (!user_id || !event_id) {
       return res
         .status(400)

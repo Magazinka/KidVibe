@@ -56,6 +56,7 @@ function OneCard() {
   useEffect(() => {
     $api.get(`event/${id}`).then((response) => {
       setEvent(response.data);
+      console.log("response.data one useEffect: ", response.data);
       reset(response.data);
     });
 
@@ -112,6 +113,7 @@ function OneCard() {
       console.log(response.data);
       if (response.data) {
         setIsUserSignedUp(true);
+
         setSignupArr(response.data);
       }
       console.log(signupArr);
@@ -170,7 +172,6 @@ function OneCard() {
           Редактировать
         </Button>
       )}
-
       {Number(userId) === event.user_id && !isChange && (
         <Button
           onClick={() => deleteHandler(event.id)}
@@ -188,7 +189,6 @@ function OneCard() {
           X
         </Button>
       )}
-
       {isChange ? (
         <Box
           sx={{

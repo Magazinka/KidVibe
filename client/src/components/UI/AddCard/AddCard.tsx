@@ -16,8 +16,9 @@ import {
   InputLabel,
 } from "@mui/material";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppDispatch } from "../../../redux/store";
+import { getEvent } from "../../../redux/slice/event.slice";
 
 interface FormData {
   id?: number;
@@ -34,21 +35,23 @@ interface Props {
 }
 function AddCard({ toggleModalVisable }: Props) {
   const [isVisible, setIsVisible] = useState(false);
-
+  const dispatch = useDispatch<AppDispatch>();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
-  const user_id = useSelector((state: RootState) => state.authSlicer.user?.id);
+  const id = useSelector((state: RootState) => state.authSlicer.user?.id);
   const [createEvent, { isLoading, isError, error }] = useCreateEventMutation();
 
   const onSubmit = async (data: FormData) => {
     try {
       const response = await createEvent({
         ...data,
-        user_id: user_id,
+        user_id: id,
       }).unwrap();
+      dispatch(getEvent());
+      console.log("RESPONSE FRONT: ", response);
       console.log("Event created successfully:", response);
       setIsVisible(false);
       toggleModalVisable();
@@ -214,3 +217,6 @@ function AddCard({ toggleModalVisable }: Props) {
 }
 
 export default AddCard;
+function changeEvent(response: ApiResponse): any {
+  throw new Error("Function not implemented.");
+}

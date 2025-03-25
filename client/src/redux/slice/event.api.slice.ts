@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { RootState } from "../store";
 
 interface ApiResponse {
   id?: number;
@@ -6,7 +7,7 @@ interface ApiResponse {
   date: string;
   description: string;
   // file: FileList;
-  userId: string;
+  user_id: string;
   location: string;
   price: number;
 }
@@ -16,6 +17,14 @@ export const apiEvent = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_URL}/event`,
     credentials: "include",
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as RootState).authSlicer.user?.token;
+      console.log("token event: ", token);
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
   tagTypes: ["Event"],
   endpoints: (builder) => ({
@@ -27,7 +36,7 @@ export const apiEvent = createApi({
         date: string;
         description: string;
         // fileList: FileList;
-        userId: number | undefined;
+        user_id: number | undefined;
         location: string;
         price: number;
       }
