@@ -1,7 +1,102 @@
-/* Основные стили для контейнера и заголовков */
+/* Анимация для плавного появления карточек */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Плавное появление карточек */
+.card-container {
+  position: relative;
+  border-radius: 20px;
+  transform: rotate(0);
+  transition: transform 0.3s ease, background 0.3s ease;
+  cursor: pointer;
+  overflow: visible;
+  background-color: #8174a0;
+  color: #cfebc7;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  opacity: 0; /* Изначально карточки скрыты */
+}
+
+.card-container.appear {
+  animation: fadeIn 0.8s ease forwards; /* Анимация появления */
+}
+
+/* Стили при наведении */
+.card-container:hover {
+  transform: translateY(-5px) rotate(0deg);
+  background: linear-gradient(135deg, #ffffff, #f9f3d0);
+}
+
+.card-media {
+  height: 140px;
+  object-fit: cover;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.corner-image {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  z-index: 2;
+  transition: transform 0.5s ease;
+}
+
+.card-container:hover .top-left {
+  animation: spin-clockwise 2s linear infinite;
+  top: -40px;
+  left: -40px;
+}
+
+.card-container:hover .bottom-right {
+  animation: spin-counterclockwise 2s linear infinite;
+  bottom: -40px;
+  right: -40px;
+}
+
+.top-left {
+  top: -30px;
+  left: -50px;
+}
+
+.bottom-right {
+  bottom: -30px;
+  right: -5px;
+}
+
+/* Анимация вращения */
+@keyframes spin-clockwise {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-counterclockwise {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
 .container {
   padding: 20px;
-  overflow: visible; 
+  overflow: visible;
 }
 
 .section-title {
@@ -19,84 +114,4 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-}
-
-.card-container {
-  position: relative;
-  border-radius: 20px;
-  transform: rotate(0);
-  transition: transform 0.3s ease, background 0.3s ease;
-  cursor: pointer;
-  overflow: visible; 
-  background-color: #8174a0;
-  color: #cfebc7;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.card-container:hover {
-  transform: translateY(-5px) rotate(0deg);
-  background: linear-gradient(135deg, #ffffff, #f9f3d0);
-}
-
-.card-media {
-  height: 140px;
-  object-fit: cover;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-}
-
-.card-content {
-  padding: 16px;
-}
-
-
-.corner-image {
-  position: absolute;
-  width: 80px; 
-  height: 80px;
-  z-index: 2;
-  transition: transform 0.5s ease;
-}
-
-
-@keyframes spin-clockwise {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-
-@keyframes spin-counterclockwise {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(-360deg);
-  }
-}
-
-
-.card-container:hover .top-left {
-  animation: spin-clockwise 2s linear infinite;
-  top: -40px; 
-  left: -40px;
-}
-
-.card-container:hover .bottom-right {
-  animation: spin-counterclockwise 2s linear infinite;
-  bottom: -40px; 
-  right: -40px;
-}
-
-.top-left {
-  top: -30px; 
-  left: -50px;
-}
-
-.bottom-right {
-  bottom: -30px;
-  right: -5px;
 }
