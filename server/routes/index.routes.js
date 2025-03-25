@@ -8,6 +8,7 @@ const linkRoutes = require("./link.routes");
 const signupEvent = require("./signupEvent.routes");
 const verifyAccessToken = require("../middlewares/verify.access.token");
 const commentEventRouter = require("./commentEvent.routes");
+const pointRoutes = require("./points.routes")
 
 indexRouter.use("/auth", authRoutes);
 indexRouter.use("/tokens", tokensRouter);
@@ -17,5 +18,6 @@ indexRouter.use("/announcement", announcementRoutes);
 indexRouter.use("/link", verifyAccessToken, linkRoutes);
 indexRouter.use("/event/:id", verifyAccessToken, signupEvent);
 indexRouter.use("/event/:id/comment", commentEventRouter);
+indexRouter.use("/map", pointRoutes)
 
 module.exports = indexRouter;

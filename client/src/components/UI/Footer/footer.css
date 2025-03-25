@@ -1,0 +1,46 @@
+/* Основные стили для футера */
+footer {
+  position: fixed; /* Закрепляем футер внизу окна */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 840px; /* Фиксированная ширина */
+  margin: 0 auto;
+  background-color: #F5F5F5;
+  box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.2); /* Легкая тень */
+  padding: 15px 30px; /* Отступы внутри футера */
+  height: 60px; /* Задаем высоту футера */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 12px; /* Закругленные углы */
+  transform: translateY(100%); /* Изначально скрыт */
+  transition: transform 0.5s ease; /* Анимация появления */
+}
+
+footer.visible {
+  transform: translateY(0); /* Показываем футер */
+}
+
+/* Стили текста */
+footer p, footer a {
+  color: #8174A0;
+  font-family: 'Shantell Sans', sans-serif;
+  font-size: 14px;
+  margin: 0;
+}
+
+footer a {
+  text-decoration: none;
+  color: #385e2d;
+  font-weight: bold;
+}
+
+footer a:hover {
+  color: #441752;
+}
+
+/* Стиль для основного контента */
+main {
+  padding-bottom: 80px; /* Резервируем место под футер (чуть больше его высоты) */
+}
