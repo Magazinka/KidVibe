@@ -34,7 +34,8 @@ function AddGadget({ toggleModalVisible }: Props) {
 	const user_id = useSelector((state: RootState) => state.authSlicer.user?.id);
 	const [createGadget, { isLoading, isError, error }] = useCreateGadgetMutation();
 
-	const onSubmit = async (data: FormData) => {
+	const onSubmit = async (data: FormData, event) => {
+		event.preventDefault();
 		try {
 			let imageUrl = null;
 
@@ -46,12 +47,12 @@ function AddGadget({ toggleModalVisible }: Props) {
 
 				const controller = new AbortController();
   				// Устанавливаем таймаут 30 секунд (30000 мс)
-				const timeoutId = setTimeout(() => controller.abort(), 30000);
+				// const timeoutId = setTimeout(() => controller.abort(), 30000);
 				
 				const cloudinaryResponse = await fetch(`https://api.cloudinary.com/v1_1/dlliagivo/image/upload`, {
 					method: "POST",
 					body: formData,
-					signal: controller.signal
+					// signal: controller.signal
 				});
 
 				if (!cloudinaryResponse.ok) {
@@ -60,7 +61,10 @@ function AddGadget({ toggleModalVisible }: Props) {
 
 				const result = await cloudinaryResponse.json();
 				imageUrl = result.secure_url;
+				console.log("formData", formData.getAll("upload_preset"))
 				console.log(result);
+				console.log(imageUrl);
+				
 				
 			}
 			// Отправляем данные на сервер
