@@ -12,7 +12,7 @@ const commentEventRouter = require("./commentEvent.routes");
 indexRouter.use("/auth", authRoutes);
 indexRouter.use("/tokens", tokensRouter);
 indexRouter.use("/event", verifyAccessToken, eventRoutes);
-indexRouter.use("/gadget", gadgetRoutes);
+indexRouter.use("/gadget", verifyAccessToken, gadgetRoutes);
 indexRouter.use("/announcement", announcementRoutes);
 indexRouter.use("/link", verifyAccessToken, linkRoutes);
 indexRouter.use("/event/:id", verifyAccessToken, signupEvent);
