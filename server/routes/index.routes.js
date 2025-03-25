@@ -13,6 +13,7 @@ indexRouter.use("/auth", authRoutes);
 indexRouter.use("/tokens", tokensRouter);
 indexRouter.use("/event", verifyAccessToken, eventRoutes);
 indexRouter.use("/gadget", verifyAccessToken, gadgetRoutes);
+indexRouter.use("/gadget/:id", verifyAccessToken, gadgetRoutes);
 indexRouter.use("/announcement", announcementRoutes);
 indexRouter.use("/link", verifyAccessToken, linkRoutes);
 indexRouter.use("/event/:id", verifyAccessToken, signupEvent);

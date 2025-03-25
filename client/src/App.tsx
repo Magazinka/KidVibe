@@ -13,6 +13,7 @@ import NavBar from "./components/UI/NavBar/NavBar";
 import { loginUser } from "./redux/slice/auth.slice";
 import $api from "./shared/axios.instance";
 import OneCard from "./components/UI/OneCard/OneCard";
+import OneGadget from "./components/UI/OneGadget/OneGadget";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ function App() {
           <Route path="/link" element={<LinkPage />} />
           <Route path="/map" element={<MapPage />} />
           <Route path="/gadget" element={<GadgetPage />} />
+          <Route path="/gadget/:id" element={<OneGadget />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/auth" element={<AuthPage />} />
         </Route>
