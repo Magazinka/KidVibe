@@ -135,6 +135,7 @@ function OneGadget() {
 				justifyContent: "center",
 				alignItems: "center",
 				minHeight: "60vh",
+				fontFamily: "'Shantell Sans', sans-serif",
 			}}
 		>
 			{Number(userId) === gadget.user_id && !isChange && (
@@ -144,6 +145,7 @@ function OneGadget() {
 					sx={{
 						backgroundColor: "#441752",
 						color: "#CFEBC7",
+						fontFamily: "'Shantell Sans', sans-serif",
 						"&:hover": {
 							backgroundColor: "#8174A0",
 						},
@@ -161,6 +163,7 @@ function OneGadget() {
 					sx={{
 						backgroundColor: "#441752",
 						color: "#CFEBC7",
+						fontFamily: "'Shantell Sans', sans-serif",
 						"&:hover": {
 							backgroundColor: "#8174A0",
 						},
@@ -183,6 +186,7 @@ function OneGadget() {
 						boxShadow: 3,
 						borderRadius: 2,
 						backgroundColor: "#F5F5F5",
+						fontFamily: "'Shantell Sans', sans-serif",
 					}}
 				>
 					<form onSubmit={handleSubmit(onSubmit)}>
@@ -195,6 +199,13 @@ function OneGadget() {
 							required
 							sx={{
 								marginTop: 2,
+								fontFamily: "'Shantell Sans', sans-serif",
+							}}
+							InputProps={{
+								style: { fontFamily: "'Shantell Sans', sans-serif" },
+							}}
+							InputLabelProps={{
+								style: { fontFamily: "'Shantell Sans', sans-serif" },
 							}}
 						/>
 						<TextField
@@ -207,6 +218,12 @@ function OneGadget() {
 							sx={{
 								marginTop: 2,
 							}}
+							InputProps={{
+								style: { fontFamily: "'Shantell Sans', sans-serif" },
+							}}
+							InputLabelProps={{
+								style: { fontFamily: "'Shantell Sans', sans-serif" },
+							}}
 						/>
 						<TextField
 							{...register("description")}
@@ -216,6 +233,12 @@ function OneGadget() {
 							fullWidth
 							sx={{
 								marginTop: 2,
+							}}
+							InputProps={{
+								style: { fontFamily: "'Shantell Sans', sans-serif" },
+							}}
+							InputLabelProps={{
+								style: { fontFamily: "'Shantell Sans', sans-serif" },
 							}}
 						/>
 						<TextField
@@ -227,6 +250,12 @@ function OneGadget() {
 							sx={{
 								marginTop: 2,
 							}}
+							InputProps={{
+								style: { fontFamily: "'Shantell Sans', sans-serif" },
+							}}
+							InputLabelProps={{
+								style: { fontFamily: "'Shantell Sans', sans-serif" },
+							}}
 						/>
 						<TextField
 							{...register("group")}
@@ -237,6 +266,12 @@ function OneGadget() {
 							sx={{
 								marginTop: 2,
 							}}
+							InputProps={{
+								style: { fontFamily: "'Shantell Sans', sans-serif" },
+							}}
+							InputLabelProps={{
+								style: { fontFamily: "'Shantell Sans', sans-serif" },
+							}}
 						/>
 						<Button
 							type='submit'
@@ -244,6 +279,7 @@ function OneGadget() {
 							sx={{
 								backgroundColor: "#441752",
 								color: "#CFEBC7",
+								fontFamily: "'Shantell Sans', sans-serif",
 								"&:hover": {
 									backgroundColor: "#8174A0",
 								},
@@ -270,17 +306,48 @@ function OneGadget() {
 							image={gadget.image}
 							alt={gadget.name}
 						/>
-						<Typography variant='h5' component='div' sx={{ color: "#441752", marginBottom: 2, marginTop: 2 }}>
+						<Typography
+							variant='h5'
+							component='div'
+							sx={{
+								color: "#441752",
+								marginBottom: 2,
+								marginTop: 2,
+								fontFamily: "'Shantell Sans', sans-serif",
+							}}
+						>
 							{gadget.name}
 						</Typography>
-						<Typography variant='body2' color='text.secondary' sx={{ color: "#8174A0", marginBottom: 1 }}>
+						<Typography
+							variant='body2'
+							color='text.secondary'
+							sx={{
+								color: "#8174A0",
+								marginBottom: 1,
+								fontFamily: "'Shantell Sans', sans-serif",
+							}}
+						>
 							{gadget.description}
 						</Typography>
 						<div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-							<Typography variant='body2' color='text.secondary' sx={{ color: "#441752" }}>
+							<Typography
+								variant='body2'
+								color='text.secondary'
+								sx={{
+									color: "#441752",
+									fontFamily: "'Shantell Sans', sans-serif",
+								}}
+							>
 								Цена: {gadget.price} руб.
 							</Typography>
-							<Typography variant='body2' color='text.secondary' sx={{ color: "#441752" }}>
+							<Typography
+								variant='body2'
+								color='text.secondary'
+								sx={{
+									color: "#441752",
+									fontFamily: "'Shantell Sans', sans-serif",
+								}}
+							>
 								Группа: {gadget.group}
 							</Typography>
 						</div>
@@ -295,6 +362,7 @@ function OneGadget() {
 							sx={{
 								backgroundColor: "#441752",
 								color: "#CFEBC7",
+								fontFamily: "'Shantell Sans', sans-serif",
 								"&:hover": {
 									backgroundColor: "#8174A0",
 								},
@@ -313,6 +381,7 @@ function OneGadget() {
 							sx={{
 								backgroundColor: "#441752",
 								color: "#CFEBC7",
+								fontFamily: "'Shantell Sans', sans-serif",
 								"&:hover": {
 									backgroundColor: "#8174A0",
 								},
@@ -329,6 +398,7 @@ function OneGadget() {
 							sx={{
 								backgroundColor: "#441752",
 								color: "#CFEBC7",
+								fontFamily: "'Shantell Sans', sans-serif",
 								"&:hover": {
 									backgroundColor: "#8174A0",
 								},
@@ -342,7 +412,14 @@ function OneGadget() {
 				</div>
 			</Box>
 			<Box sx={{ padding: 2 }}>
-				<Typography variant='h6' sx={{ color: "#441752", marginBottom: 1 }}>
+				<Typography
+					variant='h6'
+					sx={{
+						color: "#441752",
+						marginBottom: 1,
+						fontFamily: "'Shantell Sans', sans-serif",
+					}}
+				>
 					Забронировавшие гаджет:
 				</Typography>
 				{signupArr.length > 0 ? (
@@ -354,9 +431,16 @@ function OneGadget() {
 									backgroundColor: "#6A4F7D",
 									position: "relative",
 									paddingLeft: "20px",
+									fontFamily: "'Shantell Sans', sans-serif",
 								}}
 							>
-								<Typography variant='body2' sx={{ color: "#fff" }}>
+								<Typography
+									variant='body2'
+									sx={{
+										color: "#fff",
+										fontFamily: "'Shantell Sans', sans-serif",
+									}}
+								>
 									<span
 										style={{
 											position: "absolute",
@@ -374,7 +458,13 @@ function OneGadget() {
 						))}
 					</ul>
 				) : (
-					<Typography variant='body2' sx={{ color: "#441752" }}>
+					<Typography
+						variant='body2'
+						sx={{
+							color: "#441752",
+							fontFamily: "'Shantell Sans', sans-serif",
+						}}
+					>
 						Пока никто не забронировал.
 					</Typography>
 				)}

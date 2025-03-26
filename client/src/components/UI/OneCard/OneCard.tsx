@@ -113,7 +113,6 @@ function OneCard() {
       console.log(response.data);
       if (response.data) {
         setIsUserSignedUp(true);
-
         setSignupArr(response.data);
       }
       console.log(signupArr);
@@ -153,6 +152,7 @@ function OneCard() {
         justifyContent: "center",
         alignItems: "center",
         minHeight: "60vh",
+        fontFamily: "'Shantell Sans', sans-serif",
       }}
     >
       {Number(userId) === event.user_id && !isChange && (
@@ -162,6 +162,7 @@ function OneCard() {
           sx={{
             backgroundColor: "#441752",
             color: "#CFEBC7",
+            fontFamily: "'Shantell Sans', sans-serif",
             "&:hover": {
               backgroundColor: "#8174A0",
             },
@@ -179,6 +180,7 @@ function OneCard() {
           sx={{
             backgroundColor: "#441752",
             color: "#CFEBC7",
+            fontFamily: "'Shantell Sans', sans-serif",
             "&:hover": {
               backgroundColor: "#8174A0",
             },
@@ -201,6 +203,7 @@ function OneCard() {
             boxShadow: 3,
             borderRadius: 2,
             backgroundColor: "#F5F5F5",
+            fontFamily: "'Shantell Sans', sans-serif",
           }}
         >
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -213,6 +216,13 @@ function OneCard() {
               required
               sx={{
                 marginTop: 2,
+                fontFamily: "'Shantell Sans', sans-serif",
+              }}
+              InputProps={{
+                style: { fontFamily: "'Shantell Sans', sans-serif" }
+              }}
+              InputLabelProps={{
+                style: { fontFamily: "'Shantell Sans', sans-serif" }
               }}
             />
             <TextField
@@ -225,6 +235,12 @@ function OneCard() {
               sx={{
                 marginTop: 2,
               }}
+              InputProps={{
+                style: { fontFamily: "'Shantell Sans', sans-serif" }
+              }}
+              InputLabelProps={{
+                style: { fontFamily: "'Shantell Sans', sans-serif" }
+              }}
             />
             <TextField
               {...register("location")}
@@ -235,6 +251,12 @@ function OneCard() {
               required
               sx={{
                 marginTop: 2,
+              }}
+              InputProps={{
+                style: { fontFamily: "'Shantell Sans', sans-serif" }
+              }}
+              InputLabelProps={{
+                style: { fontFamily: "'Shantell Sans', sans-serif" }
               }}
             />
             <TextField
@@ -247,6 +269,12 @@ function OneCard() {
               sx={{
                 marginTop: 2,
               }}
+              InputProps={{
+                style: { fontFamily: "'Shantell Sans', sans-serif" }
+              }}
+              InputLabelProps={{
+                style: { fontFamily: "'Shantell Sans', sans-serif" }
+              }}
             />
             <Button
               type="submit"
@@ -254,6 +282,7 @@ function OneCard() {
               sx={{
                 backgroundColor: "#441752",
                 color: "#CFEBC7",
+                fontFamily: "'Shantell Sans', sans-serif",
                 "&:hover": {
                   backgroundColor: "#8174A0",
                 },
@@ -283,14 +312,23 @@ function OneCard() {
             <Typography
               variant="h5"
               component="div"
-              sx={{ color: "#441752", marginBottom: 2, marginTop: 2 }}
+              sx={{ 
+                color: "#441752", 
+                marginBottom: 2, 
+                marginTop: 2,
+                fontFamily: "'Shantell Sans', sans-serif",
+              }}
             >
               {event.name}
             </Typography>
             <Typography
               variant="body2"
               color="text.secondary"
-              sx={{ color: "#8174A0", marginBottom: 1 }}
+              sx={{ 
+                color: "#8174A0", 
+                marginBottom: 1,
+                fontFamily: "'Shantell Sans', sans-serif",
+              }}
             >
               {event.description}
             </Typography>
@@ -300,21 +338,30 @@ function OneCard() {
               <Typography
                 variant="body2"
                 color="text.secondary"
-                sx={{ color: "#441752" }}
+                sx={{ 
+                  color: "#441752",
+                  fontFamily: "'Shantell Sans', sans-serif",
+                }}
               >
                 Где: {event.location}
               </Typography>
               <Typography
                 variant="body2"
                 color="text.secondary"
-                sx={{ color: "#441752" }}
+                sx={{ 
+                  color: "#441752",
+                  fontFamily: "'Shantell Sans', sans-serif",
+                }}
               >
                 Когда: {event.date}
               </Typography>
               <Typography
                 variant="body2"
                 color="text.secondary"
-                sx={{ color: "#441752" }}
+                sx={{ 
+                  color: "#441752",
+                  fontFamily: "'Shantell Sans', sans-serif",
+                }}
               >
                 Сколько: {event.price}
               </Typography>

@@ -15,7 +15,7 @@ interface FormData {
 	name: string;
 	user_id: number;
 	price: string;
-	image?: File; // Измените тип на File
+	image?: File;
 	group: string;
 	description: string;
 }
@@ -39,11 +39,10 @@ function AddGadget({ toggleModalVisible }: Props) {
 		try {
 			let imageUrl = null;
 
-			// Проверяем, есть ли файл изображения
 			if (data.image instanceof File) {
 				const formData = new FormData();
 				formData.append("file", data.image);
-				formData.append("upload_preset", "upload_gadgets"); 
+				formData.append("upload_preset", "upload_gadgets");
 
 				const cloudinaryResponse = await fetch(`https://api.cloudinary.com/v1_1/dlliagivo/image/upload`, {
 					method: "POST",
@@ -56,23 +55,17 @@ function AddGadget({ toggleModalVisible }: Props) {
 
 				const result = await cloudinaryResponse.json();
 				imageUrl = result.secure_url;
-				// console.log("formData", formData.getAll("upload_preset"))
-				// console.log(result);
-				// console.log(imageUrl);
-				
-				
 			}
-			// Отправляем данные на сервер
 			const gadgetData = {
 				name: data.name,
-				price: data.price.toString(), // Явное преобразование в строку
+				price: data.price.toString(),
 				user_id: user_id,
-				image: imageUrl || "", // На случай если изображение не загружено
+				image: imageUrl || "",
 				group: data.group,
 				description: data.description,
 			};
 
-			// console.log("Sending to server:", gadgetData);
+			// Отправка данных на сервер
 			const response = await createGadget(gadgetData).unwrap();
 
 			console.log("Gadget created successfully:", response);
@@ -81,7 +74,6 @@ function AddGadget({ toggleModalVisible }: Props) {
 			setPreviewImage(null);
 		} catch (err) {
 			console.error("Error creating gadget:", err);
-			// Здесь можно добавить уведомление для пользователя
 		}
 	};
 
@@ -100,6 +92,7 @@ function AddGadget({ toggleModalVisible }: Props) {
 					"&:hover": {
 						backgroundColor: "#8174A0",
 					},
+					fontFamily: "'Shantell Sans', sans-serif",
 				}}
 				onClick={toggleVisibility}
 			>
@@ -132,6 +125,7 @@ function AddGadget({ toggleModalVisible }: Props) {
 								display: "flex",
 								flexDirection: "column",
 								borderRadius: 2,
+								fontFamily: "'Shantell Sans', sans-serif",
 							}}
 						>
 							<Typography variant='h5' sx={{ color: "#441752", marginBottom: 2 }}>
@@ -149,6 +143,17 @@ function AddGadget({ toggleModalVisible }: Props) {
 												required: "Наименование обязательно",
 											})}
 											error={!!errors.name}
+											inputProps={{
+												style: {
+													fontFamily: "'Shantell Sans', sans-serif",
+												},
+											}}
+											InputLabelProps={{
+												style: {
+													fontFamily: "'Shantell Sans', sans-serif",
+												},
+											}}
+											placeholder='Введите название'
 										/>
 									</Box>
 
@@ -164,8 +169,19 @@ function AddGadget({ toggleModalVisible }: Props) {
 												valueAsNumber: true,
 											})}
 											error={!!errors.price}
+											inputProps={{
+												style: {
+													fontFamily: "'Shantell Sans', sans-serif",
+												},
+											}}
+											InputLabelProps={{
+												style: {
+													fontFamily: "'Shantell Sans', sans-serif",
+												},
+											}}
 										/>
 									</Box>
+
 									<Box sx={{ marginBottom: 2 }}>
 										<TextField
 											fullWidth
@@ -176,8 +192,19 @@ function AddGadget({ toggleModalVisible }: Props) {
 												required: "Категория обязательна",
 											})}
 											error={!!errors.group}
+											inputProps={{
+												style: {
+													fontFamily: "'Shantell Sans', sans-serif",
+												},
+											}}
+											InputLabelProps={{
+												style: {
+													fontFamily: "'Shantell Sans', sans-serif",
+												},
+											}}
 										/>
 									</Box>
+
 									<Box sx={{ marginBottom: 2 }}>
 										<TextField
 											fullWidth
@@ -188,12 +215,24 @@ function AddGadget({ toggleModalVisible }: Props) {
 												required: "Описание обязательно",
 											})}
 											error={!!errors.description}
+											inputProps={{
+												style: {
+													fontFamily: "'Shantell Sans', sans-serif",
+												},
+											}}
+											InputLabelProps={{
+												style: {
+													fontFamily: "'Shantell Sans', sans-serif",
+												},
+											}}
 										/>
 									</Box>
-									<Button sx={{ marginBottom: 2 }}>
+									<Button variant='contained' component='label' sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
+										Загрузить изображение
 										<input
 											type='file'
 											accept='image/*'
+											hidden
 											onChange={e => {
 												if (e.target.files && e.target.files[0]) {
 													setValue("image", e.target.files[0]);
@@ -201,7 +240,6 @@ function AddGadget({ toggleModalVisible }: Props) {
 												}
 											}}
 										/>
-										{errors.image && <Typography color='error'>Изображение обязательно</Typography>}
 									</Button>
 
 									{previewImage && (
@@ -218,6 +256,7 @@ function AddGadget({ toggleModalVisible }: Props) {
 												backgroundColor: "#8174A0",
 											},
 											marginTop: 2,
+											fontFamily: "'Shantell Sans', sans-serif",
 										}}
 										type='submit'
 										disabled={isLoading}

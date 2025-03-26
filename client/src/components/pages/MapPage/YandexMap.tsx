@@ -36,7 +36,6 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
   const [mapInstance, setMapInstance] = useState<any>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
-  // Инициализация карты
   useEffect(() => {
     if (!ymaps || !mapRef.current) return;
 
@@ -45,7 +44,6 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
       zoom: ZOOM,
     });
 
-    // Добавляем элементы управления
     map.controls.add('zoomControl');
     map.controls.add('typeSelector');
 
@@ -53,18 +51,15 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
     return () => map.destroy();
   }, [ymaps]);
 
-  // Обновление меток на карте
   useEffect(() => {
     if (!mapInstance || !ymaps) return;
 
     mapInstance.geoObjects.removeAll();
 
-    // Отображаем все точки или фильтруем по категории
     const pointsToShow = activeCategory 
       ? ALL_POINTS.filter(point => point.category === activeCategory)
       : ALL_POINTS;
 
-    // Добавляем основные точки
     pointsToShow.forEach(point => {
       const placemark = new ymaps.Placemark(
         point.coordinates,
@@ -89,7 +84,6 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
       mapInstance.geoObjects.add(placemark);
     });
 
-    // Добавляем сохранённые точки
     savedPoints.forEach(point => {
       const placemark = new ymaps.Placemark(
         point.coordinates,
@@ -104,7 +98,6 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
       mapInstance.geoObjects.add(placemark);
     });
 
-    // Автоматически центрируем карту
     if (pointsToShow.length > 0) {
       mapInstance.setBounds(ymaps.util.bounds.fromPoints(
         pointsToShow.map(p => p.coordinates)
@@ -113,7 +106,6 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
 
   }, [mapInstance, ymaps, activeCategory, savedPoints]);
 
-  // Загрузка сохранённых точек
   useEffect(() => {
     const saved = localStorage.getItem('savedPoints');
     if (saved) setSavedPoints(JSON.parse(saved));
@@ -124,7 +116,7 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
 
     const newSavedPoint = {
       ...selectedPoint,
-      id: Date.now() // Уникальный ID
+      id: Date.now()
     };
 
     const updated = [...savedPoints, newSavedPoint];
@@ -132,7 +124,6 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
     setSavedPoints(updated);
   };
 
-  // Вспомогательные функции
   const getIconByCategory = (category: string) => {
     const icons = {
       'clinic': 'islands#blueHospitalIcon',
@@ -164,10 +155,10 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
   };
 
   return (
-    <Box className="map-container">
+    <Box className="map-container" sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
       {/* Панель управления и фильтры */}
-      <Paper className="map-controls" elevation={3}>
-        <Typography variant="h6" gutterBottom>
+      <Paper className="map-controls" elevation={3} sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
+        <Typography variant="h6" gutterBottom sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
           Объекты Севастополя
         </Typography>
         
@@ -176,20 +167,21 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
             value={activeCategory}
             exclusive
             onChange={(_, value) => setActiveCategory(value)}
+            sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
           >
-            <ToggleButton value={null} key="all">
+            <ToggleButton value={null} key="all" sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
               Все ({ALL_POINTS.length})
             </ToggleButton>
-            <ToggleButton value="clinic" key="clinic">
+            <ToggleButton value="clinic" key="clinic" sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
               Поликлиники ({CHILD_CLINICS.length})
             </ToggleButton>
-            <ToggleButton value="water_park" key="water_park">
+            <ToggleButton value="water_park" key="water_park" sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
               Аквапарки ({WATER_PARKS.length})
             </ToggleButton>
-            <ToggleButton value="pharmacy" key="pharmacy">
+            <ToggleButton value="pharmacy" key="pharmacy" sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
               Аптеки ({PHARMACIES.length})
             </ToggleButton>
-            <ToggleButton value="kindergarten" key="kindergarten">
+            <ToggleButton value="kindergarten" key="kindergarten" sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
               Детсады ({KINDERGARTENS.length})
             </ToggleButton>
           </ToggleButtonGroup>
@@ -197,7 +189,7 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
       </Paper>
   
       {/* Список точек */}
-      <Paper className="points-list" elevation={3}>
+      <Paper className="points-list" elevation={3} sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
         <List>
           {(activeCategory 
             ? ALL_POINTS.filter(p => p.category === activeCategory) 
@@ -210,19 +202,22 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
                 setSelectedPoint(point);
                 mapInstance?.panTo(point.coordinates, { flying: true });
               }}
+              sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
             >
               <ListItemText
                 primary={point.name}
+                primaryTypographyProps={{ fontFamily: "'Shantell Sans', sans-serif" }}
                 secondary={
                   <>
                     {point.address}
                     <Chip 
                       label={getCategoryName(point.category)} 
                       size="small"
-                      sx={{ ml: 1 }}
+                      sx={{ ml: 1, fontFamily: "'Shantell Sans', sans-serif" }}
                     />
                   </>
                 }
+                secondaryTypographyProps={{ fontFamily: "'Shantell Sans', sans-serif" }}
               />
             </ListItem>
           ))}
@@ -234,16 +229,18 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
   
       {/* Избранное */}
       {savedPoints.length > 0 && (
-        <Paper elevation={3} sx={{ p: 2 }}>
-          <Typography variant="h6">
+        <Paper elevation={3} sx={{ p: 2, fontFamily: "'Shantell Sans', sans-serif" }}>
+          <Typography variant="h6" sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
             Избранное ({savedPoints.length})
           </Typography>
           <List dense>
             {savedPoints.map(point => (
-              <ListItem key={point.id}>
+              <ListItem key={point.id} sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
                 <ListItemText
                   primary={point.name}
+                  primaryTypographyProps={{ fontFamily: "'Shantell Sans', sans-serif" }}
                   secondary={point.address}
+                  secondaryTypographyProps={{ fontFamily: "'Shantell Sans', sans-serif" }}
                 />
               </ListItem>
             ))}
