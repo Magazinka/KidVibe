@@ -7,27 +7,39 @@ const jwtConfig = require("../shared/jwt.config");
 authRoutes.post("/signup", async (req, res) => {
   try {
     const { login, email, password } = req.body;
-    // console.log(' login, email, password : ',  login, email, password );
+    // Check if the required fields are provided
     if (!login || !email || !password) {
-      return res.status(400).end();
+      return res.status(400).json({ message: "All fields are required." });
     }
+
+    // Check if the user already exists
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ message: "User with this email already exists." });
+    }
+
+    // Hash the password before saving to the database
     const hashPass = await bcrypt.hash(password, 10);
-    const [newUser, created] = await User.findOrCreate({
-      where: { email },
-      defaults: { login, email, password: hashPass },
+
+    // Create a new user
+    const newUser = await User.create({
+      login,
+      email,
+      password: hashPass,
     });
-    if (!created) {
-      return res.status(400).end();
-    }
-    console.log("NEWUSER: ", newUser);
+
+    // Remove sensitive information like password and timestamps
     const user = newUser.get();
     delete user.password;
     delete user.updatedAt;
     delete user.createdAt;
-    console.log("WUSER: ", user);
-    const { accessToken, refreshToken } = generateToken({ user });
-    // console.log("acc: ", accessToken);
 
+    // Generate tokens
+    const { accessToken, refreshToken } = generateToken({ user });
+
+    // Set the refresh token in the cookies
     return res
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
@@ -35,10 +47,48 @@ authRoutes.post("/signup", async (req, res) => {
       })
       .json({ accessToken, user });
   } catch (error) {
-    console.log("error sign up: ", error);
-    return res.status(500).json({ message: "server err" });
+    console.log("Error during signup: ", error);
+    return res
+      .status(500)
+      .json({ message: "Server error. Please try again later." });
   }
 });
+
+// authRoutes.post("/signup", async (req, res) => {
+//   try {
+//     const { login, email, password } = req.body;
+//     // console.log(' login, email, password : ',  login, email, password );
+//     if (!login || !email || !password) {
+//       return res.status(400).end();
+//     }
+//     const hashPass = await bcrypt.hash(password, 10);
+//     const [newUser, created] = await User.findOrCreate({
+//       where: { email },
+//       defaults: { login, email, password: hashPass },
+//     });
+//     if (!created) {
+//       return res.status(400).end();
+//     }
+//     console.log("NEWUSER: ", newUser);
+//     const user = newUser.get();
+//     delete user.password;
+//     delete user.updatedAt;
+//     delete user.createdAt;
+//     console.log("WUSER: ", user);
+//     const { accessToken, refreshToken } = generateToken({ user });
+//     // console.log("acc: ", accessToken);
+
+//     return res
+//       .cookie("refreshToken", refreshToken, {
+//         httpOnly: true,
+//         maxAge: jwtConfig.refresh.expiresIn,
+//       })
+//       .json({ accessToken, user });
+//   } catch (error) {
+//     console.log("error sign up: ", error);
+//     return res.status(500).json({ message: "server err" });
+//   }
+// });
 
 authRoutes.post("/login", async (req, res) => {
   try {
