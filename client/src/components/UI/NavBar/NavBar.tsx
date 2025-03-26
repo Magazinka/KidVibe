@@ -3,7 +3,7 @@ import { AppDispatch, RootState } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useLogoutUserMutation } from "../../../redux/slice/api.slice";
 import { logout } from "../../../redux/slice/auth.slice";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 function NavBar() {
   const dispatch = useDispatch<AppDispatch>();
@@ -22,7 +22,7 @@ function NavBar() {
   return (
     <Box
       sx={{
-        maxWidth: 800,
+        maxWidth: 870,
         margin: "auto",
         display: "flex",
         marginBottom: "10px",
@@ -34,6 +34,18 @@ function NavBar() {
       }}
     >
       <Box sx={{ display: "flex", gap: 1 }}>
+        <NavLink to="/">
+          <img
+            src="https://res.cloudinary.com/dlliagivo/image/upload/v1742999929/logo_navbar.png"
+            alt="Logo"
+            style={{
+              height: "40px",
+              width: "auto",
+              padding: "1px",
+              marginRight: "25px",
+            }}
+          />
+        </NavLink>
         <NavLink to="/" style={{ textDecoration: "none" }}>
           <Button
             variant="contained"
