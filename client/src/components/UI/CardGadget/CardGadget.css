@@ -15,102 +15,99 @@
   color: #CFEBC7;
 }
 
-.event-container {
+.gadget-container {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
   padding: 16px;
   flex-grow: 1;
+  display: flex;
 }
 
-.event-card {
+.gadget-card {
   width: 350px;
   height: 610px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   background-color: #E3F2FD;
   border-radius: 8px;
   overflow: hidden;
   position: relative;
 }
 
-.event-media {
+.gadget-media {
   width: 100%;
   height: 300px;
   object-fit: cover;
 }
 
-.event-content {
+.gadget-content {
   padding: 16px;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.event-title {
+.gadget-title {
   font-size: 1.25rem;
   color: #441752;
   margin-bottom: 8px;
 }
 
-.event-price,
-.event-date {
+.gadget-price {
   font-size: 1rem;
   color: #441752;
   margin-bottom: 8px;
 }
 
-.event-description {
+.gadget-description {
   font-size: 1rem;
   color: #441752;
   margin-bottom: 15px;
+  flex-grow: 1;
   overflow-y: auto;
   max-height: 150px;
   position: relative;
-  padding-right: 5px;
 }
 
-.event-description::-webkit-scrollbar {
-  width: 4px;
-}
-
-.event-description::-webkit-scrollbar-thumb {
-  background-color: #8174A0;
-  border-radius: 2px;
-}
-
-.event-description-container {
+.gadget-description-container {
   position: relative;
   flex-grow: 1;
-  min-height: 150px;
+  width: 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.event-description-overlay {
+.gadget-description-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 50px;
+  height: 70px;
   background: linear-gradient(
     to bottom,
     rgba(227, 242, 253, 0),
-    rgba(227, 242, 253, 0.8) 20%,
     rgba(227, 242, 253, 1)
   );
   pointer-events: none;
   transition: opacity 0.3s ease;
   display: flex;
   justify-content: center;
-  align-items: flex-end;
-  padding-bottom: 5px;
+  align-items: center;
 }
 
-.event-description-overlay.hidden {
+.gadget-description-overlay.hidden {
   opacity: 0;
 }
 
-.event-description-overlay .arrow {
+.gadget-description-overlay .arrow {
   color: #441752;
   font-size: 20px;
 }
@@ -118,8 +115,9 @@
 .more-button {
   background-color: #441752;
   color: #CFEBC7;
-  margin: 0 20px 20px auto;
-  display: block;
+  margin-top: auto;
+  margin-bottom: 20px;
+  align-self: flex-end;
 }
 
 .more-button:hover {

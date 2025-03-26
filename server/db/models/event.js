@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "event_id",
         as: "Attendees",
       });
+
       this.hasMany(eventComment, {
         foreignKey: "event_id",
         as: "CommentEvent",
@@ -30,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       img_url: DataTypes.STRING,
       location: DataTypes.STRING,
       price: DataTypes.STRING,
+      user_id: DataTypes.INTEGER,
       group: DataTypes.STRING,
     },
     {

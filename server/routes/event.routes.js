@@ -1,14 +1,13 @@
 const eventRoutes = require("express").Router();
-const { where } = require("sequelize");
 const { event, User, userEvent } = require("../db/models");
 
 eventRoutes.get("/", async (req, res) => {
+  console.log("allEvent: ");
   try {
-    console.log("WORK");
     const allEvent = await event.findAll();
-
-    const user = await User.findByPk;
     // console.log("allEvent: ", allEvent);
+
+    const user = await User.findByPk();
     res.status(200).json(allEvent);
   } catch (error) {
     console.log("error event get: ", error);
@@ -20,7 +19,7 @@ eventRoutes.get("/:id", async (req, res) => {
   try {
     const eventId = req.params.id;
     const id = Number(eventId);
-    console.log("event id: ", eventId);
+    // console.log("event id: ", eventId);
     const eventbd = await event.findByPk(id);
     if (!event) {
       res.status(400).json({ message: "error" });
@@ -36,8 +35,9 @@ eventRoutes.get("/:id", async (req, res) => {
 eventRoutes.post("/", async (req, res) => {
   console.log("REQBODY CREATE: ", req.body);
   try {
-    const { name, description, location, price, date, user_id, group } =
+    const { name, description, location, price, date, user_id, group, img_url } =
       req.body;
+    console.log(typeof user_id);
     if (
       !name ||
       !description ||
@@ -45,8 +45,10 @@ eventRoutes.post("/", async (req, res) => {
       !price ||
       !date ||
       !user_id ||
-      !group
-    ) {
+      !group 
+      // !img_url
+    )
+    {
       return res.status(400).json({ message: "Error createEvent" });
     }
     const createEvent = await event.create({
@@ -57,12 +59,15 @@ eventRoutes.post("/", async (req, res) => {
       date,
       user_id,
       group,
+      img_url
     });
-    const card = createEvent.get();
-    delete card.createdAt;
-    delete card.updatedAt;
+    const allEvent = await event.findAll();
+    // const card = createEvent.get();
+    // delete card.createdAt;
+    // delete card.updatedAt;
     // console.log("card: ", card);
-    res.status(200).json({ card });
+
+    res.status(200).json(allEvent);
   } catch (error) {
     console.log("error post create: ", error);
     res.status(400).json({ message: "err create event server" });
@@ -72,10 +77,7 @@ eventRoutes.post("/", async (req, res) => {
 eventRoutes.delete("/", async (req, res) => {
   try {
     const { id } = req.body;
-    // console.log("id: ", id);
-
     const card = await event.findByPk(Number(id));
-    // console.log("card: ", card);
 
     if (!card) {
       return res.status(404).json({ message: "Event not found" });

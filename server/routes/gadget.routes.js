@@ -33,15 +33,21 @@ gadgetRoutes.get("/:id", async (req, res) => {
 gadgetRoutes.post("/", async (req, res) => {
 	console.log("REQBODY CREATE GADGET: ", req.body);
 	try {
-		const { name, price, user_id } = req.body;
-		if (!name || !price || !user_id || !image) {
+		const { name, price, user_id, image, group, description } = req.body;
+		if (!name || !price || !user_id || !image || !group || !description) {
 			return res.status(400).json({ message: "Missing required fields" });
 		}
+		const user = await User.findByPk(user_id);
+		if (!user) {
+			return res.status(404).json({ message: "User not found" });
+		}
 		const createGadget = await Gadget.create({
-			name,
-			price,
-			user_id,
-			image
+			name: name,
+			user_id: user_id,
+			price: String(price),
+			image: image,
+			group: group,
+			description: description
 		});
 		const card = createGadget.get();
 		delete card.createdAt;
@@ -51,6 +57,30 @@ gadgetRoutes.post("/", async (req, res) => {
 	} catch (error) {
 		console.log("Error creating gadget: ", error);
 		res.status(400).json({ message: "Error creating gadget" });
+	}
+});
+
+gadgetRoutes.put("/:id", async (req, res) => {
+	try {
+		const gadgetId = req.params.id;
+		const { name, price, image, group, description } = req.body;
+
+		const gadget = await Gadget.findByPk(gadgetId);
+		if (!gadget) {
+			return res.status(404).json({ message: "Gadget not found" });
+		}
+
+		if (name) gadget.name = name;
+		if (price) gadget.price = price;
+		if (image) gadget.image = image;
+		if (group) gadget.group = group;
+		if (description) gadget.description = description;
+
+		await gadget.save();
+		res.status(200).json({ message: "Gadget updated successfully", gadget });
+	} catch (error) {
+		console.log("Error updating gadget: ", error);
+		res.status(400).json({ message: "Error updating gadget" });
 	}
 });
 
