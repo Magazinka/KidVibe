@@ -322,101 +322,112 @@ function OneCard() {
           </CardContent>
         </>
       )}
-      <Box>
-        <div style={{ display: "flex" }}>
-          <Link to={`/event`} style={{ textDecoration: "none" }}>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "#441752",
-                color: "#CFEBC7",
-                "&:hover": {
-                  backgroundColor: "#8174A0",
-                },
-                margin: "10px 20px",
-                alignSelf: "flex-end",
-              }}
-            >
-              Вернуться
-            </Button>
-          </Link>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+        }}
+      >
+        <Box>
+          <div style={{ display: "flex" }}>
+            <Link to={`/event`} style={{ textDecoration: "none" }}>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "#441752",
+                  color: "#CFEBC7",
+                  "&:hover": {
+                    backgroundColor: "#8174A0",
+                  },
+                  margin: "10px 20px",
+                  alignSelf: "flex-end",
+                }}
+              >
+                Вернуться
+              </Button>
+            </Link>
 
-          {isUserSignedUp ? (
-            <Button
-              onClick={unsubscribe}
-              variant="contained"
-              sx={{
-                backgroundColor: "#441752",
-                color: "#CFEBC7",
-                "&:hover": {
-                  backgroundColor: "#8174A0",
-                },
-                margin: "10px 20px",
-                alignSelf: "flex-end",
-              }}
-            >
-              Отписаться
-            </Button>
-          ) : (
-            <Button
-              onClick={signupHandler}
-              variant="contained"
-              sx={{
-                backgroundColor: "#441752",
-                color: "#CFEBC7",
-                "&:hover": {
-                  backgroundColor: "#8174A0",
-                },
-                margin: "10px 20px",
-                alignSelf: "flex-end",
-              }}
-            >
-              Записаться
-            </Button>
-          )}
-        </div>
-      </Box>
-      <Box sx={{ padding: 2 }}>
-        <Typography variant="h6" sx={{ color: "#441752", marginBottom: 1 }}>
-          Подписавшиеся на событие:
-        </Typography>
-        {signupArr.length > 0 ? (
-          <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
-            {signupArr.map(
-              (user: { id: number; login: string; email: string }) => (
-                <li
-                  key={user.id}
-                  style={{
-                    backgroundColor: "#6A4F7D",
-                    position: "relative",
-                    paddingLeft: "20px",
-                  }}
-                >
-                  <Typography variant="body2" sx={{ color: "#fff" }}>
-                    <span
-                      style={{
-                        position: "absolute",
-                        left: 0,
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        fontSize: "1.2em",
-                      }}
-                    >
-                      ✨
-                    </span>
-                    Login: {user.login}, Email: ({user.email})
-                  </Typography>
-                </li>
-              )
+            {isUserSignedUp ? (
+              <Button
+                onClick={unsubscribe}
+                variant="contained"
+                sx={{
+                  backgroundColor: "#441752",
+                  color: "#CFEBC7",
+                  "&:hover": {
+                    backgroundColor: "#8174A0",
+                  },
+                  margin: "10px 20px",
+                  alignSelf: "flex-end",
+                }}
+              >
+                Отписаться
+              </Button>
+            ) : (
+              <Button
+                onClick={signupHandler}
+                variant="contained"
+                sx={{
+                  backgroundColor: "#441752",
+                  color: "#CFEBC7",
+                  "&:hover": {
+                    backgroundColor: "#8174A0",
+                  },
+                  margin: "10px 20px",
+                  alignSelf: "flex-end",
+                }}
+              >
+                Записаться
+              </Button>
             )}
-          </ul>
-        ) : (
-          <Typography variant="body2" sx={{ color: "#441752" }}>
-            Пока никто не подписался.
+          </div>
+        </Box>
+        <Box sx={{ padding: "5px" }}>
+          <Typography variant="h6" sx={{ color: "#441752", marginBottom: 1 }}>
+            Подписавшиеся на событие:
           </Typography>
-        )}
+          {signupArr.length > 0 ? (
+            <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
+              {signupArr.map(
+                (user: { id: number; login: string; email: string }) => (
+                  <li
+                    key={user.id}
+                    style={{
+                      backgroundColor: "#6A4F7D",
+                      position: "relative",
+                      paddingLeft: "20px",
+                    }}
+                  >
+                    <Typography variant="body2" sx={{ color: "#fff" }}>
+                      <span
+                        style={{
+                          position: "absolute",
+                          left: 0,
+                          top: "50%",
+                          transform: "translateY(-50%)",
+                          fontSize: "1.2em",
+                        }}
+                      >
+                        ✨
+                      </span>
+                      Login: {user.login}, Email: ({user.email})
+                    </Typography>
+                  </li>
+                )
+              )}
+            </ul>
+          ) : (
+            <Typography variant="body2" sx={{ color: "#441752" }}>
+              Пока никто не подписался.
+            </Typography>
+          )}
+        </Box>
       </Box>
+      <Box sx= {{marginTop: "50px"}}>
       <CommentEvent />
+      </Box>
+
     </Card>
   );
 }
