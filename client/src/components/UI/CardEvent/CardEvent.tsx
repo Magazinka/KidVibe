@@ -18,21 +18,25 @@ import { Link } from "react-router-dom";
 import "./CardEvent.css";
 
 function CardEvent() {
-  const { event } = useSelector((state: RootState) => state.eventSlicer);
+  const { event } = useSelector((state: RootState) => state.event);
   const dispatch = useDispatch<AppDispatch>();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [categories, setCategories] = useState<string[]>([]);
   const [overlayVisibility, setOverlayVisibility] = useState<{ [key: number]: boolean }>({});
   const descriptionRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
+  const categoryListRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
+  // Получаем данные событий
   useEffect(() => {
     dispatch(getEvent());
   }, [dispatch]);
 
+  // Инициализация категорий и состояния
   useEffect(() => {
     if (event) {
       const uniqueCategories = [...new Set(event.map((e) => e.group))];
-      setCategories(["all", ...uniqueCategories]);
+      setCategories(["all", ...uniqueCategories.sort()]);
 
       const initialVisibility = event.reduce((acc, e) => {
         acc[e.id] = true;
@@ -49,6 +53,22 @@ function CardEvent() {
       }, 100);
     }
   }, [event]);
+
+  // Фиксируем размер контейнера при первой загрузке
+  useEffect(() => {
+    if (containerRef.current) {
+      const resizeObserver = new ResizeObserver((entries) => {
+        for (let entry of entries) {
+          const { width, height } = entry.contentRect;
+          entry.target.style.minWidth = `${width}px`;
+          entry.target.style.minHeight = `${height}px`;
+        }
+      });
+      
+      resizeObserver.observe(containerRef.current);
+      return () => resizeObserver.disconnect();
+    }
+  }, []);
 
   const checkScroll = (id: number) => {
     const element = descriptionRefs.current[id];
@@ -67,25 +87,65 @@ function CardEvent() {
     checkScroll(id);
   };
 
-  const filteredEvents =
-    selectedCategory === "all"
-      ? event
-      : event?.filter((e) => e.group === selectedCategory);
+  const filteredEvents = selectedCategory === "all" 
+    ? event 
+    : event?.filter((e) => e.group === selectedCategory);
 
   return (
-    <Box sx={{ display: "flex", fontFamily: "'Shantell Sans', sans-serif" }}>
-      <Box className="category-list" sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
-        <List>
+    <Box 
+      ref={containerRef}
+      sx={{ 
+        display: "flex", 
+        height: "100vh",
+        overflow: "hidden",
+        position: "relative", 
+        fontFamily: "'Shantell Sans', sans-serif"
+      }}
+    >
+      {/* Список категорий */}
+      <Box 
+        ref={categoryListRef}
+        sx={{
+          fontFamily: "'Shantell Sans', sans-serif",
+          width: "250px",
+          flexShrink: 0,
+          borderRight: "1px solid rgba(0,0,0,0.12)",
+          overflowY: "auto",
+          '&::-webkit-scrollbar': {
+            width: '6px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: '#8174A0',
+            borderRadius: '3px',
+          }
+        }}
+      >
+        <List sx={{ py: 0 }}>
           {categories.map((category) => (
             <ListItem key={category} disablePadding>
               <ListItemButton
-                className={`category-button ${selectedCategory === category ? "selected" : ""}`}
+                selected={selectedCategory === category}
                 onClick={() => setSelectedCategory(category)}
-                sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+                sx={{
+                  fontFamily: "'Shantell Sans', sans-serif",
+                  width: "100%",
+                  transition: "background-color 0.2s",
+                  bgcolor: selectedCategory === category ? "#441752" : "inherit",
+                  color: selectedCategory === category ? "#CFEBC7" : "inherit",
+                  '&:hover': {
+                    backgroundColor: "rgba(68, 23, 82, 0.1)",
+                  }
+                }}
               >
                 <ListItemText 
-                  primary={category} 
+                  primary={category}  
                   primaryTypographyProps={{ fontFamily: "'Shantell Sans', sans-serif" }}
+                  sx={{
+                    '& .MuiTypography-root': {
+                      fontSize: "0.9rem",
+                      fontWeight: selectedCategory === category ? "600" : "400",
+                    }
+                  }} 
                 />
               </ListItemButton>
             </ListItem>
@@ -93,73 +153,119 @@ function CardEvent() {
         </List>
       </Box>
 
-      <Box className="event-container" sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
+      {/* Контейнер карточек */}
+      <Box 
+        sx={{
+          fontFamily: "'Shantell Sans', sans-serif"
+          flexGrow: 1,
+          overflowY: "auto",
+          p: "20px",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))",
+          gap: "20px",
+          alignContent: "flex-start",
+          '&::-webkit-scrollbar': {
+            width: '6px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: '#8174A0',
+            borderRadius: '3px',
+          }
+        }}
+      >
         {filteredEvents?.map((e) => (
           <Card 
-            style={{ backgroundColor: "rgba(227, 242, 253, 1)" }} 
-            key={e.id} 
-            className="event-card"
-            sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+            key={e.id}
+            sx={{
+              fontFamily: "'Shantell Sans', sans-serif",
+              width: "100%",
+              height: "610px",
+              display: "flex",
+              flexDirection: "column",
+              backgroundColor: "#E3F2FD",
+              borderRadius: "8px",
+              overflow: "hidden",
+            }}
           >
             <CardMedia
               component="img"
-              className="event-media"
+              sx={{
+                width: "100%",
+                height: "300px",
+                objectFit: "cover",
+              }}
               image={e.img_url}
               alt={e.name}
             />
-            <CardContent style={{ paddingBottom: "0px" }} className="event-content">
-              <Typography 
-                variant="h5" 
-                className="event-title"
-                sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
-              >
+            <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
+              <Typography variant="h5" sx={{ fontSize: "1.25rem", color: "#441752", mb: 1 }}
+              sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
                 {e.name}
               </Typography>
-              <Typography 
-                className="event-price"
-                sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
-              >
+              <Typography sx={{ fontSize: "1rem", color: "#441752", mb: 1 ,
+                 fontFamily: "'Shantell Sans', sans-serif" 
+              }}>
                 Цена: {e.price} руб.
               </Typography>
-              <Typography 
-                className="event-date"
-                sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
-              >
+              <Typography sx={{ fontSize: "1rem", color: "#441752", mb: 1 , fontFamily: "'Shantell Sans', sans-serif" }}>
                 Дата: {e.date}
               </Typography>
-              <Box className="event-description-container">
+              <Box sx={{ position: "relative", flexGrow: 1 }}>
                 <Typography
-                  className="event-description"
                   ref={(el) => (descriptionRefs.current[e.id] = el)}
                   onScroll={handleScroll(e.id)}
-                  sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+                  sx={{
+                    fontFamily: "'Shantell Sans', sans-serif" ,
+                    fontSize: "1rem",
+                    color: "#441752",
+                    height: "100%",
+                    overflowY: "auto",
+                    pr: "5px",
+                    '&::-webkit-scrollbar': {
+                      width: '4px',
+                    },
+                    '&::-webkit-scrollbar-thumb': {
+                      backgroundColor: '#8174A0',
+                      borderRadius: '2px',
+                    }
+                  }}
                 >
                   {e.description}
                 </Typography>
-                <div
-                  className={`event-description-overlay ${
-                    !overlayVisibility[e.id] ? "hidden" : ""
-                  }`}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    height: "50px",
+                    background: "linear-gradient(to bottom, rgba(227, 242, 253, 0), rgba(227, 242, 253, 0.8) 20%, rgba(227, 242, 253, 1))",
+                    display: overlayVisibility[e.id] ? "flex" : "none",
+                    justifyContent: "center",
+                    alignItems: "flex-end",
+                    pb: "5px",
+                  }}
                 >
-                  <span className="arrow">▼</span>
-                </div>
+                  <Box sx={{ color: "#441752", fontSize: "20px" }}>▼</Box>
+                </Box>
               </Box>
             </CardContent>
-            <Link to={`/event/${e.id}`} style={{ textDecoration: "none" }}>
-              <Button 
-                style={{ paddingTop: "0px" }} 
-                className="more-button"
-                sx={{ 
-                  fontFamily: "'Shantell Sans', sans-serif",
-                  color: "#8174A0",
-                  "&:hover": {
-                    backgroundColor: "rgba(129, 116, 160, 0.1)"
-                  }
-                }}
-              >
-                Подробнее
-              </Button>
-            </Link>
+            <Box sx={{ p: 2 }}>
+              <Link to={`/event/${e.id}`} style={{ textDecoration: "none" }}>
+                <Button 
+                  sx={{
+                    fontFamily: "'Shantell Sans', sans-serif",
+                    backgroundColor: "#441752",
+                    color: "#CFEBC7",
+                    '&:hover': {
+                      backgroundColor: "#8174A0",
+                    }
+                  }}
+                >
+                  Подробнее
+                </Button>
+              </Link>
+            </Box>
           </Card>
         ))}
       </Box>

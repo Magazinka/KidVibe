@@ -13,7 +13,6 @@ import {
   Box,
   Button,
 } from "@mui/material";
-import Grid2 from "@mui/material/Grid2";
 import { useNavigate } from "react-router-dom";
 import "./MainPage.css";
 
@@ -38,30 +37,27 @@ const MainPage: React.FC = () => {
     }
   }, [isLoadingEvents, isLoadingGadgets]);
 
-  if (isLoadingEvents || isLoadingGadgets) {
-    return (
-      <Box 
-        className="loading-container"
-        sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
-
-  const lastFourEvents = events.slice(-4);
-  const lastFourGadgets = gadgets.slice(-4);
+  const animalImages = [
+    "https://res.cloudinary.com/dlliagivo/image/upload/v1742475564/yepp6p1fzkqaydzodpce.webp",
+    "https://res.cloudinary.com/dlliagivo/image/upload/v1742475564/ijzquujqf200q9ehavdo.webp",
+    "https://res.cloudinary.com/dlliagivo/image/upload/v1742476902/xqg3r6xxt0lh2iqvbfz0.webp",
+    "https://res.cloudinary.com/dlliagivo/image/upload/v1742641971/esqsjyfnwrwcyrhdrtzc.png",
+    "https://res.cloudinary.com/dlliagivo/image/upload/v1742642372/ph4dabj592sqwwz2kw9r.png",
+  ];
 
   const getRandomAnimalImage = () => {
-    const animalImages = [
-      "https://res.cloudinary.com/dlliagivo/image/upload/v1742475564/yepp6p1fzkqaydzodpce.webp",
-      "https://res.cloudinary.com/dlliagivo/image/upload/v1742475564/ijzquujqf200q9ehavdo.webp",
-      "https://res.cloudinary.com/dlliagivo/image/upload/v1742476902/xqg3r6xxt0lh2iqvbfz0.webp",
-      "https://res.cloudinary.com/dlliagivo/image/upload/v1742641971/esqsjyfnwrwcyrhdrtzc.png",
-      "https://res.cloudinary.com/dlliagivo/image/upload/v1742642372/ph4dabj592sqwwz2kw9r.png",
+    return animalImages[Math.floor(Math.random() * animalImages.length)];
+  };
+
+  const getRandomSize = (index: number) => {
+    const sizes = [
+      { gridRow: "span 1", gridColumn: "span 1", imgHeight: 140, contentHeight: 160, isTall: false },
+      { gridRow: "span 1", gridColumn: "span 2", imgHeight: 150, contentHeight: 180, isTall: false },
+      { gridRow: "span 2", gridColumn: "span 1", imgHeight: 200, contentHeight: 300, isTall: true },
+      { gridRow: "span 1", gridColumn: "span 1", imgHeight: 120, contentHeight: 180, isTall: false },
+      { gridRow: "span 2", gridColumn: "span 2", imgHeight: 220, contentHeight: 350, isTall: true },
     ];
-    const randomIndex = Math.floor(Math.random() * animalImages.length);
-    return animalImages[randomIndex];
+    return sizes[index % sizes.length];
   };
 
   const handleAllEventsClick = () => navigate("/event");
@@ -69,160 +65,242 @@ const MainPage: React.FC = () => {
   const handleEventClick = (id: number) => navigate(`/event/${id}`);
   const handleGadgetClick = (id: number) => navigate(`/gadget/${id}`);
 
-  return (
-    <Container 
-      className="container"
-      sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
-    >
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-        <Typography 
-          variant="h4" 
-          className="section-title"
-          sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
-        >
-          Мероприятия
-        </Typography>
-        <Button
-          variant="contained"
-          onClick={handleAllEventsClick}
+  const renderPuzzleCard = (item: any, type: "event" | "gadget", onClick: (id: number) => void, index: number) => {
+    const size = getRandomSize(index);
+    const [animal1, animal2] = [getRandomAnimalImage(), getRandomAnimalImage()];
+    
+    return (
+      <Box
+        key={item.id}
+        sx={{
+          position: "relative",
+          overflow: "visible",
+          gridRow: size.gridRow,
+          gridColumn: size.gridColumn,
+          margin: "20px",
+          '&:hover .animal-image': { animation: "spin-clockwise 2s linear infinite" },
+          '&:hover .animal-image-2': { animation: "spin-counterclockwise 2s linear infinite" },
+        }}
+      >
+        {/* Зверушки */}
+        <Box
+          component="img"
+          src={animal1}
+          alt="Зверушка"
+          className="animal-image"
           sx={{
-            backgroundColor: "#8174A0",
-            color: "#CFEBC7",
-            fontFamily: "'Shantell Sans', sans-serif",
+            position: "absolute",
+            width: 60,
+            height: 60,
+            top: -15,
+            left: -15,
+            zIndex: 2,
+            transition: "transform 0.8s ease",
+          }}
+        />
+        <Box
+          component="img"
+          src={animal2}
+          alt="Зверушка"
+          className="animal-image-2"
+          sx={{
+            position: "absolute",
+            width: 60,
+            height: 60,
+            bottom: -15,
+            right: -15,
+            zIndex: 2,
+            transition: "transform 0.8s ease",
+          }}
+        />
+        
+        {/* Карточка */}
+        <Card
+          className={`card-container ${loaded ? "appear" : ""}`}
+          sx={{
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            borderRadius: "20px",
+            overflow: "hidden",
+            cursor: "pointer",
+            backgroundColor: "#8174a0",
+            color: "#cfebc7",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+            transition: "transform 0.4s ease, background 0.4s ease",
             "&:hover": {
-              backgroundColor: "#441752",
+              transform: "translateY(-5px)",
+              background: "linear-gradient(135deg, #ffffff, #f9f3d0)",
             },
           }}
+          onClick={() => onClick(item.id)}
         >
-          Все мероприятия
-        </Button>
-      </Box>
-      <Grid2 container spacing={6}>
-        {lastFourEvents.map((event) => (
-          <Grid2 key={event.id} xs={12} sm={6} md={4} lg={3}>
-            <Card
-              className={`card-container ${loaded ? "appear" : ""}`}
-              sx={{ 
-                overflow: "visible",
-                fontFamily: "'Shantell Sans', sans-serif",
-              }}
-              onClick={() => handleEventClick(event.id)}
-            >
-              <Box
-                component="img"
-                src={getRandomAnimalImage()}
-                alt="Зверушка"
-                className="corner-image top-left"
-              />
-              <Box
-                component="img"
-                src={getRandomAnimalImage()}
-                alt="Зверушка"
-                className="corner-image bottom-right"
-              />
-              <CardMedia
-                component="img"
-                height="140"
-                image={event.img_url}
-                alt={event.name}
-              />
-              <CardContent>
-                <Typography 
-                  gutterBottom 
-                  variant="h5"
-                  sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
-                >
-                  {event.name}
-                </Typography>
-                <Typography 
-                  variant="body2"
-                  sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
-                >
-                  Дата: {event.date}
-                </Typography>
-                <Typography 
-                  variant="body2"
-                  sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
-                >
-                  Место: {event.location}
-                </Typography>
-                <Typography 
-                  variant="body2"
-                  sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
-                >
-                  Цена: {event.price} руб.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid2>
-        ))}
-      </Grid2>
+          <CardMedia
+            component="img"
+            sx={{
+              height: type === "event" ? size.imgHeight * 0.9 : size.imgHeight,
+              width: "100%",
+              objectFit: "cover",
+              flexShrink: 0,
+            }}
+            image={type === "event" ? item.img_url : item.image}
+            alt={item.name}
+          />
+          <CardContent 
+            sx={{ 
+              flex: "1 1 auto",
+              display: "flex",
+              flexDirection: "column",
+              p: 2,
+              '&:last-child': { pb: 2 },
+              overflow: "hidden",
+            }}
+          >
+            <Box sx={{ 
+              flex: size.isTall ? "1 1 auto" : "0 0 auto",
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              overflow: "hidden",
+            }}>
+              <Typography 
+                gutterBottom 
+                variant="h6" 
+                sx={{ 
+                  fontSize: "1rem",
+                  fontWeight: "bold",
+                  lineHeight: 1.2,
+                  mb: 1,
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                }}
+              >
+                {item.name}
+              </Typography>
 
-      <Box display="flex" justifyContent="space-between" alignItems="center" mt={4} mb={2}>
-        <Typography 
-          variant="h4" 
-          className="section-title"
-          sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
-        >
-          Гаджеты
-        </Typography>
-        <Button
-          variant="contained"
-          onClick={handleAllGadgetsClick}
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: "0.8rem",
+                  lineHeight: 1.4,
+                  mb: 1,
+                  display: "-webkit-box",
+                  WebkitLineClamp: size.isTall ? 8 : 3,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                  flex: size.isTall ? "1 1 auto" : "0 0 auto",
+                  color: type === "event" ? "#e0e0e0" : "#cfebc7",
+                }}
+              >
+                {item.description || "Описание отсутствует"}
+              </Typography>
+              
+              {type === "event" && (
+                <Box sx={{ mt: "auto", pt: 1 }}>
+                  <Typography variant="body2" sx={{ fontSize: "0.75rem" }}>
+                    {item.date}
+                  </Typography>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      fontSize: "0.75rem",
+                      display: "-webkit-box",
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {item.location}
+                  </Typography>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      fontSize: "0.9rem", 
+                      fontWeight: "bold", 
+                      mt: 1,
+                      textAlign: "right"
+                    }}
+                  >
+                    {item.price} ₽
+                  </Typography>
+                </Box>
+              )}
+            </Box>
+          </CardContent>
+        </Card>
+      </Box>
+    );
+  };
+
+  if (isLoadingEvents || isLoadingGadgets) {
+    return (
+      <Box className="loading-container">
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  return (
+    <Container className="container" sx={{ maxWidth: "lg", py: 4 }}>
+      <Box sx={{ mb: 6 }}>
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+          <Typography variant="h4" className="section-title">
+            Мероприятия
+          </Typography>
+          <Button
+            variant="contained"
+            onClick={handleAllEventsClick}
+            sx={{
+              backgroundColor: "#8174A0",
+              color: "#CFEBC7",
+              fontFamily: "'Shantell Sans', sans-serif",
+            }}
+          >
+            Все мероприятия
+          </Button>
+        </Box>
+        <Box
           sx={{
-            backgroundColor: "#8174A0",
-            color: "#CFEBC7",
-            fontFamily: "'Shantell Sans', sans-serif",
-            "&:hover": {
-              backgroundColor: "#441752",
-            },
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", md: "repeat(4, 1fr)" },
+            gridAutoRows: "minmax(100px, auto)",
+            gap: "40px",
           }}
         >
-          Все гаджеты
-        </Button>
+          {events.slice(0, 5).map((event, index) => renderPuzzleCard(event, "event", handleEventClick, index))}
+        </Box>
       </Box>
-      <Grid2 container spacing={6}>
-        {lastFourGadgets.map((gadget) => (
-          <Grid2 key={gadget.id} xs={12} sm={6} md={4} lg={3}>
-            <Card
-              className={`card-container ${loaded ? "appear" : ""}`}
-              sx={{ 
-                overflow: "visible",
-                fontFamily: "'Shantell Sans', sans-serif",
-              }}
-              onClick={() => handleGadgetClick(gadget.id)}
-            >
-              <Box
-                component="img"
-                src={getRandomAnimalImage()}
-                alt="Зверушка"
-                className="corner-image top-left"
-              />
-              <Box
-                component="img"
-                src={getRandomAnimalImage()}
-                alt="Зверушка"
-                className="corner-image bottom-right"
-              />
-              <CardMedia
-                component="img"
-                height="140"
-                image={gadget.image}
-                alt={gadget.name}
-              />
-              <CardContent>
-                <Typography 
-                  gutterBottom 
-                  variant="h5"
-                  sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
-                >
-                  {gadget.name}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid2>
-        ))}
-      </Grid2>
+
+      <Box sx={{ mt: 8, mb: 4 }}>
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+          <Typography variant="h4" className="section-title">
+            Гаджеты
+          </Typography>
+          <Button
+            variant="contained"
+            onClick={handleAllGadgetsClick}
+            sx={{
+              backgroundColor: "#8174A0",
+              color: "#CFEBC7",
+              fontFamily: "'Shantell Sans', sans-serif",
+            }}
+          >
+            Все гаджеты
+          </Button>
+        </Box>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", md: "repeat(4, 1fr)" },
+            gridAutoRows: "minmax(100px, auto)",
+            gap: "40px",
+          }}
+        >
+          {gadgets.slice(0, 5).map((gadget, index) => renderPuzzleCard(gadget, "gadget", handleGadgetClick, index))}
+        </Box>
+      </Box>
     </Container>
   );
 };
