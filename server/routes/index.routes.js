@@ -8,7 +8,8 @@ const linkRoutes = require("./link.routes");
 const signupEvent = require("./signupEvent.routes");
 const verifyAccessToken = require("../middlewares/verify.access.token");
 const commentEventRouter = require("./commentEvent.routes");
-const pointRoutes = require("./points.routes")
+const pointRoutes = require("./points.routes");
+const signupGadget = require("./signupGadget.routes");
 
 indexRouter.use("/auth", authRoutes);
 indexRouter.use("/tokens", tokensRouter);
@@ -18,6 +19,7 @@ indexRouter.use("/gadget/:id", verifyAccessToken, gadgetRoutes);
 indexRouter.use("/announcement", announcementRoutes);
 indexRouter.use("/link", verifyAccessToken, linkRoutes);
 indexRouter.use("/event/:id", verifyAccessToken, signupEvent);
+indexRouter.use("/gadget/:id", verifyAccessToken, signupGadget);
 indexRouter.use("/event/:id/comment", commentEventRouter);
 indexRouter.use("/map", pointRoutes)
 
