@@ -1,15 +1,12 @@
 const commentEventRoutes = require("express").Router();
-const { where } = require("sequelize");
 const { eventComment, User, event } = require("../db/models");
 
 commentEventRoutes.get("/", async (req, res) => {
-  // console.log("comment/ ");
   try {
     const { eventId, userId } = req.query;
-    // console.log("userId comment: ", userId);
     const comment = await eventComment.findAll({
       where: { event_id: Number(eventId) },
-      attributes: ["id", "text"],
+      attributes: ["id", "text", "createdAt"],
       include: [
         {
           model: User,
@@ -19,7 +16,6 @@ commentEventRoutes.get("/", async (req, res) => {
       ],
     });
 
-    // console.log("comment: ", comment);
 
     res.status(200).json(comment);
   } catch (error) {
@@ -30,9 +26,7 @@ commentEventRoutes.get("/", async (req, res) => {
 
 commentEventRoutes.post("/", async (req, res) => {
   try {
-    const { user_id, text, event_id } = req.body;
-    // console.log("event_id: ", event_id);
-    // console.log("user_id comment: ", user_id);
+    const { user_id, text, event_id, createdAt } = req.body;
 
     const commentCreate = await eventComment.create({
       user_id,
@@ -50,10 +44,6 @@ commentEventRoutes.post("/", async (req, res) => {
         },
       ],
     });
-    // console.log("commentCreate: ", comment);
-    // const comment = commentCreate.get();
-    // delete comment.createdAt;
-    // delete comment.updatedAt;
 
     res.status(200).json(comment);
   } catch (error) {
@@ -83,14 +73,50 @@ commentEventRoutes.delete("/", async (req, res) => {
         },
       });
     }
-
-    // console.log("userComment: ", userComment);
-
     res.status(200).json({ message: "Комментарий удален" });
-    // console.log("REQ BODY COMMENT: ", req.body);
   } catch (error) {
     console.log("error: ", error);
     res.status(500).json({ message: "Ошибка при удалении записи" });
+  }
+});
+commentEventRoutes.put("/", async (req, res) => {
+  try {
+    const { id, text } = req.body; 
+
+    const user_id = res.locals.user.id;
+
+    if (!id || !text) {
+      return res.status(400).json({ message: "Нет данных для редактирования" });
+    }
+
+
+    const userComment = await eventComment.findOne({
+      where: { id: Number(id) },
+    });
+
+    if (!userComment) {
+      return res.status(404).json({ message: "Комментарий не найден" });
+    }
+
+    if (Number(user_id) !== userComment.user_id) {
+      return res.status(403).json({
+        message: "У вас нет прав на редактирование этого комментария",
+      });
+    }
+
+    userComment.text = text;
+    console.log("userComment: ", userComment);
+
+
+    await userComment.save();
+
+
+    res
+      .status(200)
+      .json({ message: "Комментарий обновлен", comment: userComment });
+  } catch (error) {
+    console.error("Ошибка при редактировании комментария:", error); 
+    res.status(500).json({ message: "Ошибка при редактировании комментария" });
   }
 });
 
