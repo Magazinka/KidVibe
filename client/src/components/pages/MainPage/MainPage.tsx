@@ -51,11 +51,11 @@ const MainPage: React.FC = () => {
 
   const getRandomSize = (index: number) => {
     const sizes = [
-      { gridRow: "span 1", gridColumn: "span 1", imgHeight: 160, contentHeight: 120 },
-      { gridRow: "span 1", gridColumn: "span 2", imgHeight: 180, contentHeight: 100 },
-      { gridRow: "span 2", gridColumn: "span 1", imgHeight: 240, contentHeight: 140 },
-      { gridRow: "span 1", gridColumn: "span 1", imgHeight: 140, contentHeight: 140 },
-      { gridRow: "span 2", gridColumn: "span 2", imgHeight: 280, contentHeight: 160 },
+      { gridRow: "span 1", gridColumn: "span 1", imgHeight: 140, contentHeight: 160, isTall: false },
+      { gridRow: "span 1", gridColumn: "span 2", imgHeight: 150, contentHeight: 180, isTall: false },
+      { gridRow: "span 2", gridColumn: "span 1", imgHeight: 200, contentHeight: 300, isTall: true },
+      { gridRow: "span 1", gridColumn: "span 1", imgHeight: 120, contentHeight: 180, isTall: false },
+      { gridRow: "span 2", gridColumn: "span 2", imgHeight: 220, contentHeight: 350, isTall: true },
     ];
     return sizes[index % sizes.length];
   };
@@ -138,9 +138,10 @@ const MainPage: React.FC = () => {
           <CardMedia
             component="img"
             sx={{
-              height: type === "event" ? size.imgHeight * 0.8 : size.imgHeight,
+              height: type === "event" ? size.imgHeight * 0.9 : size.imgHeight,
               width: "100%",
               objectFit: "cover",
+              flexShrink: 0,
             }}
             image={type === "event" ? item.img_url : item.image}
             alt={item.name}
@@ -148,60 +149,85 @@ const MainPage: React.FC = () => {
           <CardContent 
             sx={{ 
               flex: "1 1 auto",
-              height: size.contentHeight,
               display: "flex",
               flexDirection: "column",
               p: 2,
-              '&:last-child': { pb: 2 }
+              '&:last-child': { pb: 2 },
+              overflow: "hidden",
             }}
           >
-            <Typography 
-              gutterBottom 
-              variant="h6" 
-              sx={{ 
-                fontSize: "1rem",
-                fontWeight: "bold",
-                lineHeight: 1.2,
-                mb: 1,
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-              }}
-            >
-              {item.name}
-            </Typography>
-            
-            {type === "event" && (
-              <Box sx={{ mt: "auto" }}>
-                <Typography variant="body2" sx={{ fontSize: "0.75rem" }}>
-                  {item.date}
-                </Typography>
-                <Typography 
-                  variant="body2" 
-                  sx={{ 
-                    fontSize: "0.75rem",
-                    display: "-webkit-box",
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: "vertical",
-                    overflow: "hidden",
-                  }}
-                >
-                  {item.location}
-                </Typography>
-                <Typography 
-                  variant="body2" 
-                  sx={{ 
-                    fontSize: "0.9rem", 
-                    fontWeight: "bold", 
-                    mt: 1,
-                    textAlign: "right"
-                  }}
-                >
-                  {item.price} ₽
-                </Typography>
-              </Box>
-            )}
+            <Box sx={{ 
+              flex: size.isTall ? "1 1 auto" : "0 0 auto",
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              overflow: "hidden",
+            }}>
+              <Typography 
+                gutterBottom 
+                variant="h6" 
+                sx={{ 
+                  fontSize: "1rem",
+                  fontWeight: "bold",
+                  lineHeight: 1.2,
+                  mb: 1,
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                }}
+              >
+                {item.name}
+              </Typography>
+
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: "0.8rem",
+                  lineHeight: 1.4,
+                  mb: 1,
+                  display: "-webkit-box",
+                  WebkitLineClamp: size.isTall ? 8 : 3,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                  flex: size.isTall ? "1 1 auto" : "0 0 auto",
+                  color: type === "event" ? "#e0e0e0" : "#cfebc7",
+                }}
+              >
+                {item.description || "Описание отсутствует"}
+              </Typography>
+              
+              {type === "event" && (
+                <Box sx={{ mt: "auto", pt: 1 }}>
+                  <Typography variant="body2" sx={{ fontSize: "0.75rem" }}>
+                    {item.date}
+                  </Typography>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      fontSize: "0.75rem",
+                      display: "-webkit-box",
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {item.location}
+                  </Typography>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      fontSize: "0.9rem", 
+                      fontWeight: "bold", 
+                      mt: 1,
+                      textAlign: "right"
+                    }}
+                  >
+                    {item.price} ₽
+                  </Typography>
+                </Box>
+              )}
+            </Box>
           </CardContent>
         </Card>
       </Box>
