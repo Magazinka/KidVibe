@@ -74,6 +74,12 @@
   overflow-y: auto;
   max-height: 150px;
   position: relative;
+  -ms-overflow-style: none;  /* IE и Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.gadget-description::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari и Opera */
 }
 
 .gadget-description-container {

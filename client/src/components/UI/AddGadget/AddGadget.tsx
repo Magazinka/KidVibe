@@ -102,19 +102,28 @@ function AddGadget({ toggleModalVisible }: Props) {
 				open={isVisible}
 				onClose={toggleVisibility}
 				closeAfterTransition
-				BackdropComponent={Backdrop}
-				BackdropProps={{
-					timeout: 500,
-					invisible: true,
+				slots={{ backdrop: Backdrop }}
+				slotProps={{
+					backdrop: {
+						timeout: 500,
+						sx: {
+							backgroundColor: "rgba(0, 0, 0, 0.5)",
+						},
+					},
 				}}
 			>
 				<Fade in={isVisible}>
 					<Box
 						sx={{
-							display: "flex",
-							justifyContent: "center",
-							alignItems: "center",
-							height: "100vh",
+							position: "absolute",
+							top: "50%",
+							left: "50%",
+							transform: "translate(-50%, -50%)",
+							width: 400,
+							bgcolor: "#E3F2FD",
+							boxShadow: 24,
+							borderRadius: 2,
+							outline: "none",
 						}}
 					>
 						<Card
