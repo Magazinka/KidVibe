@@ -31,10 +31,11 @@ function NavBar() {
         boxShadow: 3,
         borderRadius: 2,
         backgroundColor: "#F5F5F5",
+        alignItems: "center", // Добавлено для вертикального выравнивания
       }}
     >
-      <Box sx={{ display: "flex", gap: 1 }}>
-        <NavLink to="/">
+      <Box sx={{ display: "flex", gap: 1, flexGrow: 1, alignItems: "center" }}>
+        <NavLink to="/" style={{ display: "flex", alignItems: "center" }}>
           <img
             src="https://res.cloudinary.com/dlliagivo/image/upload/v1742999929/logo_navbar.png"
             alt="Logo"
@@ -46,108 +47,99 @@ function NavBar() {
             }}
           />
         </NavLink>
-        <NavLink to="/" style={{ textDecoration: "none" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              backgroundColor: "#8174A0",
-              color: "#CFEBC7",
-              fontFamily: "'Shantell Sans', sans-serif",
-              "&:hover": {
-                backgroundColor: "#441752",
-              },
-            }}
-            fullWidth
-          >
-            Главная
-          </Button>
-        </NavLink>
-        <NavLink to="/event" style={{ textDecoration: "none" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              backgroundColor: "#8174A0",
-              color: "#CFEBC7",
-              fontFamily: "'Shantell Sans', sans-serif",
-              "&:hover": {
-                backgroundColor: "#441752",
-              },
-            }}
-            fullWidth
-          >
-            Мероприятия
-          </Button>
-        </NavLink>
-        <NavLink to="/link" style={{ textDecoration: "none" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              backgroundColor: "#8174A0",
-              color: "#CFEBC7",
-              fontFamily: "'Shantell Sans', sans-serif",
-              "&:hover": {
-                backgroundColor: "#441752",
-              },
-            }}
-            fullWidth
-          >
-            Совет
-          </Button>
-        </NavLink>
-        <NavLink to="/map" style={{ textDecoration: "none" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              backgroundColor: "#8174A0",
-              color: "#CFEBC7",
-              fontFamily: "'Shantell Sans', sans-serif",
-              "&:hover": {
-                backgroundColor: "#441752",
-              },
-            }}
-            fullWidth
-          >
-            Карты
-          </Button>
-        </NavLink>
-        <NavLink to="/gadget" style={{ textDecoration: "none" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              backgroundColor: "#8174A0",
-              color: "#CFEBC7",
-              fontFamily: "'Shantell Sans', sans-serif",
-              "&:hover": {
-                backgroundColor: "#441752",
-              },
-            }}
-            fullWidth
-          >
-            Гаджеты
-          </Button>
-        </NavLink>
-        <NavLink to="/profile" style={{ textDecoration: "none" }}>
-          {/* <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              backgroundColor: "#8174A0",
-              color: "#CFEBC7",
-              fontFamily: "'Shantell Sans', sans-serif",
-              "&:hover": {
-                backgroundColor: "#441752",
-              },
-            }}
-            fullWidth
-          >
-            Профиль
-          </Button> */}
-        </NavLink>
+        
+        <Box sx={{ display: "flex", gap: 1, flexGrow: 1 }}>
+          <NavLink to="/" style={{ textDecoration: "none", flex: 1 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                backgroundColor: "#8174A0",
+                color: "#CFEBC7",
+                fontFamily: "'Shantell Sans', sans-serif",
+                "&:hover": {
+                  backgroundColor: "#441752",
+                },
+                width: "100%",
+                height: "40px", // Фиксированная высота
+              }}
+            >
+              Главная
+            </Button>
+          </NavLink>
+          <NavLink to="/event" style={{ textDecoration: "none", flex: 1 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                backgroundColor: "#8174A0",
+                color: "#CFEBC7",
+                fontFamily: "'Shantell Sans', sans-serif",
+                "&:hover": {
+                  backgroundColor: "#441752",
+                },
+                width: "100%",
+                height: "40px",
+              }}
+            >
+              Мероприятия
+            </Button>
+          </NavLink>
+          <NavLink to="/link" style={{ textDecoration: "none", flex: 1 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                backgroundColor: "#8174A0",
+                color: "#CFEBC7",
+                fontFamily: "'Shantell Sans', sans-serif",
+                "&:hover": {
+                  backgroundColor: "#441752",
+                },
+                width: "100%",
+                height: "40px",
+              }}
+            >
+              Совет
+            </Button>
+          </NavLink>
+          <NavLink to="/map" style={{ textDecoration: "none", flex: 1 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                backgroundColor: "#8174A0",
+                color: "#CFEBC7",
+                fontFamily: "'Shantell Sans', sans-serif",
+                "&:hover": {
+                  backgroundColor: "#441752",
+                },
+                width: "100%",
+                height: "40px",
+              }}
+            >
+              Карты
+            </Button>
+          </NavLink>
+          <NavLink to="/gadget" style={{ textDecoration: "none", flex: 1 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                backgroundColor: "#8174A0",
+                color: "#CFEBC7",
+                fontFamily: "'Shantell Sans', sans-serif",
+                "&:hover": {
+                  backgroundColor: "#441752",
+                },
+                width: "100%",
+                height: "40px",
+              }}
+            >
+              Гаджеты
+            </Button>
+          </NavLink>
+        </Box>
       </Box>
 
       {user !== null ? (
@@ -155,16 +147,20 @@ function NavBar() {
           variant="outlined"
           color="error"
           sx={{
-            padding: "1px 10px",
             fontFamily: "'Shantell Sans', sans-serif",
+            minWidth: "120px",
+            height: "40px", // Такая же высота как у других кнопок
+            borderWidth: "2px",
+            "&:hover": {
+              borderWidth: "2px",
+            },
           }}
-          fullWidth
           onClick={handleLogout}
         >
           Logout
         </Button>
       ) : (
-        <NavLink to="/auth" style={{ textDecoration: "none" }}>
+        <NavLink to="/auth" style={{ textDecoration: "none", minWidth: "120px" }}>
           <Button
             variant="contained"
             color="primary"
@@ -175,9 +171,9 @@ function NavBar() {
               "&:hover": {
                 backgroundColor: "#441752",
               },
-              padding: "5px 5px",
+              width: "100%",
+              height: "40px", // Такая же высота как у других кнопок
             }}
-            fullWidth
           >
             Регистрация
           </Button>

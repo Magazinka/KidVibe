@@ -156,7 +156,7 @@ function CardEvent() {
       {/* Контейнер карточек */}
       <Box 
         sx={{
-          fontFamily: "'Shantell Sans', sans-serif"
+          fontFamily: "'Shantell Sans', sans-serif",
           flexGrow: 1,
           overflowY: "auto",
           p: "20px",

@@ -82,7 +82,6 @@ const MainPage: React.FC = () => {
           '&:hover .animal-image-2': { animation: "spin-counterclockwise 2s linear infinite" },
         }}
       >
-        {/* Зверушки */}
         <Box
           component="img"
           src={animal1}
@@ -114,7 +113,6 @@ const MainPage: React.FC = () => {
           }}
         />
         
-        {/* Карточка */}
         <Card
           className={`card-container ${loaded ? "appear" : ""}`}
           sx={{
@@ -132,6 +130,7 @@ const MainPage: React.FC = () => {
               transform: "translateY(-5px)",
               background: "linear-gradient(135deg, #ffffff, #f9f3d0)",
             },
+            fontFamily: "'Shantell Sans', sans-serif",
           }}
           onClick={() => onClick(item.id)}
         >
@@ -175,6 +174,7 @@ const MainPage: React.FC = () => {
                   WebkitLineClamp: 2,
                   WebkitBoxOrient: "vertical",
                   overflow: "hidden",
+                  fontFamily: "'Shantell Sans', sans-serif",
                 }}
               >
                 {item.name}
@@ -192,6 +192,7 @@ const MainPage: React.FC = () => {
                   overflow: "hidden",
                   flex: size.isTall ? "1 1 auto" : "0 0 auto",
                   color: type === "event" ? "#e0e0e0" : "#cfebc7",
+                  fontFamily: "'Shantell Sans', sans-serif",
                 }}
               >
                 {item.description || "Описание отсутствует"}
@@ -199,7 +200,13 @@ const MainPage: React.FC = () => {
               
               {type === "event" && (
                 <Box sx={{ mt: "auto", pt: 1 }}>
-                  <Typography variant="body2" sx={{ fontSize: "0.75rem" }}>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      fontSize: "0.75rem",
+                      fontFamily: "'Shantell Sans', sans-serif",
+                    }}
+                  >
                     {item.date}
                   </Typography>
                   <Typography 
@@ -210,6 +217,7 @@ const MainPage: React.FC = () => {
                       WebkitLineClamp: 2,
                       WebkitBoxOrient: "vertical",
                       overflow: "hidden",
+                      fontFamily: "'Shantell Sans', sans-serif",
                     }}
                   >
                     {item.location}
@@ -220,7 +228,8 @@ const MainPage: React.FC = () => {
                       fontSize: "0.9rem", 
                       fontWeight: "bold", 
                       mt: 1,
-                      textAlign: "right"
+                      textAlign: "right",
+                      fontFamily: "'Shantell Sans', sans-serif",
                     }}
                   >
                     {item.price} ₽
@@ -236,17 +245,31 @@ const MainPage: React.FC = () => {
 
   if (isLoadingEvents || isLoadingGadgets) {
     return (
-      <Box className="loading-container">
+      <Box 
+        className="loading-container"
+        sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+      >
         <CircularProgress />
       </Box>
     );
   }
 
   return (
-    <Container className="container" sx={{ maxWidth: "lg", py: 4 }}>
+    <Container 
+      className="container" 
+      sx={{ 
+        maxWidth: "lg", 
+        py: 4,
+        fontFamily: "'Shantell Sans', sans-serif",
+      }}
+    >
       <Box sx={{ mb: 6 }}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-          <Typography variant="h4" className="section-title">
+          <Typography 
+            variant="h4" 
+            className="section-title"
+            sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+          >
             Мероприятия
           </Typography>
           <Button
@@ -256,6 +279,9 @@ const MainPage: React.FC = () => {
               backgroundColor: "#8174A0",
               color: "#CFEBC7",
               fontFamily: "'Shantell Sans', sans-serif",
+              "&:hover": {
+                backgroundColor: "#441752",
+              },
             }}
           >
             Все мероприятия
@@ -275,7 +301,11 @@ const MainPage: React.FC = () => {
 
       <Box sx={{ mt: 8, mb: 4 }}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-          <Typography variant="h4" className="section-title">
+          <Typography 
+            variant="h4" 
+            className="section-title"
+            sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+          >
             Гаджеты
           </Typography>
           <Button
@@ -285,6 +315,9 @@ const MainPage: React.FC = () => {
               backgroundColor: "#8174A0",
               color: "#CFEBC7",
               fontFamily: "'Shantell Sans', sans-serif",
+              "&:hover": {
+                backgroundColor: "#441752",
+              },
             }}
           >
             Все гаджеты
