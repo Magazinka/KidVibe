@@ -20,7 +20,7 @@ import "./MainPage.css";
 const MainPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
-  const [loaded, setLoaded] = useState(false); // Состояние для отображения карточек
+  const [loaded, setLoaded] = useState(false);
 
   const events = useSelector((state: RootState) => state.event.event);
   const gadgets = useSelector((state: RootState) => state.gadget.gadget);
@@ -34,14 +34,16 @@ const MainPage: React.FC = () => {
 
   useEffect(() => {
     if (!isLoadingEvents && !isLoadingGadgets) {
-      // Устанавливаем задержку перед отображением карточек
       setTimeout(() => setLoaded(true), 300);
     }
   }, [isLoadingEvents, isLoadingGadgets]);
 
   if (isLoadingEvents || isLoadingGadgets) {
     return (
-      <Box className="loading-container">
+      <Box 
+        className="loading-container"
+        sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+      >
         <CircularProgress />
       </Box>
     );
@@ -68,9 +70,16 @@ const MainPage: React.FC = () => {
   const handleGadgetClick = (id: number) => navigate(`/gadget/${id}`);
 
   return (
-    <Container className="container">
+    <Container 
+      className="container"
+      sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+    >
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-        <Typography variant="h4" className="section-title">
+        <Typography 
+          variant="h4" 
+          className="section-title"
+          sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+        >
           Мероприятия
         </Typography>
         <Button
@@ -80,6 +89,9 @@ const MainPage: React.FC = () => {
             backgroundColor: "#8174A0",
             color: "#CFEBC7",
             fontFamily: "'Shantell Sans', sans-serif",
+            "&:hover": {
+              backgroundColor: "#441752",
+            },
           }}
         >
           Все мероприятия
@@ -90,7 +102,10 @@ const MainPage: React.FC = () => {
           <Grid2 key={event.id} xs={12} sm={6} md={4} lg={3}>
             <Card
               className={`card-container ${loaded ? "appear" : ""}`}
-              sx={{ overflow: "visible" }}
+              sx={{ 
+                overflow: "visible",
+                fontFamily: "'Shantell Sans', sans-serif",
+              }}
               onClick={() => handleEventClick(event.id)}
             >
               <Box
@@ -112,12 +127,31 @@ const MainPage: React.FC = () => {
                 alt={event.name}
               />
               <CardContent>
-                <Typography gutterBottom variant="h5">
+                <Typography 
+                  gutterBottom 
+                  variant="h5"
+                  sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+                >
                   {event.name}
                 </Typography>
-                <Typography variant="body2">Дата: {event.date}</Typography>
-                <Typography variant="body2">Место: {event.location}</Typography>
-                <Typography variant="body2">Цена: {event.price} руб.</Typography>
+                <Typography 
+                  variant="body2"
+                  sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+                >
+                  Дата: {event.date}
+                </Typography>
+                <Typography 
+                  variant="body2"
+                  sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+                >
+                  Место: {event.location}
+                </Typography>
+                <Typography 
+                  variant="body2"
+                  sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+                >
+                  Цена: {event.price} руб.
+                </Typography>
               </CardContent>
             </Card>
           </Grid2>
@@ -125,7 +159,11 @@ const MainPage: React.FC = () => {
       </Grid2>
 
       <Box display="flex" justifyContent="space-between" alignItems="center" mt={4} mb={2}>
-        <Typography variant="h4" className="section-title">
+        <Typography 
+          variant="h4" 
+          className="section-title"
+          sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+        >
           Гаджеты
         </Typography>
         <Button
@@ -135,6 +173,9 @@ const MainPage: React.FC = () => {
             backgroundColor: "#8174A0",
             color: "#CFEBC7",
             fontFamily: "'Shantell Sans', sans-serif",
+            "&:hover": {
+              backgroundColor: "#441752",
+            },
           }}
         >
           Все гаджеты
@@ -145,7 +186,10 @@ const MainPage: React.FC = () => {
           <Grid2 key={gadget.id} xs={12} sm={6} md={4} lg={3}>
             <Card
               className={`card-container ${loaded ? "appear" : ""}`}
-              sx={{ overflow: "visible" }}
+              sx={{ 
+                overflow: "visible",
+                fontFamily: "'Shantell Sans', sans-serif",
+              }}
               onClick={() => handleGadgetClick(gadget.id)}
             >
               <Box
@@ -167,7 +211,11 @@ const MainPage: React.FC = () => {
                 alt={gadget.name}
               />
               <CardContent>
-                <Typography gutterBottom variant="h5">
+                <Typography 
+                  gutterBottom 
+                  variant="h5"
+                  sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+                >
                   {gadget.name}
                 </Typography>
               </CardContent>
