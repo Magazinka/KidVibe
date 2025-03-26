@@ -51,11 +51,10 @@ function AddCard({ toggleModalVisable }: Props) {
     try {
       let imageUrl = null;
 
-      // Загрузка изображения в Cloudinary
       if (data.image instanceof File) {
         const formData = new FormData();
         formData.append("file", data.image);
-        formData.append("upload_preset", "upload_gadgets"); // Ваш upload preset
+        formData.append("upload_preset", "upload_gadgets");
 
         const cloudinaryResponse = await fetch(
           `https://api.cloudinary.com/v1_1/dlliagivo/image/upload`,
@@ -73,7 +72,6 @@ function AddCard({ toggleModalVisable }: Props) {
         imageUrl = result.secure_url;
       }
 
-      // Создание мероприятия
       const eventData = {
         name: data.name,
         description: data.description,
@@ -82,7 +80,7 @@ function AddCard({ toggleModalVisable }: Props) {
         price: data.price,
         group: data.group,
         user_id: id,
-        img_url: imageUrl || "", // URL изображения или пустая строка
+        img_url: imageUrl || "",
       };
 
       const response = await createEvent(eventData).unwrap();
@@ -109,6 +107,7 @@ function AddCard({ toggleModalVisable }: Props) {
         sx={{
           backgroundColor: "#441752",
           color: "#CFEBC7",
+          fontFamily: "'Shantell Sans', sans-serif",
           "&:hover": {
             backgroundColor: "#8174A0",
           },
@@ -134,6 +133,7 @@ function AddCard({ toggleModalVisable }: Props) {
               justifyContent: "center",
               alignItems: "center",
               height: "100vh",
+              fontFamily: "'Shantell Sans', sans-serif",
             }}
           >
             <Card
@@ -144,11 +144,16 @@ function AddCard({ toggleModalVisable }: Props) {
                 display: "flex",
                 flexDirection: "column",
                 borderRadius: 2,
+                fontFamily: "'Shantell Sans', sans-serif",
               }}
             >
-              <Typography
-                variant="h5"
-                sx={{ color: "#441752", marginBottom: 2 }}
+              <Typography 
+                variant="h5" 
+                sx={{ 
+                  color: "#441752", 
+                  marginBottom: 2,
+                  fontFamily: "'Shantell Sans', sans-serif",
+                }}
               >
                 Добавить новое событие
               </Typography>
@@ -164,6 +169,12 @@ function AddCard({ toggleModalVisable }: Props) {
                         required: "Наименование обязательно",
                       })}
                       error={!!errors.name}
+                      InputProps={{
+                        style: { fontFamily: "'Shantell Sans', sans-serif" }
+                      }}
+                      InputLabelProps={{
+                        style: { fontFamily: "'Shantell Sans', sans-serif" }
+                      }}
                     />
                   </Box>
 
@@ -177,6 +188,12 @@ function AddCard({ toggleModalVisable }: Props) {
                         required: "Описание обязательно",
                       })}
                       error={!!errors.description}
+                      InputProps={{
+                        style: { fontFamily: "'Shantell Sans', sans-serif" }
+                      }}
+                      InputLabelProps={{
+                        style: { fontFamily: "'Shantell Sans', sans-serif" }
+                      }}
                     />
                   </Box>
                   <Box sx={{ marginBottom: 2 }}>
@@ -189,6 +206,12 @@ function AddCard({ toggleModalVisable }: Props) {
                         required: "Категория обязательна",
                       })}
                       error={!!errors.group}
+                      InputProps={{
+                        style: { fontFamily: "'Shantell Sans', sans-serif" }
+                      }}
+                      InputLabelProps={{
+                        style: { fontFamily: "'Shantell Sans', sans-serif" }
+                      }}
                     />
                   </Box>
                   <Box sx={{ marginBottom: 2 }}>
@@ -201,6 +224,12 @@ function AddCard({ toggleModalVisable }: Props) {
                         required: "Локация обязательна",
                       })}
                       error={!!errors.location}
+                      InputProps={{
+                        style: { fontFamily: "'Shantell Sans', sans-serif" }
+                      }}
+                      InputLabelProps={{
+                        style: { fontFamily: "'Shantell Sans', sans-serif" }
+                      }}
                     />
                   </Box>
                   <Box sx={{ marginBottom: 2 }}>
@@ -210,6 +239,12 @@ function AddCard({ toggleModalVisable }: Props) {
                       variant="outlined"
                       {...register("date", { required: "Дата обязательна" })}
                       error={!!errors.date}
+                      InputProps={{
+                        style: { fontFamily: "'Shantell Sans', sans-serif" }
+                      }}
+                      InputLabelProps={{
+                        style: { fontFamily: "'Shantell Sans', sans-serif" }
+                      }}
                     />
                   </Box>
 
@@ -224,12 +259,21 @@ function AddCard({ toggleModalVisable }: Props) {
                         valueAsNumber: true,
                       })}
                       error={!!errors.price}
+                      InputProps={{
+                        style: { fontFamily: "'Shantell Sans', sans-serif" }
+                      }}
+                      InputLabelProps={{
+                        style: { fontFamily: "'Shantell Sans', sans-serif" }
+                      }}
                     />
                   </Box>
 
-                  {/* Поле для загрузки изображения */}
                   <Box sx={{ marginBottom: 2 }}>
-                    <Button variant="contained" component="label">
+                    <Button 
+                      variant="contained" 
+                      component="label"
+                      sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+                    >
                       Загрузить изображение
                       <input
                         type="file"
@@ -246,7 +290,10 @@ function AddCard({ toggleModalVisable }: Props) {
                       />
                     </Button>
                     {errors.image && (
-                      <Typography color="error">
+                      <Typography 
+                        color="error"
+                        sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+                      >
                         Изображение обязательно
                       </Typography>
                     )}
@@ -256,10 +303,9 @@ function AddCard({ toggleModalVisable }: Props) {
                     <img
                       src={previewImage}
                       alt="Preview"
-                      style={{
-                        width: "50%",
-                        height: "100px",
-                        marginBottom: 16,
+                      style={{ 
+                        width: "100%", 
+                        marginBottom: 16, 
                         borderRadius: 4,
                       }}
                     />
@@ -271,6 +317,7 @@ function AddCard({ toggleModalVisable }: Props) {
                     sx={{
                       backgroundColor: "#441752",
                       color: "#CFEBC7",
+                      fontFamily: "'Shantell Sans', sans-serif",
                       "&:hover": {
                         backgroundColor: "#8174A0",
                       },

@@ -27,6 +27,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "user_id",
         as: "attendees",
       });
+        this.belongsToMany(Gadget, {
+          through: "Usergadget",
+          foreignKey: "user_id",
+          as: "gadgets"
+        });
     }
   }
 

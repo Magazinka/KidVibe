@@ -132,7 +132,7 @@ function NavBar() {
           </Button>
         </NavLink>
         <NavLink to="/profile" style={{ textDecoration: "none" }}>
-          <Button
+          {/* <Button
             variant="contained"
             color="primary"
             sx={{
@@ -146,7 +146,7 @@ function NavBar() {
             fullWidth
           >
             Профиль
-          </Button>
+          </Button> */}
         </NavLink>
       </Box>
 

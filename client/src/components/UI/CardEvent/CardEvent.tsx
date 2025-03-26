@@ -40,7 +40,6 @@ function CardEvent() {
       }, {} as { [key: number]: boolean });
       setOverlayVisibility(initialVisibility);
 
-      // Проверяем скролл после загрузки данных
       setTimeout(() => {
         event.forEach(e => {
           if (descriptionRefs.current[e.id]) {
@@ -74,25 +73,34 @@ function CardEvent() {
       : event?.filter((e) => e.group === selectedCategory);
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <Box className="category-list">
+    <Box sx={{ display: "flex", fontFamily: "'Shantell Sans', sans-serif" }}>
+      <Box className="category-list" sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
         <List>
           {categories.map((category) => (
             <ListItem key={category} disablePadding>
               <ListItemButton
                 className={`category-button ${selectedCategory === category ? "selected" : ""}`}
                 onClick={() => setSelectedCategory(category)}
+                sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
               >
-                <ListItemText primary={category} />
+                <ListItemText 
+                  primary={category} 
+                  primaryTypographyProps={{ fontFamily: "'Shantell Sans', sans-serif" }}
+                />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
       </Box>
 
-      <Box className="event-container">
+      <Box className="event-container" sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
         {filteredEvents?.map((e) => (
-          <Card style={{ backgroundColor: "rgba(227, 242, 253, 1)" }} key={e.id} className="event-card">
+          <Card 
+            style={{ backgroundColor: "rgba(227, 242, 253, 1)" }} 
+            key={e.id} 
+            className="event-card"
+            sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+          >
             <CardMedia
               component="img"
               className="event-media"
@@ -100,13 +108,23 @@ function CardEvent() {
               alt={e.name}
             />
             <CardContent style={{ paddingBottom: "0px" }} className="event-content">
-              <Typography variant="h5" className="event-title">
+              <Typography 
+                variant="h5" 
+                className="event-title"
+                sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+              >
                 {e.name}
               </Typography>
-              <Typography className="event-price">
+              <Typography 
+                className="event-price"
+                sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+              >
                 Цена: {e.price} руб.
               </Typography>
-              <Typography className="event-date">
+              <Typography 
+                className="event-date"
+                sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
+              >
                 Дата: {e.date}
               </Typography>
               <Box className="event-description-container">
@@ -114,6 +132,7 @@ function CardEvent() {
                   className="event-description"
                   ref={(el) => (descriptionRefs.current[e.id] = el)}
                   onScroll={handleScroll(e.id)}
+                  sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
                 >
                   {e.description}
                 </Typography>
@@ -127,7 +146,19 @@ function CardEvent() {
               </Box>
             </CardContent>
             <Link to={`/event/${e.id}`} style={{ textDecoration: "none" }}>
-              <Button style={{ paddingTop: "0px" }} className="more-button">Подробнее</Button>
+              <Button 
+                style={{ paddingTop: "0px" }} 
+                className="more-button"
+                sx={{ 
+                  fontFamily: "'Shantell Sans', sans-serif",
+                  color: "#8174A0",
+                  "&:hover": {
+                    backgroundColor: "rgba(129, 116, 160, 0.1)"
+                  }
+                }}
+              >
+                Подробнее
+              </Button>
             </Link>
           </Card>
         ))}
