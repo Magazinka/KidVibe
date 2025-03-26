@@ -6,7 +6,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-interface AuthorCommentGadgee {
+interface AuthorCommentGadget {
   id: number;
   login: string;
 }
