@@ -47,7 +47,6 @@ const authSlice = createSlice({
       console.log("token: ", accessToken);
       console.log("id authSlice: ", user);
 
-      state.user = user;
       state.isAuth = true;
     },
     loginUser: (state, action) => {
