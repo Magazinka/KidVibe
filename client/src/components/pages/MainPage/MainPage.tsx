@@ -20,6 +20,7 @@ const MainPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   const [loaded, setLoaded] = useState(false);
+  const [showUnderline, setShowUnderline] = useState(false);
 
   const events = useSelector((state: RootState) => state.event.event);
   const gadgets = useSelector((state: RootState) => state.gadget.gadget);
@@ -31,9 +32,20 @@ const MainPage: React.FC = () => {
     dispatch(getGadget());
   }, [dispatch]);
 
+  // Эффект для загрузки контента и зверушек
   useEffect(() => {
     if (!isLoadingEvents && !isLoadingGadgets) {
       setTimeout(() => setLoaded(true), 300);
+    }
+  }, [isLoadingEvents, isLoadingGadgets]);
+
+  // Отдельный эффект для подчеркивания (не влияет на зверушек)
+  useEffect(() => {
+    if (!isLoadingEvents && !isLoadingGadgets) {
+      setTimeout(() => {
+        setLoaded(true);
+        setShowUnderline(true); // Добавляем эту строку
+      }, 300);
     }
   }, [isLoadingEvents, isLoadingGadgets]);
 
@@ -78,8 +90,12 @@ const MainPage: React.FC = () => {
           gridRow: size.gridRow,
           gridColumn: size.gridColumn,
           margin: "20px",
-          '&:hover .animal-image': { animation: "spin-clockwise 2s linear infinite" },
-          '&:hover .animal-image-2': { animation: "spin-counterclockwise 2s linear infinite" },
+          '&:hover .animal-image': {
+            animation: "spin-clockwise 2s linear infinite"
+          },
+          '&:hover .animal-image-2': {
+            animation: "spin-counterclockwise 2s linear infinite"
+          }
         }}
       >
         <Box
@@ -94,7 +110,9 @@ const MainPage: React.FC = () => {
             top: -15,
             left: -15,
             zIndex: 2,
-            transition: "transform 0.8s ease",
+            transition: "all 0.8s ease",
+            opacity: loaded ? 1 : 0,
+            transform: loaded ? "translateY(0)" : "translateY(20px)",
           }}
         />
         <Box
@@ -109,7 +127,9 @@ const MainPage: React.FC = () => {
             bottom: -15,
             right: -15,
             zIndex: 2,
-            transition: "transform 0.8s ease",
+            transition: "all 0.8s ease",
+            opacity: loaded ? 1 : 0,
+            transform: loaded ? "translateY(0)" : "translateY(20px)",
           }}
         />
         
@@ -122,13 +142,13 @@ const MainPage: React.FC = () => {
             borderRadius: "20px",
             overflow: "hidden",
             cursor: "pointer",
-            backgroundColor: "#8174a0",
-            color: "#cfebc7",
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-            transition: "transform 0.4s ease, background 0.4s ease",
+            backgroundColor: "#ffffff",
+            color: "#333333",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+            transition: "all 0.4s ease",
             "&:hover": {
               transform: "translateY(-5px)",
-              background: "linear-gradient(135deg, #ffffff, #f9f3d0)",
+              boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
             },
             fontFamily: "'Shantell Sans', sans-serif",
           }}
@@ -175,6 +195,7 @@ const MainPage: React.FC = () => {
                   WebkitBoxOrient: "vertical",
                   overflow: "hidden",
                   fontFamily: "'Shantell Sans', sans-serif",
+                  color: "#333333",
                 }}
               >
                 {item.name}
@@ -191,7 +212,7 @@ const MainPage: React.FC = () => {
                   WebkitBoxOrient: "vertical",
                   overflow: "hidden",
                   flex: size.isTall ? "1 1 auto" : "0 0 auto",
-                  color: type === "event" ? "#e0e0e0" : "#cfebc7",
+                  color: "#555555",
                   fontFamily: "'Shantell Sans', sans-serif",
                 }}
               >
@@ -205,6 +226,7 @@ const MainPage: React.FC = () => {
                     sx={{ 
                       fontSize: "0.75rem",
                       fontFamily: "'Shantell Sans', sans-serif",
+                      color: "#555555",
                     }}
                   >
                     {item.date}
@@ -218,6 +240,7 @@ const MainPage: React.FC = () => {
                       WebkitBoxOrient: "vertical",
                       overflow: "hidden",
                       fontFamily: "'Shantell Sans', sans-serif",
+                      color: "#555555",
                     }}
                   >
                     {item.location}
@@ -228,8 +251,9 @@ const MainPage: React.FC = () => {
                       fontSize: "0.9rem", 
                       fontWeight: "bold", 
                       mt: 1,
-                      textAlign: "right",
+                      textAlign: "center",
                       fontFamily: "'Shantell Sans', sans-serif",
+                      color: "#333333",
                     }}
                   >
                     {item.price} ₽
@@ -265,19 +289,37 @@ const MainPage: React.FC = () => {
     >
       <Box sx={{ mb: 6 }}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-          <Typography 
-            variant="h4" 
-            className="section-title"
-            sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
-          >
-            Мероприятия
-          </Typography>
+          <Box sx={{ position: 'relative', display: 'inline-block' }}>
+            <Typography 
+              variant="h4" 
+              sx={{ 
+                fontFamily: "'Shantell Sans', sans-serif",
+                position: 'relative',
+                display: 'inline-block',
+                paddingBottom: '8px',
+                color: '#333333',
+                '&::after': {
+                  content: '""',
+                  position: 'absolute',
+                  width: showUnderline ? '200%' : '0%',
+                  height: '3px',
+                  bottom: '0',
+                  left: '0',
+                  backgroundColor: '#8174A0',
+                  transition: 'width 0.5s ease',
+                  transform: 'translateX(-25%)',
+                }
+              }}
+            >
+              Мероприятия
+            </Typography>
+          </Box>
           <Button
             variant="contained"
             onClick={handleAllEventsClick}
             sx={{
               backgroundColor: "#8174A0",
-              color: "#CFEBC7",
+              color: "#ffffff",
               fontFamily: "'Shantell Sans', sans-serif",
               "&:hover": {
                 backgroundColor: "#441752",
@@ -301,19 +343,37 @@ const MainPage: React.FC = () => {
 
       <Box sx={{ mt: 8, mb: 4 }}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-          <Typography 
-            variant="h4" 
-            className="section-title"
-            sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
-          >
-            Гаджеты
-          </Typography>
+          <Box sx={{ position: 'relative', display: 'inline-block' }}>
+            <Typography 
+              variant="h4" 
+              sx={{ 
+                fontFamily: "'Shantell Sans', sans-serif",
+                position: 'relative',
+                display: 'inline-block',
+                paddingBottom: '8px',
+                color: '#333333',
+                '&::after': {
+                  content: '""',
+                  position: 'absolute',
+                  width: showUnderline ? '200%' : '0%',
+                  height: '3px',
+                  bottom: '0',
+                  left: '0',
+                  backgroundColor: '#8174A0',
+                  transition: 'width 0.5s ease 0.3s',
+                  transform: 'translateX(-25%)',
+                }
+              }}
+            >
+              Гаджеты
+            </Typography>
+          </Box>
           <Button
             variant="contained"
             onClick={handleAllGadgetsClick}
             sx={{
               backgroundColor: "#8174A0",
-              color: "#CFEBC7",
+              color: "#ffffff",
               fontFamily: "'Shantell Sans', sans-serif",
               "&:hover": {
                 backgroundColor: "#441752",
