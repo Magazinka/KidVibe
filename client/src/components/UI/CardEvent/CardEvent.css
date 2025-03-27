@@ -1,22 +1,37 @@
-/* CardEvent.css */
-.event-media {
+/* Добавьте эти стили в MainPage.css */
+
+@keyframes underline-animation {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.section-title {
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px;
+  bottom: -5px;
+  left: 0;
+  background-color: #8174A0;
+  transition: width 0.5s ease;
+}
+
+.section-title:hover::after {
   width: 100%;
-  height: 300px;
-  object-fit: cover;
 }
 
-.event-description {
-  font-size: 1rem;
-  color: #441752;
-  margin-bottom: 15px;
-  overflow-y: auto;
-  max-height: 150px;
+.title-container {
   position: relative;
-  padding-right: 5px;
-}
-
-.event-description-container {
-  position: relative;
-  flex-grow: 1;
-  min-height: 150px;
+  padding: 8px 16px;
+  border: 2px solid #8174A0;
+  border-radius: 8px;
 }

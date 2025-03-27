@@ -131,7 +131,7 @@ function CardEvent() {
                   width: "100%",
                   transition: "background-color 0.2s",
                   bgcolor: selectedCategory === category ? "#441752" : "inherit",
-                  color: selectedCategory === category ? "#CFEBC7" : "inherit",
+                  color: selectedCategory === category ? "#441752" : "#441752",
                   '&:hover': {
                     backgroundColor: "rgba(68, 23, 82, 0.1)",
                   }

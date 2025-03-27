@@ -27,7 +27,9 @@ import {
 import './YandexMap.css';
 
 const SEVASTOPOL_CENTER: [number, number] = [44.6167, 33.5254];
-const ZOOM = 12;
+const DEFAULT_ZOOM = 10;
+const SINGLE_POINT_ZOOM = 14;
+const MAX_ZOOM = 15;
 
 const YandexMap = ({ ymaps }: { ymaps: any }) => {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -41,7 +43,7 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
 
     const map = new ymaps.Map(mapRef.current, {
       center: SEVASTOPOL_CENTER,
-      zoom: ZOOM,
+      zoom: DEFAULT_ZOOM,
     });
 
     map.controls.add('zoomControl');
@@ -79,6 +81,7 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
       
       placemark.events.add('click', () => {
         setSelectedPoint(point);
+        mapInstance.setCenter(point.coordinates, SINGLE_POINT_ZOOM);
       });
       
       mapInstance.geoObjects.add(placemark);
@@ -98,10 +101,22 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
       mapInstance.geoObjects.add(placemark);
     });
 
-    if (pointsToShow.length > 0) {
-      mapInstance.setBounds(ymaps.util.bounds.fromPoints(
+    if (pointsToShow.length === 1) {
+      mapInstance.setCenter(pointsToShow[0].coordinates, SINGLE_POINT_ZOOM);
+    } else if (pointsToShow.length > 1) {
+      const bounds = ymaps.util.bounds.fromPoints(
         pointsToShow.map(p => p.coordinates)
-      ));
+      );
+      mapInstance.setBounds(bounds, {
+        checkZoomRange: true,
+        zoomMargin: 30
+      });
+      
+      if (mapInstance.getZoom() > MAX_ZOOM) {
+        mapInstance.setZoom(MAX_ZOOM);
+      }
+    } else {
+      mapInstance.setCenter(SEVASTOPOL_CENTER, DEFAULT_ZOOM);
     }
 
   }, [mapInstance, ymaps, activeCategory, savedPoints]);
@@ -156,7 +171,6 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
 
   return (
     <Box className="map-container" sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
-      {/* Панель управления и фильтры */}
       <Paper className="map-controls" elevation={3} sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
         <Typography variant="h6" gutterBottom sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
           Объекты Севастополя
@@ -188,7 +202,6 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
         </Box>
       </Paper>
   
-      {/* Список точек */}
       <Paper className="points-list" elevation={3} sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
         <List>
           {(activeCategory 
@@ -200,7 +213,7 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
               selected={selectedPoint?.id === point.id}
               onClick={() => {
                 setSelectedPoint(point);
-                mapInstance?.panTo(point.coordinates, { flying: true });
+                mapInstance?.setCenter(point.coordinates, SINGLE_POINT_ZOOM);
               }}
               sx={{ fontFamily: "'Shantell Sans', sans-serif" }}
             >
@@ -224,10 +237,8 @@ const YandexMap = ({ ymaps }: { ymaps: any }) => {
         </List>
       </Paper>
   
-      {/* Карта */}
       <Box ref={mapRef} className="main-map" />
   
-      {/* Избранное */}
       {savedPoints.length > 0 && (
         <Paper elevation={3} sx={{ p: 2, fontFamily: "'Shantell Sans', sans-serif" }}>
           <Typography variant="h6" sx={{ fontFamily: "'Shantell Sans', sans-serif" }}>
