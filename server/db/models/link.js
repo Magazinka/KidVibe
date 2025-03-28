@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   link.init({
     name: DataTypes.STRING,
-    url: DataTypes.STRING
+    url: DataTypes.STRING,
+    img: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'link',

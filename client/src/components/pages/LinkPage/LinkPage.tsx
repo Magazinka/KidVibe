@@ -69,7 +69,7 @@ const LinkPage: React.FC = () => {
                 <CardMedia
                   component="img"
                   height="140"
-                  image={link.image || 'https://res.cloudinary.com/dlliagivo/image/upload/v1742477841/wvtyoh2ysubjbrpo75kx.png'}
+                  image={link.img || 'https://res.cloudinary.com/dlliagivo/image/upload/v1742477841/wvtyoh2ysubjbrpo75kx.png'}
                   alt={link.name}
                   className="link-image"
                 />
